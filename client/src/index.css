@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* ============================================
+   🌍 GLOBAL RESPONSIVE & FLUID BASE
+   ============================================ */
+
+/* 1. Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. HTML & Body Base */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background: transparent; /* Allows background video to show through */
+}
+
+/* 3. Root Container */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 4. Fluid Media (Images, Videos, Iframes) */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 5. Prevent Horizontal Scrolling Globally */
+html, body, #root, .app {
+  overflow-x: hidden !important;
+  width: 100% !important;
+}
+
+/* 6. Touch-Friendly Targets for Mobile Devices */
+@media (max-width: 768px) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  .nav-link,
+  .sidebar-menu-btn,
+  .sidebar-submenu-item {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* 7. Accessibility: Respect User's Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 8. Print Styles (Clean printing without UI elements) */
+@media print {
+  .navbar,
+  .sidebar-overlay,
+  .vertical-sidebar,
+  .whatsapp-float,
+  .admin-floating-btn,
+  .hamburger-btn,
+  .scrolling-banner,
+  .ai-chatbot {
+    display: none !important;
+  }
+  
+  body, .app {
+    background: white !important;
+    color: black !important;
+  }
+}

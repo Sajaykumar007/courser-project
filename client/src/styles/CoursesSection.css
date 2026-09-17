@@ -1,0 +1,141 @@
+/* ===== COURSES SECTION - COMPACT BUT COMFORTABLE ===== */
+.courses-section {
+  padding: 2rem 3%;
+  background: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 100%);
+  min-height: auto;
+}
+
+.courses-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 0.6rem 0;
+}
+
+.section-header p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Sub Section Title */
+.sub-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 1.2rem 0 0.8rem 0;
+}
+
+/* Course Cards Grid - 3 Columns */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* Individual Course Card */
+.course-card {
+  background: white;
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  border-left: 4px solid #00e676;
+  border-radius: 8px;
+  padding: 1.2rem 1.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
+  border-left-color: #5b21b6;
+}
+
+/* Card Icon */
+.card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+/* Card Description */
+.card-description {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Card Colors - Different for each */
+.course-card:nth-child(1) { border-left-color: #7c3aed; }
+.course-card:nth-child(2) { border-left-color: #f59e0b; }
+.course-card:nth-child(3) { border-left-color: #00e676; }
+.course-card:nth-child(4) { border-left-color: #7c3aed; }
+.course-card:nth-child(5) { border-left-color: #f59e0b; }
+.course-card:nth-child(6) { border-left-color: #00e676; }
+.course-card:nth-child(7) { border-left-color: #ec4899; }
+.course-card:nth-child(8) { border-left-color: #00e676; }
+.course-card:nth-child(9) { border-left-color: #3b82f6; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 968px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .courses-section {
+    padding: 1.5rem 2%;
+  }
+  
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .section-header p {
+    font-size: 0.85rem;
+  }
+  
+  .card-title {
+    font-size: 0.95rem;
+  }
+  
+  .card-description {
+    font-size: 0.8rem;
+  }
+  
+  .course-card {
+    padding: 1rem;
+  }
+}

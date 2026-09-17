@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courser Talent Brochure</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 20px;
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+    
+    .talent-pool {
+      margin: 40px 0;
+    }
+    
+    .talent-pool h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 10px;
+    }
+    
+    .talent-category {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .talent-category strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+    }
+    
+    .benefits {
+      margin: 40px 0;
+    }
+    
+    .benefits h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 3px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .contact-info {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+    
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding: 20px;
+      }
+      
+      .container {
+        background: white;
+        box-shadow: none;
+      }
+      
+      .stat-card, .talent-category, .benefit-item, .contact-info {
+        background: #f0fdf4;
+        color: black;
+        border-color: #10b981;
+      }
+      
+      .header, .talent-pool h2, .benefits h2, .footer h3 {
+        color: #064e3b;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🎓 Courser Talent Brochure</h1>
+      <p>Hire Top Tech Talent for Your Organization</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <span class="stat-number">6,200+</span>
+        <span class="stat-label">Trained Professionals</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">95%</span>
+        <span class="stat-label">Placement Rate</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">200+</span>
+        <span class="stat-label">Hiring Partners</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">15+</span>
+        <span class="stat-label">Industries Covered</span>
+      </div>
+    </div>
+
+    <!-- Talent Pool -->
+    <div class="talent-pool">
+      <h2>Our Talent Pool</h2>
+      <div class="talent-category">
+        <strong>Full Stack Developers</strong>
+        1,200+ professionals skilled in MERN, MEAN, Java Spring
+      </div>
+      <div class="talent-category">
+        <strong>Data Scientists</strong>
+        800+ professionals skilled in Python, ML, AI, Analytics
+      </div>
+      <div class="talent-category">
+        <strong>Cloud Engineers</strong>
+        650+ professionals skilled in AWS, Azure, GCP
+      </div>
+      <div class="talent-category">
+        <strong>DevOps Engineers</strong>
+        500+ professionals skilled in Docker, Kubernetes, CI/CD
+      </div>
+      <div class="talent-category">
+        <strong>Mobile Developers</strong>
+        450+ professionals skilled in React Native, Flutter, iOS, Android
+      </div>
+      <div class="talent-category">
+        <strong>QA Engineers</strong>
+        600+ professionals skilled in Automation & Manual Testing
+      </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="benefits">
+      <h2>Why Partner With Us?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-item">✓ Industry-Ready Talent</div>
+        <div class="benefit-item">✓ Quick Hiring Process</div>
+        <div class="benefit-item">✓ Cost-Effective</div>
+        <div class="benefit-item">✓ Verified Skills</div>
+        <div class="benefit-item">✓ Diverse Talent Pool</div>
+        <div class="benefit-item">✓ Continuous Support</div>
+      </div>
+    </div>
+
+    <!-- Footer / Contact -->
+    <div class="footer">
+      <h3>Ready to Build Your Dream Team?</h3>
+      <div class="contact-info">
+        <p><strong>Contact Us:</strong></p>
+        <p> +91 77060 37060</p>
+        <p>📧 hire@courser.com</p>
+        <p>🌐 www.courser.com</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

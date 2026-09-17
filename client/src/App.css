@@ -1,0 +1,94 @@
+/* ===== FORCE TRANSPARENT BACKGROUNDS ===== */
+/* =========================================
+   1. FORCE TRANSPARENT BACKGROUNDS (CRITICAL)
+   ========================================= */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: transparent !important; /* Removes solid background hiding the video */
+  min-height: 100vh;
+  color: #1e293b; /* Default text color */
+}
+
+.app {
+  background: transparent !important; /* Ensures app container doesn't hide video */
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   2. MAKE SECTIONS SEMI-TRANSPARENT (GLASSMORPHISM)
+   ========================================= */
+
+/* Light Sections (Courses, Features, Testimonials, etc.) */
+.courses-section, 
+.key-features-section, 
+.placement-section, 
+.testimonials-section, 
+.referral-section,
+.all-courses-page,
+.online-courses-page,
+.contact-page,
+.placements-page,
+.hire-from-us-page,
+.corporate-training-page {
+  background: rgba(255, 255, 255, 0.85) !important; /* 85% White, 15% Transparent */
+  backdrop-filter: blur(10px); /* Blurs the video slightly so text is readable */
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Dark Sections (Hero, Footer, CTA) */
+.hero-section,
+.new-footer,
+.courses-cta,
+.final-cta,
+.corp-cta {
+  background: rgba(15, 23, 42, 0.85) !important; /* Dark blue with 85% opacity */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white !important;
+}
+
+/* Navbar (Make it slightly transparent too) */
+.navbar {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* =========================================
+   3. ENSURE VIDEO STAYS BEHIND EVERYTHING
+   ========================================= */
+.global-bg-video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  z-index: -2 !important; /* Must be behind everything */
+  pointer-events: none !important;
+}
+
+.global-bg-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.4) !important; /* Adjust 0.4 to 0.6 if you want it darker */
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: transparent !important; /* Removes solid background */
+  min-height: 100vh;
+}
+
+.app {
+  background: transparent !important; /* Ensures app container doesn't hide video */
+  position: relative;
+  z-index: 1;
+}

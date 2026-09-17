@@ -1,0 +1,476 @@
+/* ============================================
+   📱 FULL WEBSITE RESPONSIVE DESIGN
+   Mobile → Tablet → Laptop → Desktop → Large
+   ============================================ */
+
+/* ===== 1. GLOBAL RESPONSIVE BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== 2. CONTAINER - FLUID WIDTH ===== */
+.container,
+.hero-container,
+.filters-container,
+.footer-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* ===== 3. TYPOGRAPHY - SCALABLE ===== */
+h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
+p  { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+
+/* ============================================
+   📱 MOBILE (320px - 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  
+  /* Navbar */
+  .navbar {
+    padding: 0.5rem 3%;
+    top: 0;
+  }
+  
+  .logo-image {
+    height: 30px;
+  }
+  
+  .hamburger-btn {
+    width: 26px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .hamburger-line {
+    height: 2.5px;
+  }
+  
+  /* Sidebar */
+  .vertical-sidebar {
+    width: 260px;
+    left: -260px;
+  }
+  
+  .sidebar-menu-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+  }
+  
+  /* Hero Sections */
+  .courses-hero,
+  .corp-hero,
+  .hire-hero,
+  .placements-hero,
+  .contact-hero {
+    padding: 2rem 4% 2.5rem;
+  }
+  
+  .hero-title {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .hero-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  
+  .hero-stat,
+  .stat-card {
+    padding: 0.8rem;
+  }
+  
+  .stat-number {
+    font-size: 1.4rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  /* Buttons */
+  .btn-primary,
+  .btn-secondary,
+  .hero-buttons button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  /* Grids - Single Column */
+  .courses-grid,
+  .programs-grid,
+  .benefits-grid,
+  .talent-grid,
+  .case-studies-grid,
+  .pricing-grid,
+  .testimonials-grid,
+  .students-grid,
+  .stories-grid,
+  .drives-grid,
+  .prep-grid,
+  .methodology-timeline,
+  .industries-grid,
+  .highlights-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  
+  /* Cards */
+  .course-card,
+  .program-card,
+  .benefit-card,
+  .talent-card,
+  .case-study-card,
+  .pricing-card,
+  .testimonial-card,
+  .student-card,
+  .story-card,
+  .drive-card,
+  .prep-card,
+  .methodology-step,
+  .industry-badge,
+  .highlight-card {
+    padding: 1rem;
+  }
+  
+  .course-image {
+    height: 100px;
+  }
+  
+  .course-icon {
+    font-size: 2.5rem;
+  }
+  
+  /* Forms */
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+  
+  .corp-form,
+  .hire-form,
+  .enquiry-form {
+    padding: 1.2rem;
+  }
+  
+  /* Section Padding */
+  section {
+    padding: 2rem 4% !important;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.88rem;
+  }
+  
+  /* Footer */
+  .footer-top,
+  .footer-middle {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  /* Filters */
+  .filter-controls {
+    flex-direction: column;
+  }
+  
+  .filter-group {
+    width: 100%;
+  }
+  
+  .search-input {
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+  }
+  
+  /* CTA Sections */
+  .courses-cta,
+  .corp-cta,
+  .final-cta,
+  .cta-section {
+    padding: 2rem 4%;
+  }
+  
+  .cta-content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+  }
+  
+  .cta-buttons button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+    LARGE MOBILE (481px - 640px)
+   ============================================ */
+@media (min-width: 481px) and (max-width: 640px) {
+  
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .courses-grid,
+  .programs-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .industries-grid,
+  .highlights-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  section {
+    padding: 2.5rem 4% !important;
+  }
+}
+
+/* ============================================
+    TABLET (641px - 768px)
+   ============================================ */
+@media (min-width: 641px) and (max-width: 768px) {
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .courses-grid,
+  .programs-grid,
+  .benefits-grid,
+  .talent-grid,
+  .case-studies-grid,
+  .testimonials-grid,
+  .stories-grid,
+  .prep-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .pricing-grid,
+  .drives-grid,
+  .students-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .methodology-timeline {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .industries-grid,
+  .highlights-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  section {
+    padding: 3rem 4% !important;
+  }
+}
+
+/* ============================================
+   💻 SMALL TABLET / LARGE PHONE (769px - 968px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 968px) {
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .programs-grid,
+  .benefits-grid,
+  .talent-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .pricing-grid,
+  .case-studies-grid,
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .hero-visual {
+    display: none;
+  }
+}
+
+/* ============================================
+   💻 LAPTOP (969px - 1200px)
+   ============================================ */
+@media (min-width: 969px) and (max-width: 1200px) {
+  
+  .nav-menu {
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.5rem;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .programs-grid,
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* ============================================
+   🖥️ DESKTOP (1201px - 1440px)
+   ============================================ */
+@media (min-width: 1201px) and (max-width: 1440px) {
+  
+  .container,
+  .hero-container {
+    max-width: 1200px;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================
+   ️ LARGE DESKTOP (1441px+)
+   ============================================ */
+@media (min-width: 1441px) {
+  
+  html {
+    font-size: 18px;
+  }
+  
+  .container,
+  .hero-container {
+    max-width: 1400px;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .programs-grid,
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================
+   🔄 LANDSCAPE MODE (Mobile Horizontal)
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+  
+  .sidebar-header {
+    min-height: 50px;
+    padding: 0.6rem 1rem;
+  }
+  
+  .sidebar-menu-btn {
+    padding: 0.5rem 1rem;
+  }
+  
+  .hero-section {
+    min-height: auto;
+    padding: 1.5rem 4%;
+  }
+}
+
+/* ============================================
+    ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   ️ PRINT STYLES
+   ============================================ */
+@media print {
+  .navbar,
+  .sidebar-overlay,
+  .vertical-sidebar,
+  .whatsapp-float,
+  .admin-floating-btn,
+  .hamburger-btn {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+}
