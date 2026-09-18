@@ -64,11 +64,11 @@ function PlacementsPage() {
       try {
         setLoading(true);
         const [statsRes, partnersRes, studentsRes, storiesRes, drivesRes] = await Promise.all([
-          fetch('http://localhost:5000/api/placement/stats'),
-          fetch('http://localhost:5000/api/placement/hiring-partners'),
-          fetch('http://localhost:5000/api/placement/placed-students'),
-          fetch('http://localhost:5000/api/placement/success-stories'),
-          fetch('http://localhost:5000/api/placement/placement-drives')
+          fetch('https://courser-project.onrender.com/api/placement/stats'),
+          fetch('https://courser-project.onrender.com/api/placement/hiring-partners'),
+          fetch('https://courser-project.onrender.com/api/placement/placed-students'),
+          fetch('https://courser-project.onrender.com/api/placement/success-stories'),
+          fetch('https://courser-project.onrender.com/api/placement/placement-drives')
         ]);
 
         const statsData = await statsRes.json();
@@ -107,7 +107,7 @@ function PlacementsPage() {
     setFormError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/placement/enquiry', {
+      const response = await fetch('https://courser-project.onrender.com/api/placement/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(enquiryForm),
@@ -158,7 +158,7 @@ function PlacementsPage() {
         course: registrationForm.course,
       };
 
-      const response = await fetch('http://localhost:5000/api/placement/register-drive', {
+      const response = await fetch('https://courser-project.onrender.com/api/placement/register-drive', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

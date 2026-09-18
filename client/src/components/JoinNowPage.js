@@ -65,7 +65,7 @@ function JoinNowPage({ onBack }) {
 
   try {
     // Backend-ku data anuppudhu
-    const response = await fetch('http://localhost:5000/api/leads/submit', {
+    const response = await fetch('https://courser-project.onrender.com/api/leads/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

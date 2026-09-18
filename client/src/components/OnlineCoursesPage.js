@@ -114,7 +114,7 @@ function OnlineCoursesPage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/online-courses');
+        const response = await fetch('https://courser-project.onrender.com/api/online-courses');
         const data = await response.json();
         if (data.success && data.data.length > 0) {
           setCourses(data.data);
@@ -157,7 +157,7 @@ function OnlineCoursesPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/online-courses/enquiry', {
+      const response = await fetch('https://courser-project.onrender.com/api/online-courses/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
