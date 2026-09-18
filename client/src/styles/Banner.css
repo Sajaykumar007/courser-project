@@ -1,21 +1,19 @@
 /* ===== SCROLLING BANNER ===== */
 .scrolling-banner {
-  background: #b8a9d4; /* Or use: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%); for green theme */
+  background: #b8a9d4;
   overflow: hidden;
-  
-  /* ✅ CRITICAL FIX: Changed from 'fixed' to 'relative' */
-  position: relative; 
-  top: auto; 
-  left: 0;
+
+  position: relative;
   width: 100%;
-  
-  /* ✅ Z-index below Navbar (100) but above page content */
-  z-index: 90; 
-  
+
+  z-index: 90;
+
   padding: 0.6rem 2%;
   display: flex;
   align-items: center;
+
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .scroll-content {
