@@ -7,29 +7,43 @@ function TestimonialsSection() {
       name: 'Vaishnavi',
       role: 'UPSC Aspirant',
       college: 'PSG Krishnammal College',
-      image: 'https://i.pravatar.cc/150?img=1', // Replace with actual image URL
+      image: 'https://i.pravatar.cc/150?img=1',
       testimonial: 'Joined Courser, Coimbatore Institute for UPSC Training. Trainers from Courser have helped me to gain deep knowledge on Preliminary and Main Papers. They helped us with the Previous Year Question papers and to crack them'
     },
     {
       name: 'Aravinth kumaravelu',
       role: 'Cloud Architect',
       college: 'Muthayammal Engineering College',
-      image: 'https://i.pravatar.cc/150?img=11', // Replace with actual image URL
+      image: 'https://i.pravatar.cc/150?img=11',
       testimonial: 'Joined Courser for Cloud Architect Course. Learnt Cloud Infrastructure from scratch. Worked on Tier Account of AWS and had a clear understanding of Compute, Storage and Security Services.'
     },
     {
       name: 'Pravin Murugesan',
       role: 'Full Stack Developer',
       college: 'Bharathiyar University',
-      image: 'https://i.pravatar.cc/150?img=13', // Replace with actual image URL
+      image: 'https://i.pravatar.cc/150?img=13',
       testimonial: 'Studying Full Stack Developer with Placement Assistance from Courser. I am from Non IT Background. Learning Website Development from Scratch, working on JavaScript and PHP. Building my own website and implementing all the Front End and Back End Frameworks'
     },
     {
       name: 'Harish TS',
       role: 'Diploma in Computer Applications',
       college: 'Bangalore',
-      image: 'https://i.pravatar.cc/150?img=8', // Replace with actual image URL
+      image: 'https://i.pravatar.cc/150?img=8',
       testimonial: 'Joined Courser for DCA Course and started to improvise on all Microsoft Apps. Started developing Professional Presentations. It gave us more confidence to pursue My Post Graduate degree'
+    },
+    {
+      name: 'Priya Sharma',
+      role: 'Data Analyst',
+      college: 'Anna University',
+      image: 'https://i.pravatar.cc/150?img=5',
+      testimonial: 'The Data Analyst course at Courser transformed my career. The hands-on projects and expert guidance helped me land my dream job at a top MNC.'
+    },
+    {
+      name: 'Karthik R',
+      role: 'Digital Marketing Executive',
+      college: 'Madras University',
+      image: 'https://i.pravatar.cc/150?img=12',
+      testimonial: 'Excellent training and placement support. The trainers are very knowledgeable and the practical approach made learning easy and effective.'
     }
   ];
 
@@ -44,7 +58,7 @@ function TestimonialsSection() {
           </p>
         </div>
         
-        <div className="testimonials-grid">
+        <div className="testimonials-scroll-container">
           {testimonials.map((testimonial, idx) => (
             <div key={idx} className="testimonial-card">
               <div className="testimonial-header">
@@ -54,7 +68,6 @@ function TestimonialsSection() {
                     alt={testimonial.name}
                     className="testimonial-image"
                     onError={(e) => {
-                      // Fallback if image fails to load
                       e.target.src = 'https://ui-avatars.com/api/?name=' + testimonial.name + '&background=10b981&color=fff&size=150';
                     }}
                   />

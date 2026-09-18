@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-// Import Components
 import BackgroundAnimation from './components/BackgroundAnimation';
 import BackgroundVideo from './components/BackgroundVideo';
 import Navbar from './components/Navbar';
 import ScrollingBanner from './components/ScrollingBanner';
 import HeroSection from './components/HeroSection';
-import VideoSection from './components/VideoSection';
 import GovtJobSection from './components/GovtJobSection';
 import CoursesSection from './components/CoursesSection';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -15,13 +13,11 @@ import JoinNowPage from './components/JoinNowPage';
 import AdminDashboard from './components/AdminDashboard';
 import AIChatbot from './components/AIChatbot';
 
-// Import New Sections
 import KeyFeaturesSection from './components/KeyFeaturesSection';
 import PlacementSection from './components/PlacementSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import ReferralSection from './components/ReferralSection';
 
-// Import All Pages
 import AllCoursesPage from './components/AllCoursesPage';
 import OnlineCoursesPage from './components/OnlineCoursesPage';
 import CorporateTrainingPage from './components/CorporateTrainingPage';
@@ -30,12 +26,10 @@ import PlacementsPage from './components/PlacementsPage';
 import ContactUsPage from './components/ContactUsPage';
 import LearningPathsPage from './components/LearningPathsPage';
 
-// Import Styles
 import './styles/App.css';
 import './styles/Navbar.css';
 import './styles/Banner.css';
 import './styles/Hero.css';
-import './styles/VideoSection.css';
 import './styles/GovtJob.css';
 import './styles/CoursesSection.css';
 import './styles/Footer.css';
@@ -61,7 +55,6 @@ function App() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
 
-  // Check URL on load & listen for URL changes
   useEffect(() => {
     const checkPath = () => {
       const currentPath = window.location.pathname;
@@ -110,17 +103,13 @@ function App() {
     return () => window.removeEventListener('popstate', checkPath);
   }, []);
 
-  // Listen for Navbar page navigation
   useEffect(() => {
     const handleNavigation = (e) => {
       const page = e.detail;
       setCurrentPage(page);
-      
-      // Reset Join Now & Admin states when navigating to other pages
       setShowJoinNow(false);
       setShowAdmin(false);
       
-      // Set URL based on page
       const routes = {
         'home': '/',
         'allCourses': '/courses',
@@ -143,7 +132,6 @@ function App() {
     return () => window.removeEventListener('navigateToPage', handleNavigation);
   }, []);
 
-  // Listen for Join Now button click
   useEffect(() => {
     const handleJoinNow = () => {
       setShowJoinNow(true);
@@ -155,7 +143,6 @@ function App() {
     return () => window.removeEventListener('navigateToJoinNow', handleJoinNow);
   }, []);
 
-  // ===== ADMIN DASHBOARD =====
   if (showAdmin) {
     return (
       <>
@@ -171,7 +158,6 @@ function App() {
     );
   }
 
-  // ===== JOIN NOW PAGE =====
   if (showJoinNow) {
     return (
       <>
@@ -190,7 +176,6 @@ function App() {
     );
   }
 
-  // ===== RENDER PAGE FUNCTION =====
   const renderPage = () => {
     switch (currentPage) {
       case 'allCourses':
@@ -212,7 +197,6 @@ function App() {
     }
   };
 
-  // ===== OTHER PAGES (All Courses, Online Courses, etc.) =====
   if (currentPage !== 'home') {
     return (
       <>
@@ -227,18 +211,16 @@ function App() {
     );
   }
 
-  // ===== MAIN WEBSITE (HOME) =====
   return (
     <div className="app">
       <BackgroundVideo />
       <BackgroundAnimation />
-      <Navbar /> {/* ✅ FIRST - Navbar */}
-      <ScrollingBanner /> {/* ✅ SECOND - Scrolling Banner */}
+      <Navbar />
+      <ScrollingBanner />
       
-      <div className="main-content">
+      
         <HeroSection />
-        <VideoSection />
-      </div>
+      
        
       <GovtJobSection />
       <CoursesSection />

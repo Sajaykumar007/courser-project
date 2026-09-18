@@ -2,22 +2,20 @@ import React from 'react';
 import '../styles/PlacementSection.css';
 
 function PlacementSection() {
-  const companies = [
+  const companiesRow1 = [
     'TATA', 'Microsoft', 'Flipkart', 'Standard Chartered',
-    'Amazon', 'Mahindra', 'Airtel', 'Paytm',
-    'Google', 'MasterCard', 'Myntra', 'PayPal',
-    'Toshiba', 'BOSCH', 'SONY', 'Intel'
+    'Amazon', 'Mahindra', 'Airtel', 'Paytm'
   ];
 
-  const stats = [
-    { label: 'Placement Success Rate', value: '94%', icon: '' },
-    { label: 'Minimum Salary', value: '3,00,000', icon: '💰' },
-    { label: 'Maximum Salary', value: '24,00,000', icon: '' }
+  const companiesRow2 = [
+    'Google', 'MasterCard', 'Myntra', 'PayPal',
+    'Toshiba', 'BOSCH', 'SONY', 'Intel'
   ];
 
   return (
     <section className="placement-section">
       <div className="placement-container">
+        
         <div className="section-header">
           <h2 className="section-title">Get your Dream Job</h2>
           <div className="title-underline"></div>
@@ -28,26 +26,26 @@ function PlacementSection() {
           </p>
         </div>
 
-        <div className="placement-content">
-          <div className="placement-stats">
-            <h3 className="subsection-title">Placement Statistics</h3>
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat-card">
-                <div className="stat-icon">{stat.icon}</div>
-                <div className="stat-info">
-                  <span className="stat-label">{stat.label}</span>
-                  <span className="stat-value">{stat.value}</span>
+        <div className="companies-section">
+          <h3 className="companies-title">Our Alumni work in Top Companies</h3>
+          
+          {/* Row 1 - Scrolling Left */}
+          <div className="marquee-container">
+            <div className="marquee-row marquee-left">
+              {[...companiesRow1, ...companiesRow1, ...companiesRow1].map((company, idx) => (
+                <div key={`row1-${idx}`} className="company-card-marquee">
+                  <span className="company-name-marquee">{company}</span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="companies-section">
-            <h3 className="subsection-title">Our Alumini work in Top Companies</h3>
-            <div className="companies-grid">
-              {companies.map((company, idx) => (
-                <div key={idx} className="company-card">
-                  <span className="company-name">{company}</span>
+          {/* Row 2 - Scrolling Right */}
+          <div className="marquee-container">
+            <div className="marquee-row marquee-right">
+              {[...companiesRow2, ...companiesRow2, ...companiesRow2].map((company, idx) => (
+                <div key={`row2-${idx}`} className="company-card-marquee">
+                  <span className="company-name-marquee">{company}</span>
                 </div>
               ))}
             </div>

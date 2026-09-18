@@ -1,10 +1,12 @@
-/* ===== GOVERNMENT JOB SECTION - COMPACT ===== */
+/* ===== GOVERNMENT JOB SECTION - LIGHT GREEN THEME ===== */
 .govt-job-section {
-  padding: 3rem 2%;
-  background: linear-gradient(135deg, rgba(245, 243, 255, 0.5), rgba(224, 231, 255, 0.5));
+  padding: 1rem 2% 2rem;
+  background: linear-gradient(135deg, rgba(240, 253, 244, 0.8) 0%, rgba(220, 252, 231, 0.8) 50%, rgba(187, 247, 208, 0.6) 100%);
   position: relative;
   z-index: 2;
-  margin-top: 4rem;  /* Pushes section down */
+  margin-top: 0;
+  border-top: 2px solid rgba(16, 185, 129, 0.2);
+  border-bottom: 2px solid rgba(16, 185, 129, 0.2);
 }
 
 .govt-job-container {
@@ -20,14 +22,14 @@
 .govt-job-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #d4a017;
+  color: #065f46;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
 }
 
 .govt-job-subtitle {
   font-size: 0.95rem;
-  color: #333;
+  color: #374151;
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.4;
@@ -43,8 +45,9 @@
 .govt-job-image {
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15);
   max-height: 300px;
+  border: 2px solid rgba(16, 185, 129, 0.2);
 }
 
 .govt-job-image img {
@@ -63,8 +66,8 @@
 
 .category-btn {
   background: white;
-  border: 2px solid #d4a017;
-  color: #d4a017;
+  border: 2px solid #10b981;
+  color: #065f46;
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   font-weight: 700;
@@ -73,20 +76,22 @@
   transition: all 0.3s ease;
   text-align: center;
   letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
 }
 
 .category-btn:hover {
-  background: #d4a017;
+  background: #10b981;
   color: white;
   transform: translateX(8px);
-  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.4);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  border-color: #059669;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .govt-job-section {
-    padding: 1.5rem 2%;
-    margin-top: 3rem;
+    padding: 1rem 2% 1.5rem;
+    margin-top: 0;
   }
   
   .govt-job-title {

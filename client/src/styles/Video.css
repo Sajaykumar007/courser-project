@@ -1,4 +1,4 @@
-/* ===== RIGHT SECTION ===== */
+/* 
 .right-section {
   display: flex;
   justify-content: flex-start;
@@ -162,4 +162,4 @@
   50% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
 }
 
-.overlay-content p { font-size: 1.1rem; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.overlay-content p { font-size: 1.1rem; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5); } */
