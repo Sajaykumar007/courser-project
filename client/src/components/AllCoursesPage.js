@@ -45,7 +45,7 @@ function AllCoursesPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/courses');
+      const res = await fetch('https://courser-project.onrender.com/api/courses');
       const data = await res.json();
       if (data.success) {
         setCourses(data.data);
@@ -119,7 +119,7 @@ function AllCoursesPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/courses/enquiry', {
+      const res = await fetch('https://courser-project.onrender.com/api/courses/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
