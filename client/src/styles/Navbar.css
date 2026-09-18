@@ -148,7 +148,7 @@
 
 /* ===== HAMBURGER BUTTON ===== */
 .hamburger-btn {
-  display: none; /* Hidden on desktop */
+  display: flex; /* Hidden on desktop */
   flex-direction: column;
   justify-content: space-between;
   width: 30px;

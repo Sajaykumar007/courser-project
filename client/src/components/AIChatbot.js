@@ -15,7 +15,7 @@ function AIChatbot() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch('https://courser-project.onrender.com/api/courses');
+        const res = await fetch('http://localhost:5000/api/courses');
         const data = await res.json();
         if (data.success) {
           setDynamicCourses(data.data);

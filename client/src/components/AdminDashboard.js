@@ -27,17 +27,17 @@ function AdminDashboard({ onBack }) {
     setLoading(true);
     try {
       let url = '';
-      if (activeTab === 'leads') url = 'https://courser-project.onrender.com/api/leads/all';
-      else if (activeTab === 'contacts') url = 'https://courser-project.onrender.com/api/contact/all';
-      else if (activeTab === 'placementEnquiries') url = 'https://courser-project.onrender.com/api/placement/enquiries';
-      else if (activeTab === 'placedStudents') url = 'https://courser-project.onrender.com/api/placement/placed-students';
-      else if (activeTab === 'driveRegistrations') url = 'https://courser-project.onrender.com/api/placement/drive-registrations';
-      else if (activeTab === 'hireRequests') url = 'https://courser-project.onrender.com/api/placement/hire-requests';
-      else if (activeTab === 'corporateTrainingRequests') url = 'https://courser-project.onrender.com/api/placement/corporate-training-requests';
-      else if (activeTab === 'courseEnrollments') url = 'https://courser-project.onrender.com/api/online-courses/enrollments';
-      else if (activeTab === 'courseEnquiries') url = 'https://courser-project.onrender.com/api/courses/enquiries';
-      else if (activeTab === 'referrals') url = 'https://courser-project.onrender.com/api/referrals/all';
-      else if (activeTab === 'newsletter') url = `https://courser-project.onrender.com/api/newsletter/all?search=${encodeURIComponent(subscriberSearch)}`; // ✅ NEW
+      if (activeTab === 'leads') url = 'http://localhost:5000/api/leads/all';
+      else if (activeTab === 'contacts') url = 'http://localhost:5000/api/contact/all';
+      else if (activeTab === 'placementEnquiries') url = 'http://localhost:5000/api/placement/enquiries';
+      else if (activeTab === 'placedStudents') url = 'http://localhost:5000/api/placement/placed-students';
+      else if (activeTab === 'driveRegistrations') url = 'http://localhost:5000/api/placement/drive-registrations';
+      else if (activeTab === 'hireRequests') url = 'http://localhost:5000/api/placement/hire-requests';
+      else if (activeTab === 'corporateTrainingRequests') url = 'http://localhost:5000/api/placement/corporate-training-requests';
+      else if (activeTab === 'courseEnrollments') url = 'http://localhost:5000/api/online-courses/enrollments';
+      else if (activeTab === 'courseEnquiries') url = 'http://localhost:5000/api/courses/enquiries';
+      else if (activeTab === 'referrals') url = 'http://localhost:5000/api/referrals/all';
+      else if (activeTab === 'newsletter') url = `http://localhost:5000/api/newsletter/all?search=${encodeURIComponent(subscriberSearch)}`; // ✅ NEW
 
       if (url) {
         const response = await fetch(url);
@@ -67,13 +67,13 @@ function AdminDashboard({ onBack }) {
     if (window.confirm('Are you sure you want to delete this?')) {
       try {
         let url = '';
-        if (type === 'leads') url = `https://courser-project.onrender.com/api/leads/${id}`;
-        else if (type === 'contacts') url = `https://courser-project.onrender.com/api/contact/${id}`;
-        else if (type === 'driveRegistrations') url = `https://courser-project.onrender.com/api/placement/drive-registrations/${id}`;
-        else if (type === 'courseEnrollments') url = `https://courser-project.onrender.com/api/online-courses/enrollments/${id}`;
-        else if (type === 'courseEnquiries') url = `https://courser-project.onrender.com/api/courses/enquiries/${id}`;
-        else if (type === 'referrals') url = `https://courser-project.onrender.com/api/referrals/${id}`;
-        else if (type === 'newsletter') url = `https://courser-project.onrender.com/api/newsletter/${id}`; // ✅ NEW
+        if (type === 'leads') url = `http://localhost:5000/api/leads/${id}`;
+        else if (type === 'contacts') url = `http://localhost:5000/api/contact/${id}`;
+        else if (type === 'driveRegistrations') url = `http://localhost:5000/api/placement/drive-registrations/${id}`;
+        else if (type === 'courseEnrollments') url = `http://localhost:5000/api/online-courses/enrollments/${id}`;
+        else if (type === 'courseEnquiries') url = `http://localhost:5000/api/courses/enquiries/${id}`;
+        else if (type === 'referrals') url = `http://localhost:5000/api/referrals/${id}`;
+        else if (type === 'newsletter') url = `http://localhost:5000/api/newsletter/${id}`; // ✅ NEW
 
         if (url) {
           await fetch(url, { method: 'DELETE' });
@@ -94,7 +94,7 @@ function AdminDashboard({ onBack }) {
   // ✅ NEW: Toggle subscription status
   const handleToggleSubscription = async (id) => {
     try {
-      const res = await fetch(`https://courser-project.onrender.com/api/newsletter/${id}/toggle`, { method: 'PUT' });
+      const res = await fetch(`http://localhost:5000/api/newsletter/${id}/toggle`, { method: 'PUT' });
       const data = await res.json();
       if (data.success) {
         setNewsletterSubscribers(prev => prev.map(sub => sub._id === id ? data.data : sub));

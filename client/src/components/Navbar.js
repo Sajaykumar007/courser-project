@@ -19,7 +19,7 @@ function Navbar() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch('https://courser-project.onrender.com/api/courses');
+        const res = await fetch('http://localhost:5000/api/courses');
         const data = await res.json();
         if (data.success) setAllCourses(data.data);
       } catch (error) {
@@ -33,7 +33,7 @@ function Navbar() {
   useEffect(() => {
     const fetchOnlineCourses = async () => {
       try {
-        const res = await fetch('https://courser-project.onrender.com/api/online-courses');
+        const res = await fetch('http://localhost:5000/api/online-courses');
         const data = await res.json();
         if (data.success) setOnlineCourses(data.data);
       } catch (error) {
