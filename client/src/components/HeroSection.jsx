@@ -43,10 +43,11 @@ function HeroSection() {
       className="
         relative
         overflow-hidden
+        bg-[#033b2d]
         bg-gradient-to-br
-        from-green-500
-        via-green-600
-        to-green-700
+        from-[#022d23]
+        via-[#07533b]
+        to-[#087a4d]
         px-4
         py-12
         sm:px-6
@@ -65,10 +66,9 @@ function HeroSection() {
           pointer-events-none
           absolute
           inset-0
-          opacity-20
-          animate-pulse
-          [background-image:radial-gradient(rgba(255,255,255,0.4)_1px,transparent_1px)]
-          [background-size:22px_22px]
+          opacity-40
+          [background-image:radial-gradient(rgba(167,243,208,0.55)_1px,transparent_1px)]
+          [background-size:28px_28px]
         "
       />
 
@@ -83,7 +83,7 @@ function HeroSection() {
           w-64
           animate-pulse
           rounded-full
-          bg-white/20
+          bg-emerald-300/18
           blur-3xl
         "
       />
@@ -99,10 +99,14 @@ function HeroSection() {
           w-72
           animate-pulse
           rounded-full
-          bg-green-300/20
+          bg-cyan-300/14
           blur-3xl
         "
       />
+
+      {/* Soft floating light blobs */}
+      <div className="pointer-events-none absolute -right-20 top-10 h-56 w-56 rounded-full bg-emerald-300/16 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/3 bottom-0 h-48 w-48 rounded-full bg-lime-300/12 blur-3xl" />
 
       {/* =========================================
           MAIN CONTAINER
@@ -134,13 +138,13 @@ function HeroSection() {
               gap-2
               rounded-full
               border
-              border-white/30
-              bg-white/20
+              border-emerald-300/60
+              bg-emerald-950/30
               px-3.5
               py-1.5
               text-xs
-              font-medium
-              text-white
+              font-semibold
+              text-emerald-50
               shadow-lg
               backdrop-blur-md
               transition
@@ -224,19 +228,19 @@ function HeroSection() {
                 group
                 w-full
                 rounded-lg
-                bg-white
+                bg-emerald-400
                 px-6
                 py-3
                 text-sm
                 font-bold
-                text-green-600
+                text-white
                 shadow-lg
                 shadow-black/10
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:bg-green-50
-                hover:shadow-green-900/20
+                hover:bg-emerald-300
+                hover:shadow-emerald-950/30
                 sm:w-auto
               "
             >
@@ -262,18 +266,19 @@ function HeroSection() {
                 w-full
                 rounded-lg
                 border
-                border-white/40
-                bg-white/10
+                border-emerald-300/70
+                bg-emerald-950/20
                 px-6
                 py-3
                 text-sm
                 font-bold
                 text-white
+                shadow-md
                 backdrop-blur-md
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:bg-white/20
+                hover:bg-emerald-400/15
                 sm:w-auto
               "
             >
@@ -357,8 +362,8 @@ function HeroSection() {
               overflow-hidden
               rounded-[28px]
               border
-              border-white/20
-              bg-white/10
+              border-emerald-300/30
+              bg-emerald-950/25
               p-5
               shadow-2xl
               backdrop-blur-md
@@ -377,7 +382,7 @@ function HeroSection() {
                 -translate-y-1/2
                 animate-pulse
                 rounded-full
-                bg-white/20
+                bg-emerald-300/16
                 blur-3xl
               "
             />
@@ -397,7 +402,7 @@ function HeroSection() {
                 text-xs
                 font-semibold
                 italic
-                text-white/90
+                text-emerald-50/90
                 [animation-duration:3s]
                 sm:flex
               "
@@ -426,11 +431,11 @@ function HeroSection() {
                 justify-center
                 rounded-full
                 border
-                border-white/40
+                border-emerald-300/70
                 bg-gradient-to-br
-                from-white/30
-                to-green-100/20
-                shadow-2xl
+                from-emerald-300/20
+                to-emerald-950/25
+                shadow-[0_0_60px_rgba(52,211,153,0.12)]
                 shadow-black/10
                 sm:h-56
                 sm:w-56
@@ -443,7 +448,7 @@ function HeroSection() {
                   rounded-full
                   border
                   border-dashed
-                  border-white/40
+                  border-emerald-200/40
                   animate-spin
                   [animation-duration:12s]
                 "
@@ -480,7 +485,7 @@ function HeroSection() {
                 rounded-xl
                 border
                 border-white/30
-                bg-white/95
+                bg-white/90
                 px-2.5
                 py-2
                 shadow-xl
@@ -560,7 +565,7 @@ function HeroSection() {
                 rounded-xl
                 border
                 border-white/30
-                bg-white/95
+                bg-white/90
                 px-2.5
                 py-2
                 shadow-xl
@@ -632,7 +637,7 @@ function HeroSection() {
                 rounded-xl
                 border
                 border-white/30
-                bg-white/95
+                bg-white/90
                 px-2.5
                 py-2
                 shadow-xl
@@ -700,7 +705,7 @@ function HeroSection() {
                 text-xs
                 font-semibold
                 italic
-                text-white/90
+                text-emerald-50/90
                 sm:flex
               "
             >
