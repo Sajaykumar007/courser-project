@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import BackgroundAnimation from './components/BackgroundAnimation';
 import BackgroundVideo from './components/BackgroundVideo';
 import Navbar from './components/Navbar';
 import ScrollingBanner from './components/ScrollingBanner';
@@ -25,30 +24,6 @@ import HireFromUsPage from './components/HireFromUsPage';
 import PlacementsPage from './components/PlacementsPage';
 import ContactUsPage from './components/ContactUsPage';
 import LearningPathsPage from './components/LearningPathsPage';
-
-import './styles/App.css';
-import './styles/Navbar.css';
-import './styles/Banner.css';
-import './styles/Hero.css';
-import './styles/GovtJob.css';
-import './styles/CoursesSection.css';
-import './styles/Footer.css';
-import './styles/JoinNowPage.css';
-import './styles/AdminDashboard.css';
-import './styles/AllCoursesPage.css';
-import './styles/OnlineCoursesPage.css'; 
-import './styles/CorporateTrainingPage.css';
-import './styles/HireFromUs.css';
-import './styles/PlacementsPage.css';
-import './styles/Pages.css';
-import './styles/LearningPathsPage.css';
-import './styles/KeyFeaturesSection.css';
-import './styles/PlacementSection.css';
-import './styles/TestimonialsSection.css';
-import './styles/ReferralSection.css';
-import './styles/AIChatbot.css';
-import './styles/BackgroundVideo.css';
-import './styles/Responsive.css';
 
 function App() {
   const [showJoinNow, setShowJoinNow] = useState(false);
@@ -212,24 +187,17 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className="min-h-screen bg-slate-900">
       <BackgroundVideo />
-      <BackgroundAnimation />
       <Navbar />
       <ScrollingBanner />
-      
-      
-        <HeroSection />
-      
-       
-      <GovtJobSection />
+      <HeroSection />
       <CoursesSection />
-      
+      <GovtJobSection />
       <KeyFeaturesSection />
       <PlacementSection />
       <TestimonialsSection />
       <ReferralSection />
-      
       <WhatsAppButton />
       <AIChatbot />
       <Footer /> 
