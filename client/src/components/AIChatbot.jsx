@@ -30,12 +30,6 @@ function AIChatbot() {
 
         if (data.success) {
           setDynamicCourses(data.data);
-
-          console.log(
-            'AI loaded',
-            data.data.length,
-            'courses from database!'
-          );
         }
       } catch (error) {
         console.error('AI could not fetch courses:', error);
@@ -97,7 +91,6 @@ Want to know more or enroll?`;
         response:
           'Hello! 😊 How can I help you today? You can ask me about courses, fees, placements, or contact details.',
       },
-
       {
         keywords: [
           'course',
@@ -112,7 +105,6 @@ ${dynamicCourses.map((c) => '• ' + c.title).join('\n')}
 
 Which course interests you?`,
       },
-
       {
         keywords: [
           'fee',
@@ -131,7 +123,6 @@ For detailed fee structure:
 
 Or click "Enquire Now" on any course for personalized pricing!`,
       },
-
       {
         keywords: [
           'placement',
@@ -151,7 +142,6 @@ Or click "Enquire Now" on any course for personalized pricing!`,
 Our alumni work at:
 TATA, Microsoft, Amazon, Google, Flipkart & more!`,
       },
-
       {
         keywords: [
           'contact',
@@ -171,7 +161,6 @@ Email: hi@courser.in
 • Peelamedu
 • Karumathampatti`,
       },
-
       {
         keywords: [
           'location',
@@ -189,7 +178,6 @@ Email: hi@courser.in
 
 Visit any center for a free demo class!`,
       },
-
       {
         keywords: [
           'enroll',
@@ -209,7 +197,6 @@ Visit any center for a free demo class!`,
 Or call directly:
 +91 77060 37060`,
       },
-
       {
         keywords: ['demo', 'trial', 'free class'],
         response: `🎁 Free Demo Class Available!
@@ -218,7 +205,6 @@ Experience our teaching quality before enrolling.
 
 Click "FREE DEMO CLASS" button on any course page or call us at +91 77060 37060 to schedule.`,
       },
-
       {
         keywords: ['certificate', 'certification'],
         response: `📜 Certification:
@@ -229,7 +215,6 @@ Click "FREE DEMO CLASS" button on any course page or call us at +91 77060 37060 
 
 All our courses come with certification!`,
       },
-
       {
         keywords: ['online', 'offline', 'mode', 'class mode'],
         response: `📚 Class Modes:
@@ -240,7 +225,6 @@ All our courses come with certification!`,
 
 Choose what works best for you!`,
       },
-
       {
         keywords: ['duration', 'how long', 'months', 'weeks'],
         response: `⏱️ Course Durations:
@@ -249,7 +233,6 @@ ${dynamicCourses
   .map((c) => `• ${c.title}: ${c.duration}`)
   .join('\n')}`,
       },
-
       {
         keywords: ['corporate', 'company training', 'bulk'],
         response: `🏢 Corporate Training:
@@ -262,7 +245,6 @@ We offer customized training for companies:
 
 Contact: hi@courser.in for corporate packages!`,
       },
-
       {
         keywords: ['refer', 'referral', 'earn', 'money', '2000'],
         response: `💰 Referral Program:
@@ -273,7 +255,6 @@ Contact: hi@courser.in for corporate packages!`,
 
 Click "Start Earning" to get your referral link!`,
       },
-
       {
         keywords: [
           'thanks',
@@ -286,7 +267,6 @@ Click "Start Earning" to get your referral link!`,
         response:
           "You're welcome! 😊 Is there anything else I can help you with?",
       },
-
       {
         keywords: ['bye', 'goodbye', 'see you'],
         response:
@@ -398,19 +378,16 @@ Or call us at +91 77060 37060!`;
     <>
       {/* ==================================================
           AI CHATBOT FLOATING BUTTON
-          
-          IMPORTANT:
-          WhatsAppButton already occupies bottom-right.
-          So AI chatbot is placed ABOVE WhatsApp.
+          (Moved Higher: bottom-[140px] / sm:bottom-[160px])
       ================================================== */}
-
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open Courser AI"
           className="
             fixed
-            bottom-[92px]
+            bottom-[100px]
+            sm:bottom-[110px]
             right-5
             sm:right-6
             z-[9998]
@@ -484,13 +461,14 @@ Or call us at +91 77060 37060!`;
 
       {/* ==================================================
           CHAT WINDOW
+          (Moved Higher to match button: bottom-20 / sm:bottom-24)
       ================================================== */}
-
       {isOpen && (
         <div
           className="
             fixed
-            bottom-5
+            bottom-20
+            sm:bottom-24
             right-4
             sm:right-6
             z-[9999]
@@ -518,7 +496,6 @@ Or call us at +91 77060 37060!`;
           {/* ==================================================
               HEADER
           ================================================== */}
-
           <div
             className="
               relative
@@ -633,7 +610,6 @@ Or call us at +91 77060 37060!`;
           {/* ==================================================
               MESSAGES
           ================================================== */}
-
           <div
             className="
               h-[400px]
@@ -728,7 +704,7 @@ Or call us at +91 77060 37060!`;
                       }
                     `}
                   >
-                    <p className="break-words">
+                    <p className="break-words whitespace-pre-line">
                       {lines.map((line, i) => (
                         <React.Fragment key={i}>
                           {line}
@@ -744,7 +720,6 @@ Or call us at +91 77060 37060!`;
             {/* ==================================================
                 TYPING
             ================================================== */}
-
             {isTyping && (
               <div className="mb-3 flex items-end gap-2">
                 <div
@@ -830,7 +805,6 @@ Or call us at +91 77060 37060!`;
           {/* ==================================================
               QUICK QUESTIONS
           ================================================== */}
-
           {messages.length <= 1 && (
             <div
               className="
@@ -898,7 +872,6 @@ Or call us at +91 77060 37060!`;
           {/* ==================================================
               INPUT
           ================================================== */}
-
           <div
             className="
               flex
@@ -996,7 +969,6 @@ Or call us at +91 77060 37060!`;
       {/* ==================================================
           ANIMATION
       ================================================== */}
-
       <style>{`
         @keyframes chatWindowIn {
           0% {

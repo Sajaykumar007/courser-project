@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import BackgroundVideo from './components/BackgroundVideo';
 import Navbar from './components/Navbar';
-import ScrollingBanner from './components/ScrollingBanner';
+
 import HeroSection from './components/HeroSection';
 import GovtJobSection from './components/GovtJobSection';
 import CoursesSection from './components/CoursesSection';
@@ -138,7 +138,7 @@ function App() {
       <>
         <BackgroundVideo />
         <Navbar />
-        <ScrollingBanner />
+        
         <JoinNowPage onBack={() => {
           setShowJoinNow(false);
           setCurrentPage('home');
@@ -177,7 +177,7 @@ function App() {
       <>
         <BackgroundVideo />
         <Navbar />
-        <ScrollingBanner />
+        
         {renderPage()}
         <Footer />
         <WhatsAppButton />
@@ -190,7 +190,7 @@ function App() {
     <div className="min-h-screen bg-slate-900">
       <BackgroundVideo />
       <Navbar />
-      <ScrollingBanner />
+      
       <HeroSection />
       <CoursesSection />
       <GovtJobSection />

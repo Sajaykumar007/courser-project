@@ -29,7 +29,7 @@ function PlacementSection() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-white px-4 py-20 sm:px-6 lg:px-10">
+      <section className="relative overflow-hidden bg-[#f7f7f7] px-4 py-20 sm:px-6 lg:px-10">
 
         {/* Background Animation - Logo Green Match */}
         <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 animate-pulse rounded-full bg-green-100/40 blur-3xl" />
@@ -79,13 +79,13 @@ function PlacementSection() {
             </h3>
 
             {/* ================= ROW 1 ================= */}
-            <div className="relative mb-7 overflow-hidden rounded-3xl border border-gray-100 bg-gray-50/80 py-6 shadow-sm">
+            <div className="relative mb-7 overflow-hidden rounded-3xl border border-gray-100 bg-[#f7f7f7]/80 py-6 shadow-sm">
 
-              {/* Left Gradient */}
-              <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-gray-50 via-gray-50/90 to-transparent" />
+              {/* Left Gradient - Updated to match #f7f7f7 */}
+              <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
-              {/* Right Gradient */}
-              <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-gray-50 via-gray-50/90 to-transparent" />
+              {/* Right Gradient - Updated to match #f7f7f7 */}
+              <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
               <div className="marquee-track flex w-max gap-6">
 
@@ -106,7 +106,7 @@ function PlacementSection() {
                       rounded-2xl
                       border
                       border-gray-200
-                      bg-white
+                      bg-[#ffffff]
                       shadow-sm
                       transition-all
                       duration-500
@@ -177,13 +177,13 @@ function PlacementSection() {
             </div>
 
             {/* ================= ROW 2 ================= */}
-            <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-gray-50/80 py-6 shadow-sm">
+            <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-[#f7f7f7]/80 py-6 shadow-sm">
 
-              {/* Left Gradient */}
-              <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-gray-50 via-gray-50/90 to-transparent" />
+              {/* Left Gradient - Updated to match #f7f7f7 */}
+              <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
-              {/* Right Gradient */}
-              <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-gray-50 via-gray-50/90 to-transparent" />
+              {/* Right Gradient - Updated to match #f7f7f7 */}
+              <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
               <div className="marquee-track-reverse flex w-max gap-6">
 
@@ -204,7 +204,7 @@ function PlacementSection() {
                       rounded-2xl
                       border
                       border-gray-200
-                      bg-white
+                      bg-[#ffffff]
                       shadow-sm
                       transition-all
                       duration-500

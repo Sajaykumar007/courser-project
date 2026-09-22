@@ -22,217 +22,79 @@ function HireFromUsPage() {
   ];
 
   const benefits = [
-    {
-      icon: '🚀',
-      title: 'Industry-Ready Talent',
-      desc: 'Our graduates are trained on real-world projects and latest technologies',
-    },
-    {
-      icon: '⚡',
-      title: 'Quick Hiring Process',
-      desc: 'Access to pre-screened candidates and streamlined recruitment',
-    },
-    {
-      icon: '💰',
-      title: 'Cost-Effective',
-      desc: 'Save on recruitment costs with our placement assistance',
-    },
-    {
-      icon: '✅',
-      title: 'Verified Skills',
-      desc: 'All candidates undergo rigorous assessments and certifications',
-    },
-    {
-      icon: '🌍',
-      title: 'Diverse Talent Pool',
-      desc: 'Access candidates from various technical backgrounds',
-    },
-    {
-      icon: '🎓',
-      title: 'Continuous Support',
-      desc: 'Post-hiring support and training assistance available',
-    },
+    { icon: '🚀', title: 'Industry-Ready Talent', desc: 'Graduates trained on real-world projects and latest technologies' },
+    { icon: '⚡', title: 'Quick Hiring Process', desc: 'Access to pre-screened candidates and streamlined recruitment' },
+    { icon: '💰', title: 'Cost-Effective', desc: 'Save on recruitment costs with our placement assistance' },
+    { icon: '✅', title: 'Verified Skills', desc: 'All candidates undergo rigorous assessments and certifications' },
+    { icon: '🌍', title: 'Diverse Talent Pool', desc: 'Access candidates from various technical backgrounds' },
+    { icon: '🎓', title: 'Continuous Support', desc: 'Post-hiring support and training assistance available' },
   ];
 
   const talentPool = [
-    {
-      category: 'Full Stack Developers',
-      count: '1,200+',
-      skills: 'MERN, MEAN, Java Spring',
-    },
-    {
-      category: 'Data Scientists',
-      count: '800+',
-      skills: 'Python, ML, AI, Analytics',
-    },
-    {
-      category: 'Cloud Engineers',
-      count: '650+',
-      skills: 'AWS, Azure, GCP',
-    },
-    {
-      category: 'DevOps Engineers',
-      count: '500+',
-      skills: 'Docker, Kubernetes, CI/CD',
-    },
-    {
-      category: 'Mobile Developers',
-      count: '450+',
-      skills: 'React Native, Flutter, iOS, Android',
-    },
-    {
-      category: 'QA Engineers',
-      count: '600+',
-      skills: 'Automation, Manual Testing',
-    },
+    { category: 'Full Stack Developers', count: '1,200+', skills: 'MERN, MEAN, Java Spring' },
+    { category: 'Data Scientists', count: '800+', skills: 'Python, ML, AI, Analytics' },
+    { category: 'Cloud Engineers', count: '650+', skills: 'AWS, Azure, GCP' },
+    { category: 'DevOps Engineers', count: '500+', skills: 'Docker, Kubernetes, CI/CD' },
+    { category: 'Mobile Developers', count: '450+', skills: 'React Native, Flutter, iOS, Android' },
+    { category: 'QA Engineers', count: '600+', skills: 'Automation, Manual Testing' },
   ];
 
   const hiringProcess = [
-    {
-      step: 1,
-      title: 'Share Requirements',
-      desc: 'Tell us about your open positions and skill requirements',
-    },
-    {
-      step: 2,
-      title: 'Candidate Matching',
-      desc: 'We match you with pre-screened, qualified candidates',
-    },
-    {
-      step: 3,
-      title: 'Interview Process',
-      desc: 'Conduct interviews at your convenience',
-    },
-    {
-      step: 4,
-      title: 'Selection & Onboarding',
-      desc: 'Select the best fit and we assist with onboarding',
-    },
+    { step: 1, title: 'Share Requirements', desc: 'Tell us about your open positions and skill requirements' },
+    { step: 2, title: 'Candidate Matching', desc: 'We match you with pre-screened, qualified candidates' },
+    { step: 3, title: 'Interview Process', desc: 'Conduct interviews at your convenience' },
+    { step: 4, title: 'Selection & Onboarding', desc: 'Select the best fit and we assist with onboarding' },
   ];
 
-  const industries = [
-    'IT Services',
-    'Banking & Finance',
-    'Healthcare',
-    'E-commerce',
-    'Telecommunications',
-    'Manufacturing',
-    'Consulting',
-    'Startups',
-  ];
+  const industries = ['IT Services', 'Banking & Finance', 'Healthcare', 'E-commerce', 'Telecommunications', 'Manufacturing', 'Consulting', 'Startups'];
 
   const testimonials = [
-    {
-      text: 'Courser helped us find exceptional talent for our development team. The candidates were well-prepared and skilled.',
-      name: 'Rajesh Kumar',
-      role: 'HR Director, Tech Solutions Ltd',
-    },
-    {
-      text: "The quality of graduates from Courser is outstanding. We've hired 15+ professionals and all have been excellent.",
-      name: 'Priya Sharma',
-      role: 'Talent Acquisition, Digital Innovations',
-    },
-    {
-      text: 'Streamlined hiring process and access to pre-screened candidates saved us months of recruitment time.',
-      name: 'Arun Patel',
-      role: 'CTO, StartupHub Inc',
-    },
+    { text: 'Courser helped us find exceptional talent for our development team. The candidates were well-prepared and skilled.', name: 'Rajesh Kumar', role: 'HR Director, Tech Solutions Ltd' },
+    { text: "The quality of graduates from Courser is outstanding. We've hired 15+ professionals and all have been excellent.", name: 'Priya Sharma', role: 'Talent Acquisition, Digital Innovations' },
+    { text: 'Streamlined hiring process and access to pre-screened candidates saved us months of recruitment time.', name: 'Arun Patel', role: 'CTO, StartupHub Inc' },
   ];
 
-  // URL industry filter
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const industryFilter = urlParams.get('industry');
-
     if (industryFilter) {
-      setFormData((prev) => ({
-        ...prev,
-        industry: industryFilter,
-      }));
-
+      setFormData((prev) => ({ ...prev, industry: industryFilter }));
       setTimeout(() => {
-        document
-          .querySelector('.contact-form-section')
-          ?.scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.contact-form-section')?.scrollIntoView({ behavior: 'smooth' });
       }, 500);
     }
   }, []);
 
-  // Navbar filter event
   useEffect(() => {
     const handleFilterHire = (e) => {
-      setFormData((prev) => ({
-        ...prev,
-        industry: e.detail,
-      }));
-
+      setFormData((prev) => ({ ...prev, industry: e.detail }));
       setTimeout(() => {
-        document
-          .querySelector('.contact-form-section')
-          ?.scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.contact-form-section')?.scrollIntoView({ behavior: 'smooth' });
       }, 500);
     };
-
     window.addEventListener('filterHireFromUs', handleFilterHire);
-
-    return () => {
-      window.removeEventListener('filterHireFromUs', handleFilterHire);
-    };
+    return () => window.removeEventListener('filterHireFromUs', handleFilterHire);
   }, []);
 
-  const scrollToContact = () => {
-    document
-      .querySelector('.contact-form-section')
-      ?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollToContact = () => document.querySelector('.contact-form-section')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToTalent = () => document.querySelector('.talent-pool')?.scrollIntoView({ behavior: 'smooth' });
 
-  const scrollToTalent = () => {
-    document
-      .querySelector('.talent-pool')
-      ?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handleChange = (e) => setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const response = await fetch(
-        'https://courser-project.onrender.com/api/placement/hire-request',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
+      const response = await fetch('https://courser-project.onrender.com/api/placement/hire-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
       const data = await response.json();
-
       if (data.success) {
         setSuccess(true);
-
-        setFormData({
-          companyName: '',
-          contactPerson: '',
-          email: '',
-          phone: '',
-          industry: '',
-          positions: '',
-          message: '',
-        });
-
-        setTimeout(() => {
-          setSuccess(false);
-        }, 5000);
+        setFormData({ companyName: '', contactPerson: '', email: '', phone: '', industry: '', positions: '', message: '' });
+        setTimeout(() => setSuccess(false), 5000);
       } else {
         alert('Error: ' + data.message);
       }
@@ -246,185 +108,104 @@ function HireFromUsPage() {
 
   const handleDownloadBrochure = () => {
     const printWindow = window.open('/brochure.html', '_blank');
-
     if (printWindow) {
-      printWindow.onload = () => {
-        setTimeout(() => {
-          printWindow.print();
-        }, 250);
-      };
+      printWindow.onload = () => setTimeout(() => printWindow.print(), 250);
     }
   };
 
   return (
-    <div className="overflow-hidden bg-white text-gray-800 font-sans">
-      {/* =====================================================
-          HERO
-      ===================================================== */}
-      <section className="relative overflow-hidden bg-slate-950 px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-        {/* Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,197,94,.18),transparent_30%),radial-gradient(circle_at_80%_70%,rgba(34,197,94,.12),transparent_30%)]" />
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f7f7] text-gray-800 font-sans animate-[pageLoad_0.6s_ease-out_forwards]">
+      <style>{`
+        @keyframes pageLoad { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes glowPulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.1); } }
+        @keyframes successPop { 0% { opacity: 0; transform: scale(0.5); } 70% { transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+        .animate-glow { animation: glowPulse 4s ease-in-out infinite; }
+        .animate-success-pop { animation: successPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .delay-100 { animation-delay: 100ms; } .delay-200 { animation-delay: 200ms; } .delay-300 { animation-delay: 300ms; }
+      `}</style>
 
-        <div className="absolute -left-20 top-20 h-48 w-48 rounded-full bg-green-500/10 blur-3xl animate-pulse" />
+      {/* ===== HERO ===== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-green-900 via-slate-900 to-green-950 px-4 pb-16 pt-12 sm:px-6 sm:pt-16 lg:px-8">
+        <div className="absolute -left-32 -top-32 h-64 w-64 rounded-full bg-green-500/20 blur-3xl animate-glow" />
+        <div className="absolute -bottom-32 -right-24 h-72 w-72 rounded-full bg-green-400/10 blur-3xl animate-glow delay-200" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.6)_1px,transparent_1px)] [background-size:40px_40px]" />
 
-        <div
-          className="absolute -right-20 bottom-10 h-56 w-56 rounded-full bg-green-400/10 blur-3xl animate-pulse"
-          style={{ animationDelay: '1s' }}
-        />
+        <div className="relative z-10 mx-auto max-w-5xl text-center animate-fade-in-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-green-400/30 bg-green-400/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-green-300 backdrop-blur-md">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" /> Partnership Opportunities
+          </span>
 
-        <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(255,255,255,.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.5)_1px,transparent_1px)] [background-size:45px_45px]" />
+          <h1 className="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Hire Top Tech Talent
+            <br />
+            <span className="bg-gradient-to-r from-green-300 via-green-200 to-emerald-200 bg-clip-text text-transparent">
+              From Courser
+            </span>
+          </h1>
 
-        <div className="relative mx-auto max-w-6xl">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
-            {/* Hero Content */}
-            <div className="animate-[heroLeft_.7s_ease-out]">
-              <span className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-500/10 px-3 py-1.5 text-[10px] font-bold tracking-wider text-green-300 sm:text-xs">
-                <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                🤝 PARTNERSHIP OPPORTUNITIES
-              </span>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-gray-300 sm:text-base">
+            Access our pool of 6,200+ industry-ready professionals trained in cutting-edge technologies. Find the perfect fit for your organization.
+          </p>
 
-              <h1 className="mt-5 text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-                Hire Top Tech Talent
-                <br />
-                <span className="bg-gradient-to-r from-green-400 via-green-300 to-emerald-300 bg-clip-text text-transparent">
-                  From Courser
-                </span>
-              </h1>
+          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <button onClick={scrollToContact} className="group relative overflow-hidden rounded-xl bg-green-600 px-6 py-3 text-sm font-black text-white shadow-xl shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-500 hover:shadow-2xl active:scale-95">
+              <span className="absolute inset-y-0 -left-20 w-10 rotate-12 bg-white/20 blur-sm transition-all duration-700 group-hover:left-[120%]" />
+              <span className="relative">Post a Job Opening →</span>
+            </button>
+            <button onClick={scrollToTalent} className="rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-black text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15 active:scale-95">
+              View Talent Pool
+            </button>
+          </div>
 
-              <p className="mt-5 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">
-                Access our pool of 6,200+ industry-ready professionals trained
-                in cutting-edge technologies. Find the perfect fit for your
-                organization.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={scrollToContact}
-                  className="group rounded-xl bg-green-500 px-5 py-3 text-xs font-bold text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-400 hover:shadow-xl hover:shadow-green-500/30"
-                >
-                  Post a Job Opening
-                  <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={scrollToTalent}
-                  className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-xs font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-400/30 hover:bg-white/10"
-                >
-                  View Talent Pool
-                </button>
+          <div className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
+            {stats.map((stat, index) => (
+              <div key={index} className="animate-fade-in-up rounded-xl border border-white/10 bg-white/5 px-3 py-4 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="text-xl">{stat.icon}</div>
+                <div className="mt-1 text-lg font-black text-white sm:text-xl">{stat.number}</div>
+                <div className="mt-0.5 text-[10px] text-gray-400">{stat.label}</div>
               </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-3 animate-[heroRight_.8s_ease-out]">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-green-400/30 hover:bg-white/[0.09]"
-                >
-                  <div className="absolute -right-5 -top-5 h-16 w-16 rounded-full bg-green-400/10 blur-xl transition-all duration-500 group-hover:scale-150" />
-
-                  <div className="relative">
-                    <div className="text-2xl transition-transform duration-300 group-hover:scale-110">
-                      {stat.icon}
-                    </div>
-
-                    <div className="mt-3 text-2xl font-black text-white">
-                      {stat.number}
-                    </div>
-
-                    <div className="mt-1 text-[10px] text-slate-400">
-                      {stat.label}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          WHY HIRE
-      ===================================================== */}
-      <section className="relative bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+      {/* ===== WHY PARTNER ===== */}
+      <section className="bg-[#f0f0f0] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            title="Why Partner With Us?"
-            subtitle="We connect you with pre-vetted, job-ready professionals"
-          />
-
+          <SectionHeader title="Why Partner With Us?" subtitle="We connect you with pre-vetted, job-ready professionals" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="group relative rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg hover:shadow-green-100/50"
-                style={{
-                  animation: `cardIn .5s ease-out ${index * 70}ms both`,
-                }}
-              >
-                <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-green-50 transition-all duration-500 group-hover:h-24 group-hover:w-24" />
-
-                <div className="relative">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-xl transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white">
-                    {benefit.icon}
-                  </div>
-
-                  <h3 className="mt-4 text-sm font-bold text-gray-800">
-                    {benefit.title}
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-gray-500">
-                    {benefit.desc}
-                  </p>
-                </div>
-
-                <div className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-green-500 transition-all duration-300 group-hover:w-1/2" />
+              <div key={index} className="group rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-green-100">{benefit.icon}</div>
+                <h3 className="mt-4 text-sm font-black text-gray-900">{benefit.title}</h3>
+                <p className="mt-1.5 text-xs leading-5 text-gray-500">{benefit.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          TALENT POOL
-      ===================================================== */}
-      <section className="talent-pool relative bg-white px-4 py-12 sm:px-6 lg:px-8">
+      {/* ===== TALENT POOL ===== */}
+      <section className="talent-pool px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            title="Our Talent Pool"
-            subtitle="Skilled professionals across multiple domains"
-          />
-
+          <SectionHeader title="Our Talent Pool" subtitle="Skilled professionals across multiple domains" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {talentPool.map((talent, index) => (
-              <div
-                key={index}
-                className="group rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50"
-              >
+              <div key={index} className="group rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-sm font-bold text-gray-800 transition-colors group-hover:text-green-600">
-                    {talent.category}
-                  </h3>
-
-                  <span className="shrink-0 rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-bold text-green-600">
-                    {talent.count}
-                  </span>
+                  <h3 className="text-sm font-black text-gray-900 transition-colors group-hover:text-green-700">{talent.category}</h3>
+                  <span className="shrink-0 rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-bold text-green-600">{talent.count}</span>
                 </div>
-
-                <div className="mt-4 h-px bg-gray-100 transition-colors group-hover:bg-green-100" />
-
-                <p className="mt-3 text-xs text-gray-500">
-                  {talent.skills}
-                </p>
-
-                <div className="mt-4 flex items-center text-[10px] font-semibold text-green-500 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
-                  Explore Talent
-                  <span className="ml-1">→</span>
+                <div className="mt-3 h-px bg-gray-100 transition-colors group-hover:bg-green-100" />
+                <p className="mt-3 text-xs text-gray-500">{talent.skills}</p>
+                <div className="mt-4 flex items-center text-[10px] font-black text-green-600 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+                  Explore Talent <span className="ml-1">→</span>
                 </div>
               </div>
             ))}
@@ -432,71 +213,43 @@ function HireFromUsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          HIRING PROCESS
-      ===================================================== */}
-      <section className="relative overflow-hidden bg-slate-950 px-4 py-12 text-white sm:px-6 lg:px-8">
-        <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-green-500/10 blur-3xl" />
-
-        <div className="relative mx-auto max-w-6xl">
-          <SectionHeader
-            dark
-            title="Simple Hiring Process"
-            subtitle="From requirement to onboarding in 4 easy steps"
-          />
-
-          <div className="grid gap-5 md:grid-cols-4">
+      {/* ===== HIRING PROCESS ===== */}
+      <section className="bg-slate-950 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeader dark title="Simple Hiring Process" subtitle="From requirement to onboarding in 4 easy steps" />
+          <div className="relative mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-green-100 lg:block" />
             {hiringProcess.map((item, index) => (
-              <div
-                key={item.step}
-                className="group relative text-center"
-              >
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-green-400/30 bg-green-500/10 text-sm font-black text-green-400 transition-all duration-300 group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white">
+              <div key={item.step} className="group relative z-10 rounded-xl border border-gray-200 bg-[#ffffff] p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-xs font-black text-white shadow-lg shadow-green-500/20 transition-transform duration-300 group-hover:scale-110">
                   {item.step}
                 </div>
-
-                {index < hiringProcess.length - 1 && (
-                  <div className="absolute left-[calc(50%+30px)] top-6 hidden h-px w-[calc(100%-60px)] bg-gradient-to-r from-green-500/40 to-transparent md:block" />
-                )}
-
-                <h3 className="mt-4 text-sm font-bold text-white">
-                  {item.title}
-                </h3>
-
-                <p className="mx-auto mt-2 max-w-[210px] text-[11px] leading-5 text-slate-400">
-                  {item.desc}
-                </p>
+                <h3 className="mt-4 text-sm font-black text-gray-900">{item.title}</h3>
+                <p className="mt-1.5 text-xs leading-5 text-gray-500">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          INDUSTRIES
-      ===================================================== */}
-      <section className="bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <SectionHeader
-            title="Industries We Serve"
-            subtitle="Trusted by companies across diverse sectors"
-          />
-
-          <div className="flex flex-wrap justify-center gap-3">
+      {/* ===== INDUSTRIES ===== */}
+      <section className="bg-[#f0f0f0] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="mx-auto max-w-5xl text-center animate-fade-in-up">
+          <span className="rounded-full bg-green-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-green-600">Industries</span>
+          <h2 className="mt-3 text-2xl font-black text-gray-900 sm:text-3xl">Industries We Serve</h2>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             {industries.map((industry, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    industry,
-                  }));
+                  setFormData((prev) => ({ ...prev, industry }));
                   scrollToContact();
                 }}
-                className="group rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs font-semibold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:bg-green-50 hover:text-green-600 hover:shadow-md"
+                className="group flex items-center gap-1.5 rounded-lg border border-gray-200 bg-[#ffffff] px-4 py-2.5 text-xs font-bold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:text-green-700 hover:shadow-md animate-scale-in"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                <span className="mr-1.5 text-green-500">✓</span>
+                <span className="text-green-500 transition-transform duration-300 group-hover:scale-125">✓</span>
                 {industry}
               </button>
             ))}
@@ -504,43 +257,20 @@ function HireFromUsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          TESTIMONIALS
-      ===================================================== */}
-      <section className="relative overflow-hidden bg-white px-4 py-12 sm:px-6 lg:px-8">
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            title="What Our Partners Say"
-            subtitle="Success stories from our hiring partners"
-          />
-
+          <SectionHeader title="What Our Partners Say" subtitle="Success stories from our hiring partners" />
           <div className="grid gap-4 md:grid-cols-3">
             {testimonials.map((item, index) => (
-              <div
-                key={index}
-                className="group relative rounded-2xl border border-gray-200 bg-gray-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:bg-white hover:shadow-lg"
-              >
-                <div className="absolute right-4 top-3 text-4xl font-black text-green-100 transition-colors group-hover:text-green-200">
-                  "
-                </div>
-
+              <div key={index} className="group relative rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="absolute right-4 top-3 text-3xl font-black text-green-100 transition-colors group-hover:text-green-200">"</div>
                 <div className="relative">
-                  <div className="mb-4 flex gap-1 text-xs text-amber-400">
-                    ★ ★ ★ ★ ★
-                  </div>
-
-                  <p className="text-xs leading-6 text-gray-600">
-                    "{item.text}"
-                  </p>
-
-                  <div className="mt-5 border-t border-gray-200 pt-4">
-                    <p className="text-xs font-bold text-gray-800">
-                      {item.name}
-                    </p>
-
-                    <p className="mt-1 text-[10px] text-gray-500">
-                      {item.role}
-                    </p>
+                  <div className="mb-3 flex gap-1 text-xs text-amber-400">★ ★ ★ ★ ★</div>
+                  <p className="text-xs leading-6 text-gray-600">"{item.text}"</p>
+                  <div className="mt-4 border-t border-gray-100 pt-3">
+                    <p className="text-xs font-black text-gray-900">{item.name}</p>
+                    <p className="mt-1 text-[10px] text-gray-500">{item.role}</p>
                   </div>
                 </div>
               </div>
@@ -549,301 +279,88 @@ function HireFromUsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          CONTACT FORM
-      ===================================================== */}
-      <section className="contact-form-section relative overflow-hidden bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="absolute -left-20 top-20 h-56 w-56 rounded-full bg-green-200/20 blur-3xl" />
+      {/* ===== CONTACT FORM ===== */}
+      <section className="contact-form-section px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-xl text-center animate-fade-in-up">
+            <span className="rounded-full bg-green-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-green-600">Get Started</span>
+            <h2 className="mt-3 text-2xl font-black text-gray-900 sm:text-3xl">Partner With Us</h2>
+            <p className="mt-2 text-sm leading-5 text-gray-500">Fill out the form and our team will get back to you within 24 hours.</p>
+          </div>
 
-        <div className="relative mx-auto max-w-3xl">
-          <SectionHeader
-            title="Partner With Us"
-            subtitle="Fill out the form and our team will get back to you within 24 hours"
-          />
-
-          {success ? (
-            <div className="rounded-3xl border border-green-200 bg-white px-6 py-12 text-center shadow-xl animate-[successIn_.5s_ease-out]">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl text-green-600 shadow-inner animate-[successPop_.6s_ease-out]">
-                ✓
+          <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#ffffff] p-5 shadow-xl shadow-gray-900/5 sm:p-8 animate-scale-in">
+            {success ? (
+              <div className="flex min-h-[250px] flex-col items-center justify-center text-center animate-fade-in-up">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl font-black text-green-600 shadow-lg shadow-green-500/20 animate-success-pop">✓</div>
+                <h3 className="mt-4 text-xl font-black text-gray-900">Thank You!</h3>
+                <p className="mt-2 max-w-md text-sm leading-5 text-gray-500">Our partnership team will contact you within 24 hours.</p>
               </div>
-
-              <h3 className="mt-5 text-2xl font-extrabold text-gray-800">
-                Thank You for Your Interest!
-              </h3>
-
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-gray-500">
-                Our partnership team will contact you within 24 hours to
-                discuss your requirements.
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-3xl border border-gray-200 bg-white p-5 shadow-xl shadow-gray-200/50 sm:p-7"
-            >
-              {/* Row 1 */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormInput
-                  label="Company Name *"
-                  name="companyName"
-                  value={formData.companyName}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter your company name"
-                />
-
-                <FormInput
-                  label="Contact Person *"
-                  name="contactPerson"
-                  value={formData.contactPerson}
-                  onChange={handleChange}
-                  required
-                  placeholder="Your full name"
-                />
-              </div>
-
-              {/* Row 2 */}
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <FormInput
-                  label="Email Address *"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="company@email.com"
-                />
-
-                <FormInput
-                  label="Phone Number *"
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  placeholder="+91 XXXXX XXXXX"
-                />
-              </div>
-
-              {/* Row 3 */}
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-xs font-bold text-gray-700">
-                    Industry *
-                  </label>
-
-                  <select
-                    name="industry"
-                    value={formData.industry}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-3 text-xs text-gray-700 outline-none transition-all duration-300 focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100"
-                  >
-                    <option value="">Select your industry</option>
-
-                    {industries.map((industry, index) => (
-                      <option key={index} value={industry}>
-                        {industry}
-                      </option>
-                    ))}
-                  </select>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <FormInput label="Company Name *" name="companyName" value={formData.companyName} onChange={handleChange} required placeholder="Enter company name" />
+                  <FormInput label="Contact Person *" name="contactPerson" value={formData.contactPerson} onChange={handleChange} required placeholder="Your full name" />
                 </div>
-
-                <FormInput
-                  label="Number of Positions"
-                  type="number"
-                  name="positions"
-                  value={formData.positions}
-                  onChange={handleChange}
-                  placeholder="e.g., 5"
-                />
-              </div>
-
-              {/* Message */}
-              <div className="mt-4">
-                <label className="mb-2 block text-xs font-bold text-gray-700">
-                  Additional Requirements
-                </label>
-
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="4"
-                  placeholder="Tell us about the skills you're looking for, experience level, and any specific requirements..."
-                  className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-3 text-xs text-gray-700 outline-none transition-all duration-300 placeholder:text-gray-400 focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100"
-                />
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="group relative mt-5 w-full overflow-hidden rounded-xl bg-gradient-to-r from-green-600 to-green-700 px-5 py-3.5 text-xs font-bold text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <span className="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-700 group-hover:translate-x-full" />
-
-                <span className="relative flex items-center justify-center gap-2">
-                  {loading && (
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  )}
-
-                  {loading
-                    ? 'Submitting...'
-                    : 'Submit Hiring Request'}
-                </span>
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
-
-      {/* =====================================================
-          CTA
-      ===================================================== */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-green-700 via-green-600 to-green-800 px-4 py-12 text-center text-white sm:px-6">
-        <div className="absolute -left-20 top-0 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
-
-        <div className="absolute -right-20 bottom-0 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-
-        <div className="relative mx-auto max-w-3xl animate-[fadeUp_.6s_ease-out]">
-          <div className="mb-3 text-3xl">🤝</div>
-
-          <h2 className="text-2xl font-black sm:text-3xl">
-            Ready to Build Your Dream Team?
-          </h2>
-
-          <p className="mt-3 text-xs text-green-50 sm:text-sm">
-            Join 200+ companies that trust Courser for their hiring needs
-          </p>
-
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={scrollToContact}
-              className="rounded-xl bg-white px-5 py-3 text-xs font-bold text-green-700 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-            >
-              Start Hiring Now →
-            </button>
-
-            <button
-              type="button"
-              onClick={handleDownloadBrochure}
-              className="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-xs font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20"
-            >
-              📄 Download Talent Brochure
-            </button>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <FormInput label="Email Address *" type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="company@email.com" />
+                  <FormInput label="Phone Number *" type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="+91 XXXXX XXXXX" />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold text-gray-600">Industry *</label>
+                    <select name="industry" value={formData.industry} onChange={handleChange} required className="w-full rounded-lg border border-gray-200 bg-[#f7f7f7] px-3.5 py-2.5 text-sm outline-none transition-all duration-300 hover:border-green-200 focus:border-green-500 focus:bg-[#ffffff] focus:ring-4 focus:ring-green-500/10">
+                      <option value="">Select your industry</option>
+                      {industries.map((ind, idx) => <option key={idx} value={ind}>{ind}</option>)}
+                    </select>
+                  </div>
+                  <FormInput label="Number of Positions" type="number" name="positions" value={formData.positions} onChange={handleChange} placeholder="e.g., 5" />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold text-gray-600">Additional Requirements</label>
+                  <textarea name="message" value={formData.message} onChange={handleChange} rows="4" placeholder="Tell us about the skills you're looking for..." className="w-full resize-none rounded-lg border border-gray-200 bg-[#f7f7f7] px-3.5 py-2.5 text-sm leading-5 outline-none transition-all duration-300 placeholder:text-gray-400 hover:border-green-200 focus:border-green-500 focus:bg-[#ffffff] focus:ring-4 focus:ring-green-500/10" />
+                </div>
+                <button type="submit" disabled={loading} className="group relative w-full overflow-hidden rounded-lg bg-green-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-500 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 active:scale-[0.98]">
+                  {!loading && <span className="absolute inset-y-0 -left-20 w-10 rotate-12 bg-white/20 blur-sm transition-all duration-700 group-hover:left-[110%]" />}
+                  <span className="relative flex items-center justify-center gap-2">
+                    {loading ? (<><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> Submitting...</>) : (<>Submit Hiring Request <span className="transition-transform duration-300 group-hover:translate-x-1">→</span></>)}
+                  </span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Animations */}
-      <style>{`
-        @keyframes heroLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-35px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes heroRight {
-          from {
-            opacity: 0;
-            transform: translateX(35px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes cardIn {
-          from {
-            opacity: 0;
-            transform: translateY(18px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(18px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes successIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(.97);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes successPop {
-          0% {
-            opacity: 0;
-            transform: scale(.5);
-          }
-          70% {
-            transform: scale(1.1);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: .01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: .01ms !important;
-          }
-        }
-      `}</style>
+      {/* ===== CTA ===== */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-green-700 via-green-600 to-green-800 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-white/10 blur-3xl animate-pulse" />
+        <div className="absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-green-300/10 blur-3xl" />
+        <div className="relative mx-auto max-w-3xl text-center animate-fade-in-up">
+          <h2 className="text-2xl font-black text-white sm:text-3xl">Ready to Build Your Dream Team?</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-green-100">Join 200+ companies that trust Courser for their hiring needs</p>
+          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <button onClick={scrollToContact} className="rounded-lg bg-white px-6 py-3 text-sm font-black text-green-700 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl active:scale-95">Start Hiring Now →</button>
+            <button onClick={handleDownloadBrochure} className="rounded-lg border border-white/30 bg-white/10 px-6 py-3 text-sm font-black text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 active:scale-95">📄 Download Talent Brochure</button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 /* =====================================================
-   REUSABLE SECTION HEADER
+   REUSABLE SECTION HEADER (Compact)
 ===================================================== */
-
 function SectionHeader({ title, subtitle, dark = false }) {
   return (
-    <div className="mx-auto mb-8 max-w-2xl text-center">
-      <h2
-        className={`text-2xl font-extrabold tracking-tight sm:text-3xl ${
-          dark ? 'text-white' : 'text-gray-900'
-        }`}
-      >
+    <div className="mx-auto mb-8 max-w-2xl text-center animate-fade-in-up">
+      <span className={`inline-flex rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-widest ${dark ? 'border border-green-400/20 bg-green-400/10 text-green-300' : 'bg-green-50 text-green-600'}`}>
+        {dark ? 'Our Process' : 'Why Partner With Us'}
+      </span>
+      <h2 className={`mt-3 text-2xl font-black sm:text-3xl ${dark ? 'text-white' : 'text-gray-900'}`}>
         {title}
       </h2>
-
-      <div className="mx-auto mt-3 h-1 w-12 overflow-hidden rounded-full bg-green-500">
-        <div className="h-full w-1/2 bg-green-200 animate-[lineMove_2s_ease-in-out_infinite]" />
-      </div>
-
-      <p
-        className={`mt-3 text-xs sm:text-sm ${
-          dark ? 'text-slate-400' : 'text-gray-500'
-        }`}
-      >
+      <p className={`mt-2 text-sm ${dark ? 'text-gray-400' : 'text-gray-500'}`}>
         {subtitle}
       </p>
     </div>
@@ -851,24 +368,12 @@ function SectionHeader({ title, subtitle, dark = false }) {
 }
 
 /* =====================================================
-   FORM INPUT
+   FORM INPUT (Compact)
 ===================================================== */
-
-function FormInput({
-  label,
-  type = 'text',
-  name,
-  value,
-  onChange,
-  required = false,
-  placeholder,
-}) {
+function FormInput({ label, type = 'text', name, value, onChange, required = false, placeholder }) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-bold text-gray-700">
-        {label}
-      </label>
-
+      <label className="mb-1.5 block text-xs font-bold text-gray-600">{label}</label>
       <input
         type={type}
         name={name}
@@ -876,7 +381,7 @@ function FormInput({
         onChange={onChange}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-3 text-xs text-gray-700 outline-none transition-all duration-300 placeholder:text-gray-400 focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100"
+        className="w-full rounded-lg border border-gray-200 bg-[#f7f7f7] px-3.5 py-2.5 text-sm outline-none transition-all duration-300 placeholder:text-gray-400 hover:border-green-200 focus:border-green-500 focus:bg-[#ffffff] focus:ring-4 focus:ring-green-500/10"
       />
     </div>
   );

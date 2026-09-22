@@ -575,17 +575,17 @@ function AdminDashboard({ onBack }) {
   };
 
   const tabs = [
-    { id: 'leads', label: '📥 Leads', count: leads.length },
-    { id: 'contacts', label: '✉️ Contacts', count: contacts.length },
-    { id: 'placementEnquiries', label: '🎯 Placement Enq.', count: placementEnquiries.length },
-    { id: 'placedStudents', label: '🎓 Placed Students', count: placedStudents.length },
-    { id: 'driveRegistrations', label: '🎯 Drive Reg.', count: driveRegistrations.length },
-    { id: 'hireRequests', label: '💼 Hire Requests', count: hireRequests.length },
-    { id: 'corporateTrainingRequests', label: '🏢 Corp. Training', count: corporateTrainingRequests.length },
-    { id: 'courseEnrollments', label: '📚 Enrollments', count: courseEnrollments.length },
-    { id: 'courseEnquiries', label: '📝 Course Enq.', count: courseEnquiries.length },
-    { id: 'referrals', label: '💰 Referrals', count: referrals.length },
-    { id: 'newsletter', label: '📧 Newsletter', count: newsletterSubscribers.length },
+    { id: 'leads', label: 'Leads', count: leads.length },
+    { id: 'contacts', label: 'Contacts', count: contacts.length },
+    { id: 'placementEnquiries', label: 'Placement Enq.', count: placementEnquiries.length },
+    { id: 'placedStudents', label: 'Placed Students', count: placedStudents.length },
+    { id: 'driveRegistrations', label: 'Drive Reg.', count: driveRegistrations.length },
+    { id: 'hireRequests', label: ' Hire Requests', count: hireRequests.length },
+    { id: 'corporateTrainingRequests', label: 'Corp. Training', count: corporateTrainingRequests.length },
+    { id: 'courseEnrollments', label: 'Enrollments', count: courseEnrollments.length },
+    { id: 'courseEnquiries', label: 'Course Enq.', count: courseEnquiries.length },
+    { id: 'referrals', label: 'Referrals', count: referrals.length },
+    { id: 'newsletter', label: 'Newsletter', count: newsletterSubscribers.length },
   ];
 
   return (

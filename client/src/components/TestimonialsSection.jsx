@@ -60,7 +60,7 @@ function TestimonialsSection() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gray-50 px-4 py-20 sm:px-6 lg:px-10">
+      <section className="relative overflow-hidden bg-[#f7f7f7] px-4 py-20 sm:px-6 lg:px-10">
 
         {/* Background Glow - Logo Green Match */}
         <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 animate-pulse rounded-full bg-green-100/50 blur-3xl" />
@@ -145,7 +145,7 @@ function TestimonialsSection() {
           {/* ================= TESTIMONIAL SLIDER ================= */}
           <div className="relative mt-14 overflow-hidden">
 
-            {/* Left Fade */}
+            {/* Left Fade - Updated to match #f7f7f7 */}
             <div
               className="
                 pointer-events-none
@@ -156,13 +156,13 @@ function TestimonialsSection() {
                 h-full
                 w-24
                 bg-gradient-to-r
-                from-gray-50
-                via-gray-50/80
+                from-[#f7f7f7]
+                via-[#f7f7f7]/90
                 to-transparent
               "
             />
 
-            {/* Right Fade */}
+            {/* Right Fade - Updated to match #f7f7f7 */}
             <div
               className="
                 pointer-events-none
@@ -173,8 +173,8 @@ function TestimonialsSection() {
                 h-full
                 w-24
                 bg-gradient-to-l
-                from-gray-50
-                via-gray-50/80
+                from-[#f7f7f7]
+                via-[#f7f7f7]/90
                 to-transparent
               "
             />
@@ -206,7 +206,7 @@ function TestimonialsSection() {
                     rounded-3xl
                     border
                     border-gray-100
-                    bg-white
+                    bg-[#ffffff]
                     p-6
                     shadow-md
                     transition-all
@@ -249,7 +249,7 @@ function TestimonialsSection() {
                       group-hover:text-green-100
                     "
                   >
-                    “
+                    "
                   </div>
 
                   {/* ================= USER INFO ================= */}
@@ -281,7 +281,7 @@ function TestimonialsSection() {
                           w-16
                           rounded-full
                           border-4
-                          border-white
+                          border-[#ffffff]
                           object-cover
                           shadow-md
                           transition-all
@@ -290,7 +290,6 @@ function TestimonialsSection() {
                           group-hover:border-green-200
                         "
                         onError={(e) => {
-                          // Updated fallback avatar background to exact Logo Green Hex (#22c55e)
                           e.target.src =
                             'https://ui-avatars.com/api/?name=' +
                             encodeURIComponent(testimonial.name) +
@@ -309,7 +308,7 @@ function TestimonialsSection() {
                           animate-pulse
                           rounded-full
                           border-2
-                          border-white
+                          border-[#ffffff]
                           bg-green-500
                         "
                       />

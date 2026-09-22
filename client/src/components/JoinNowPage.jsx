@@ -63,7 +63,7 @@ function JoinNowPage({ onBack }) {
     'Coimbatore',
     'Chennai',
     'Bangalore',
-    'Madurai',
+  
   ];
 
   const benefits = [

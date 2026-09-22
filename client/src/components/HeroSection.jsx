@@ -16,245 +16,66 @@ function HeroSection() {
   };
 
   const features = [
-    {
-      icon: "‍🏫",
-      label: "Expert Trainers",
-      bg: "#ffffff",
-    },
-    {
-      icon: "💼",
-      label: "Placement Support",
-      bg: "#ffffff",
-    },
-    {
-      icon: "💻",
-      label: "Online & Offline",
-      bg: "#ffffff",
-    },
-    {
-      icon: "🏆",
-      label: "Certification",
-      bg: "#ffffff",
-    },
+    { icon: "👨‍🏫", label: "Expert Trainers" },
+    { icon: "💼", label: "Placement Support" },
+    { icon: "💻", label: "Online & Offline" },
+    { icon: "", label: "Certification" },
   ];
 
   return (
-    <section
-      className="
-        relative
-        overflow-hidden
-        bg-[#033b2d]
-        bg-gradient-to-br
-        from-[#022d23]
-        via-[#07533b]
-        to-[#087a4d]
-        px-4
-        py-12
-        sm:px-6
-        sm:py-14
-        md:px-10
-        lg:px-14
-        lg:py-16
-        xl:px-20
-      "
-    >
+    // ✅ UPDATED: Further reduced top padding (pt-6, sm:pt-10, lg:pt-12) to bring content even more UP
+    <section className="relative overflow-hidden bg-[#022d23] bg-gradient-to-br from-[#022d23] via-[#07533b] to-[#087a4d] px-4 pt-6 pb-12 sm:px-6 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 lg:px-16 lg:pt-12 lg:pb-20 xl:px-24">
+      
       {/* =========================================
-          ANIMATED DOT BACKGROUND
+          SUBTLE DOT BACKGROUND PATTERN
       ========================================== */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-40
-          [background-image:radial-gradient(rgba(167,243,208,0.55)_1px,transparent_1px)]
-          [background-size:28px_28px]
-        "
-      />
+      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(167,243,208,0.4)_1px,transparent_1px)] [background-size:32px_32px]" />
 
-      {/* Animated Glow 1 */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-32
-          top-10
-          h-64
-          w-64
-          animate-pulse
-          rounded-full
-          bg-emerald-300/18
-          blur-3xl
-        "
-      />
+      {/* Animated Glow 1 (Top Left) */}
+      <div className="pointer-events-none absolute -left-32 top-10 h-80 w-80 animate-pulse rounded-full bg-emerald-400/10 blur-3xl" />
 
-      {/* Animated Glow 2 */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-32
-          bottom-0
-          h-72
-          w-72
-          animate-pulse
-          rounded-full
-          bg-cyan-300/14
-          blur-3xl
-        "
-      />
-
-      {/* Soft floating light blobs */}
-      <div className="pointer-events-none absolute -right-20 top-10 h-56 w-56 rounded-full bg-emerald-300/16 blur-3xl" />
-      <div className="pointer-events-none absolute left-1/3 bottom-0 h-48 w-48 rounded-full bg-lime-300/12 blur-3xl" />
+      {/* Animated Glow 2 (Bottom Right) */}
+      <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 animate-pulse rounded-full bg-cyan-400/10 blur-3xl [animation-delay:1.5s]" />
 
       {/* =========================================
           MAIN CONTAINER
       ========================================== */}
-      <div
-        className="
-          relative
-          z-10
-          mx-auto
-          grid
-          max-w-6xl
-          items-center
-          gap-10
-          lg:grid-cols-[1.1fr_0.9fr]
-          lg:gap-8
-        "
-      >
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+        
         {/* =======================================
             LEFT CONTENT
         ======================================== */}
         <div className="text-center lg:text-left">
-
+          
           {/* Badge */}
-          <div
-            className="
-              mb-5
-              inline-flex
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-emerald-300/60
-              bg-emerald-950/30
-              px-3.5
-              py-1.5
-              text-xs
-              font-semibold
-              text-emerald-50
-              shadow-lg
-              backdrop-blur-md
-              transition
-              duration-300
-              hover:scale-105
-            "
-          >
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-950/40 px-4 py-1.5 text-xs font-semibold text-emerald-100 shadow-lg backdrop-blur-md opacity-0 animate-[fadeInUp_0.6s_ease-out_0.1s_forwards] hover:scale-105 hover:border-emerald-400/50 transition-transform duration-300">
             <span>🎓</span>
-
-            <span>
-              #1 Learning Platform in Courser
-            </span>
+            <span>#1 Learning Platform in Courser</span>
           </div>
 
           {/* Heading */}
-          <h1
-            className="
-              text-3xl
-              font-extrabold
-              leading-tight
-              tracking-tight
-              text-white
-              sm:text-4xl
-              md:text-5xl
-              lg:text-[48px]
-              xl:text-[54px]
-            "
-          >
+          <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[64px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.2s_forwards]">
             Upgrade Your Skills
             <br />
-
-            <span
-              className="
-                inline-block
-                bg-gradient-to-r
-                from-white
-                to-green-100
-                bg-clip-text
-                text-transparent
-              "
-            >
+            <span className="inline-block bg-gradient-to-r from-emerald-200 to-green-100 bg-clip-text text-transparent">
               For a Brighter Tomorrow
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p
-            className="
-              mx-auto
-              mt-5
-              max-w-xl
-              text-sm
-              leading-6
-              text-green-50
-              sm:text-base
-              lg:mx-0
-            "
-          >
-            Industry-focused courses, expert mentors,
-            hands-on projects and 100% placement support
-            to kickstart your career.
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-emerald-100/80 sm:text-lg lg:mx-0 opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
+            Industry-focused courses, expert mentors, hands-on projects, and 100% placement support to kickstart your career.
           </p>
 
-          {/* Buttons */}
-          <div
-            className="
-              mt-7
-              flex
-              flex-col
-              items-center
-              gap-3
-              sm:flex-row
-              sm:justify-center
-              lg:justify-start
-            "
-          >
+          {/* CTA Buttons */}
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start opacity-0 animate-[fadeInUp_0.6s_ease-out_0.4s_forwards]">
             <button
               type="button"
               onClick={handleExploreCourses}
-              className="
-                group
-                w-full
-                rounded-lg
-                bg-emerald-400
-                px-6
-                py-3
-                text-sm
-                font-bold
-                text-white
-                shadow-lg
-                shadow-black/10
-                transition-all
-                duration-300
-                hover:-translate-y-1
-                hover:bg-emerald-300
-                hover:shadow-emerald-950/30
-                sm:w-auto
-              "
+              className="group w-full rounded-xl bg-emerald-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-900/20 transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-400 hover:shadow-emerald-500/30 sm:w-auto"
             >
               Explore Courses
-
-              <span
-                className="
-                  ml-2
-                  inline-block
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-1
-                "
-              >
+              <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </button>
@@ -262,78 +83,21 @@ function HeroSection() {
             <button
               type="button"
               onClick={handleBookDemo}
-              className="
-                w-full
-                rounded-lg
-                border
-                border-emerald-300/70
-                bg-emerald-950/20
-                px-6
-                py-3
-                text-sm
-                font-bold
-                text-white
-                shadow-md
-                backdrop-blur-md
-                transition-all
-                duration-300
-                hover:-translate-y-1
-                hover:bg-emerald-400/15
-                sm:w-auto
-              "
+              className="w-full rounded-xl border border-emerald-400/40 bg-emerald-950/30 px-8 py-3.5 text-sm font-bold text-white shadow-md backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-400/10 hover:border-emerald-400/60 sm:w-auto"
             >
               📅 Book a Free Demo
             </button>
           </div>
 
-          {/* =====================================
-              FEATURES
-          ====================================== */}
-          <div
-            className="
-              mt-8
-              grid
-              grid-cols-2
-              gap-2.5
-              sm:grid-cols-4
-            "
-          >
+          {/* Feature Cards (2x2 on mobile, 4x1 on desktop) */}
+          <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4 opacity-0 animate-[fadeInUp_0.6s_ease-out_0.5s_forwards]">
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                style={{
-                  backgroundColor: feature.bg,
-                }}
-                className="
-                  flex
-                  min-h-[66px]
-                  flex-col
-                  items-center
-                  justify-center
-                  gap-1
-                  rounded-lg
-                  px-2
-                  py-2
-                  shadow-md
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:scale-105
-                  hover:shadow-xl
-                "
+                className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 rounded-xl border border-emerald-400/10 bg-emerald-900/20 px-3 py-3 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-emerald-900/40 hover:shadow-lg"
               >
-                <span className="text-lg">
-                  {feature.icon}
-                </span>
-
-                <span
-                  className="
-                    text-[10px]
-                    font-semibold
-                    text-green-700
-                    sm:text-[11px]
-                  "
-                >
+                <span className="text-xl transition-transform duration-300 hover:scale-110">{feature.icon}</span>
+                <span className="text-[11px] font-semibold text-emerald-100 sm:text-xs text-center leading-tight">
                   {feature.label}
                 </span>
               </div>
@@ -342,435 +106,97 @@ function HeroSection() {
         </div>
 
         {/* =======================================
-            RIGHT SIDE VISUAL
+            RIGHT SIDE PREMIUM VISUAL
         ======================================== */}
-        <div
-          className="
-            relative
-            mx-auto
-            w-full
-            max-w-[430px]
-            lg:max-w-[400px]
-            xl:max-w-[420px]
-          "
-        >
-          {/* Main Box */}
-          <div
-            className="
-              relative
-              min-h-[390px]
-              overflow-hidden
-              rounded-[28px]
-              border
-              border-emerald-300/30
-              bg-emerald-950/25
-              p-5
-              shadow-2xl
-              backdrop-blur-md
-              sm:min-h-[420px]
-            "
-          >
-            {/* Inner glow */}
-            <div
-              className="
-                absolute
-                left-1/2
-                top-1/2
-                h-48
-                w-48
-                -translate-x-1/2
-                -translate-y-1/2
-                animate-pulse
-                rounded-full
-                bg-emerald-300/16
-                blur-3xl
-              "
-            />
-
-            {/* =================================
-                TOP LEFT TEXT
-            ================================== */}
-            <div
-              className="
-                absolute
-                left-4
-                top-5
-                z-20
-                hidden
-                animate-bounce
-                flex-col
-                text-xs
-                font-semibold
-                italic
-                text-emerald-50/90
-                [animation-duration:3s]
-                sm:flex
-              "
-            >
-              <span>Learn</span>
-              <span>Grow</span>
-              <span>Get Placed</span>
-            </div>
-
-            {/* =================================
-                STUDENT CIRCLE
-            ================================== */}
-            <div
-              className="
-                absolute
-                left-1/2
-                top-1/2
-                z-10
-                flex
-                h-52
-                w-52
-                -translate-x-1/2
-                -translate-y-1/2
-                animate-[float_4s_ease-in-out_infinite]
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-emerald-300/70
-                bg-gradient-to-br
-                from-emerald-300/20
-                to-emerald-950/25
-                shadow-[0_0_60px_rgba(52,211,153,0.12)]
-                shadow-black/10
-                sm:h-56
-                sm:w-56
-              "
-            >
-              <div
-                className="
-                  absolute
-                  inset-3
-                  rounded-full
-                  border
-                  border-dashed
-                  border-emerald-200/40
-                  animate-spin
-                  [animation-duration:12s]
-                "
+        <div className="relative mx-auto w-full max-w-[480px] lg:max-w-[520px] opacity-0 animate-[fadeInRight_0.8s_ease-out_0.4s_forwards]">
+          
+          {/* Main Image Container with Glassmorphism Border */}
+          <div className="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-emerald-950/30 p-2 shadow-2xl backdrop-blur-md">
+            
+            {/* Premium Student Image */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                alt="Students learning" 
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               />
-
-              <span
-                className="
-                  relative
-                  z-10
-                  text-[78px]
-                  drop-shadow-2xl
-                  transition-transform
-                  duration-500
-                  hover:scale-110
-                "
-              >
-                👨‍💻
-              </span>
+              {/* Subtle Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/60 via-transparent to-transparent" />
             </div>
 
-            {/* =================================
-                TOP RIGHT CARD
-            ================================== */}
-            <div
-              className="
-                absolute
-                right-2
-                top-5
-                z-30
-                flex
-                animate-[float_3s_ease-in-out_infinite]
-                items-center
-                gap-2
-                rounded-xl
-                border
-                border-white/30
-                bg-white/90
-                px-2.5
-                py-2
-                shadow-xl
-                sm:right-3
-              "
-            >
-              <div
-                className="
-                  flex
-                  h-8
-                  w-8
-                  items-center
-                  justify-center
-                  rounded-lg
-                  bg-green-100
-                "
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  {/* Exact Logo Green Hex Code: #22c55e */}
-                  <path
-                    d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="9"
-                    cy="7"
-                    r="4"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M23 21v-2a4 4 0 0 0-3-3.87"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M16 3.13a4 4 0 0 1 0 7.75"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
+            {/* Floating Card 1: Top Right */}
+            <div className="absolute right-4 top-4 z-20 flex animate-[float_4s_ease-in-out_infinite] items-center gap-3 rounded-xl border border-white/20 bg-white/90 px-4 py-3 shadow-xl backdrop-blur-md">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+                  <circle cx="9" cy="7" r="4" stroke="#10b981" strokeWidth="2"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
                 </svg>
               </div>
-
               <div>
-                <div className="text-sm font-extrabold text-gray-900">
-                  10K+
-                </div>
-
-                <div className="text-[9px] font-medium text-gray-500">
-                  Students
-                </div>
+                <div className="text-sm font-extrabold text-gray-900">10K+</div>
+                <div className="text-[10px] font-medium text-gray-500">Students Enrolled</div>
               </div>
             </div>
 
-            {/* =================================
-                BOTTOM LEFT CARD
-            ================================== */}
-            <div
-              className="
-                absolute
-                bottom-5
-                left-2
-                z-30
-                flex
-                animate-[float_3.5s_ease-in-out_infinite]
-                items-center
-                gap-2
-                rounded-xl
-                border
-                border-white/30
-                bg-white/90
-                px-2.5
-                py-2
-                shadow-xl
-                sm:left-3
-              "
-            >
-              <div
-                className="
-                  flex
-                  h-8
-                  w-8
-                  items-center
-                  justify-center
-                  rounded-lg
-                  bg-green-100
-                "
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M18 20V10"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M12 20V4"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M6 20v-6"
-                    stroke="#22c55e"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
+            {/* Floating Card 2: Bottom Left */}
+            <div className="absolute bottom-6 left-4 z-20 flex animate-[float_4.5s_ease-in-out_infinite] items-center gap-3 rounded-xl border border-white/20 bg-white/90 px-4 py-3 shadow-xl backdrop-blur-md [animation-delay:0.5s]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 20V10" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M12 20V4" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M6 20v-6" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
                 </svg>
               </div>
-
               <div>
-                <div className="text-sm font-extrabold text-gray-900">
-                  95%
-                </div>
-
-                <div className="text-[9px] font-medium text-gray-500">
-                  Placement
-                </div>
+                <div className="text-sm font-extrabold text-gray-900">95%</div>
+                <div className="text-[10px] font-medium text-gray-500">Placement Rate</div>
               </div>
             </div>
 
-            {/* =================================
-                BOTTOM RIGHT CARD
-            ================================== */}
-            <div
-              className="
-                absolute
-                bottom-3
-                right-2
-                z-30
-                flex
-                animate-[float_4s_ease-in-out_infinite]
-                items-center
-                gap-2
-                rounded-xl
-                border
-                border-white/30
-                bg-white/90
-                px-2.5
-                py-2
-                shadow-xl
-                sm:bottom-5
-                sm:right-3
-              "
-            >
-              <div
-                className="
-                  flex
-                  h-8
-                  w-8
-                  items-center
-                  justify-center
-                  rounded-lg
-                  bg-amber-100
-                "
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M22 10v6M2 10l10-5 10 5-10 5z"
-                    stroke="#d97706"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6 12v5c3 3 9 3 12 0v-5"
-                    stroke="#d97706"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+            {/* Floating Card 3: Bottom Right */}
+            <div className="absolute bottom-6 right-4 z-20 flex animate-[float_5s_ease-in-out_infinite] items-center gap-3 rounded-xl border border-white/20 bg-white/90 px-4 py-3 shadow-xl backdrop-blur-md [animation-delay:1s]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-
               <div>
-                <div className="text-xs font-extrabold text-gray-900">
-                  Industry
-                </div>
-
-                <div className="text-[9px] font-medium text-gray-500">
-                  Recognized
-                </div>
+                <div className="text-sm font-extrabold text-gray-900">Industry</div>
+                <div className="text-[10px] font-medium text-gray-500">Recognized</div>
               </div>
             </div>
 
-            {/* =================================
-                RIGHT TEXT
-            ================================== */}
-            <div
-              className="
-                absolute
-                bottom-24
-                right-3
-                z-20
-                hidden
-                animate-pulse
-                flex-col
-                text-xs
-                font-semibold
-                italic
-                text-emerald-50/90
-                sm:flex
-              "
-            >
-              <span>Your</span>
-              <span>Future</span>
-              <span>Starts Here</span>
-            </div>
-
-            {/* Decorative circles */}
-            <div
-              className="
-                absolute
-                left-6
-                top-1/2
-                h-3
-                w-3
-                animate-ping
-                rounded-full
-                bg-white
-              "
-            />
-
-            <div
-              className="
-                absolute
-                right-10
-                top-1/3
-                h-2
-                w-2
-                animate-ping
-                rounded-full
-                bg-green-200
-                [animation-delay:1s]
-              "
-            />
-
-            <div
-              className="
-                absolute
-                bottom-20
-                right-1/3
-                h-2
-                w-2
-                animate-ping
-                rounded-full
-                bg-white
-                [animation-delay:2s]
-              "
-            />
+            {/* Decorative Floating Dots */}
+            <div className="absolute left-8 top-1/2 h-3 w-3 animate-ping rounded-full bg-emerald-300/60" />
+            <div className="absolute right-12 top-1/4 h-2 w-2 animate-ping rounded-full bg-white/60 [animation-delay:1s]" />
+            <div className="absolute bottom-16 right-1/3 h-2 w-2 animate-ping rounded-full bg-emerald-200/60 [animation-delay:2s]" />
           </div>
+          
+          {/* Subtle glow behind the entire visual block */}
+          <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-emerald-500/20 blur-2xl" />
         </div>
       </div>
 
       {/* =========================================
-          TAILWIND CUSTOM ANIMATION
+          TAILWIND CUSTOM ANIMATIONS
       ========================================== */}
       <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInRight {
+          0% { opacity: 0; transform: translateX(30px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
 
-          50% {
-            transform: translateY(-8px);
-          }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
       `}</style>
     </section>

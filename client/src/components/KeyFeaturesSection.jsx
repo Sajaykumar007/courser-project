@@ -14,7 +14,7 @@ function KeyFeaturesSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gray-50 px-4 py-16 sm:px-6 lg:px-10">
+    <section className="relative overflow-hidden bg-[#f7f7f7] px-4 py-16 sm:px-6 lg:px-10">
 
       {/* Background Decoration - Logo Green Match */}
       <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-green-100/50 blur-3xl" />
@@ -63,7 +63,7 @@ function KeyFeaturesSection() {
                 rounded-2xl
                 border
                 border-gray-100
-                bg-white
+                bg-[#ffffff]
                 px-6
                 py-6
                 shadow-md

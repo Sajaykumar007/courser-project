@@ -11,7 +11,7 @@ function GovtJobSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gray-50 py-10 sm:py-12">
+    <section className="relative overflow-hidden bg-[#f7f7f7] py-10 sm:py-12">
       {/* Background Effects - Logo Green Match */}
       <div className="pointer-events-none absolute -left-24 top-10 h-56 w-56 rounded-full bg-green-200/30 blur-3xl animate-pulse" />
 
@@ -52,7 +52,7 @@ function GovtJobSection() {
         {/* Content */}
         <div className="grid items-center gap-6 lg:grid-cols-[1.05fr_.95fr]">
           {/* Image */}
-          <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-lg shadow-gray-200/60 animate-[slideLeft_.7s_ease-out]">
+          <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-[#ffffff] p-2 shadow-lg shadow-gray-200/60 animate-[slideLeft_.7s_ease-out]">
             {/* Glow - Logo Green Match */}
             <div className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-r from-green-400/20 to-green-300/20 blur-xl" />
 
@@ -67,7 +67,7 @@ function GovtJobSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent opacity-80" />
 
               {/* Floating Badge */}
-              <div className="absolute bottom-4 left-4 rounded-xl border border-white/20 bg-white/90 px-3 py-2 shadow-lg backdrop-blur-md transition-all duration-500 group-hover:-translate-y-1">
+              <div className="absolute bottom-4 left-4 rounded-xl border border-white/20 bg-[#ffffff]/90 px-3 py-2 shadow-lg backdrop-blur-md transition-all duration-500 group-hover:-translate-y-1">
                 <p className="text-[9px] font-semibold uppercase tracking-wider text-green-600">
                   Career Preparation
                 </p>
@@ -87,7 +87,7 @@ function GovtJobSection() {
             {categories.map((cat, index) => (
               <div
                 key={cat}
-                className="group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200 bg-white px-3 py-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg hover:shadow-green-100/70"
+                className="group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] px-3 py-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg hover:shadow-green-100/70"
                 style={{
                   animation: `categoryIn .5s ease-out ${index * 80}ms both`,
                 }}
@@ -123,17 +123,17 @@ function GovtJobSection() {
 
         {/* Bottom Info - Logo Green Match */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3 text-[10px] text-gray-500 sm:text-xs">
-          <div className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-1.5 rounded-full bg-[#ffffff] px-3 py-1.5 shadow-sm border border-gray-100">
             <span className="text-green-500 font-bold">✓</span>
             Expert Faculty
           </div>
 
-          <div className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-1.5 rounded-full bg-[#ffffff] px-3 py-1.5 shadow-sm border border-gray-100">
             <span className="text-green-500 font-bold">✓</span>
             Offline Classes
           </div>
 
-          <div className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-1.5 rounded-full bg-[#ffffff] px-3 py-1.5 shadow-sm border border-gray-100">
             <span className="text-green-500 font-bold">✓</span>
             Exam-Focused Training
           </div>

@@ -1,8 +1,6 @@
 import React from "react";
 
 function CoursesSection() {
-  // ஒவ்வொரு course-க்கும் 'route' property சேர்க்கப்பட்டுள்ளது.
-  // இது 'allCourses' அல்லது 'onlineCourses' பக்கத்திற்கு அனுப்பும்.
   const courses = [
     {
       name: "Web Developer",
@@ -60,11 +58,10 @@ function CoursesSection() {
     },
   ];
 
-  // Click செய்தால் அந்தந்த பக்கத்திற்கு அனுப்பும் Function
   const handleCourseClick = (route) => {
     window.dispatchEvent(
       new CustomEvent("navigateToPage", {
-        detail: route || "allCourses", // Default ஆக allCourses க்கு அனுப்பும்
+        detail: route || "allCourses",
       })
     );
   };
@@ -74,7 +71,7 @@ function CoursesSection() {
       className="
         relative
         overflow-hidden
-        bg-gray-50
+        bg-[#f7f7f7]
         px-4
         py-14
         sm:px-6
@@ -86,9 +83,8 @@ function CoursesSection() {
       "
     >
       {/* =========================================
-          BACKGROUND DECORATION - Logo Green Match
+          BACKGROUND DECORATION
       ========================================== */}
-
       <div
         className="
           pointer-events-none
@@ -99,7 +95,7 @@ function CoursesSection() {
           w-64
           animate-pulse
           rounded-full
-          bg-green-100
+          bg-green-100/50
           blur-3xl
         "
       />
@@ -114,7 +110,7 @@ function CoursesSection() {
           w-72
           animate-pulse
           rounded-full
-          bg-green-50
+          bg-green-50/50
           blur-3xl
         "
       />
@@ -122,27 +118,12 @@ function CoursesSection() {
       {/* =========================================
           CONTAINER
       ========================================== */}
-
-      <div
-        className="
-          relative
-          z-10
-          mx-auto
-          max-w-7xl
-        "
-      >
+      <div className="relative z-10 mx-auto max-w-7xl">
+        
         {/* =======================================
             SECTION HEADER
         ======================================== */}
-
-        <div
-          className="
-            mx-auto
-            max-w-3xl
-            text-center
-          "
-        >
-          {/* Small badge */}
+        <div className="mx-auto max-w-3xl text-center">
           <div
             className="
               mb-4
@@ -169,7 +150,6 @@ function CoursesSection() {
             Explore Our Courses
           </div>
 
-          {/* Heading */}
           <h2
             className="
               text-3xl
@@ -196,7 +176,6 @@ function CoursesSection() {
             Courses
           </h2>
 
-          {/* Description */}
           <p
             className="
               mt-5
@@ -217,30 +196,12 @@ function CoursesSection() {
         {/* =======================================
             SUB SECTION TITLE
         ======================================== */}
-
-        <div
-          className="
-            mt-12
-            flex
-            items-center
-            justify-center
-            gap-4
-          "
-        >
-          <div
-            className="
-              h-px
-              flex-1
-              bg-gradient-to-r
-              from-transparent
-              to-green-200
-            "
-          />
-
+        <div className="mt-12 flex items-center justify-center gap-4">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-green-200" />
           <h3
             className="
               rounded-full
-              bg-white
+              bg-[#ffffff]
               px-5
               py-2
               text-lg
@@ -254,34 +215,13 @@ function CoursesSection() {
           >
             Master's Program
           </h3>
-
-          <div
-            className="
-              h-px
-              flex-1
-              bg-gradient-to-l
-              from-transparent
-              to-green-200
-            "
-          />
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-green-200" />
         </div>
 
         {/* =======================================
             COURSES GRID
         ======================================== */}
-
-        <div
-          className="
-            mt-8
-            grid
-            grid-cols-1
-            gap-5
-            sm:grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-3
-            xl:grid-cols-3
-          "
-        >
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
           {courses.map((course, idx) => (
             <div
               key={idx}
@@ -293,7 +233,7 @@ function CoursesSection() {
                 rounded-2xl
                 border
                 border-gray-200
-                bg-white
+                bg-[#ffffff]
                 p-5
                 shadow-sm
                 transition-all
@@ -310,7 +250,7 @@ function CoursesSection() {
                 animationDelay: `${idx * 0.15}s`,
               }}
             >
-              {/* Top animated line - Logo Green Match */}
+              {/* Top animated line */}
               <div
                 className="
                   absolute
@@ -347,19 +287,8 @@ function CoursesSection() {
                 "
               />
 
-              {/* =================================
-                  ICON & NUMBER
-              ================================== */}
-
-              <div
-                className="
-                  relative
-                  z-10
-                  flex
-                  items-center
-                  justify-between
-                "
-              >
+              {/* Icon & Number */}
+              <div className="relative z-10 flex items-center justify-between">
                 <div
                   className="
                     flex
@@ -383,7 +312,6 @@ function CoursesSection() {
                   {course.icon}
                 </div>
 
-                {/* Number */}
                 <span
                   className="
                     text-xs
@@ -398,10 +326,7 @@ function CoursesSection() {
                 </span>
               </div>
 
-              {/* =================================
-                  TITLE & DESCRIPTION
-              ================================== */}
-
+              {/* Title & Description */}
               <h4
                 className="
                   relative
@@ -418,46 +343,15 @@ function CoursesSection() {
                 {course.name}
               </h4>
 
-              <p
-                className="
-                  relative
-                  z-10
-                  mt-2
-                  text-xs
-                  leading-5
-                  text-gray-500
-                "
-              >
-                {course.route === 'onlineCourses' ? '100% Online Class' : 'Offline & Online Class'}
+              <p className="relative z-10 mt-2 text-xs leading-5 text-gray-500">
+                {course.route === "onlineCourses"
+                  ? "100% Online Class"
+                  : "Offline & Online Class"}
               </p>
 
-              {/* =================================
-                  LEARNERS & ACTION
-              ================================== */}
-
-              <div
-                className="
-                  relative
-                  z-10
-                  mt-4
-                  flex
-                  items-center
-                  justify-between
-                  border-t
-                  border-gray-100
-                  pt-4
-                "
-              >
-                <div
-                  className="
-                    flex
-                    items-center
-                    gap-2
-                    text-xs
-                    font-medium
-                    text-gray-500
-                  "
-                >
+              {/* Learners & Action */}
+              <div className="relative z-10 mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+                <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
                   <span
                     className="
                       flex
@@ -475,7 +369,6 @@ function CoursesSection() {
                   {course.learners} Learners
                 </div>
 
-                {/* Arrow Button */}
                 <span
                   className="
                     flex
@@ -523,39 +416,10 @@ function CoursesSection() {
         {/* =======================================
             BOTTOM INFO
         ======================================== */}
-
-        <div
-          className="
-            mt-10
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-2
-            text-center
-            sm:flex-row
-            sm:gap-4
-          "
-        >
-          <span
-            className="
-              h-2
-              w-2
-              animate-pulse
-              rounded-full
-              bg-green-500
-            "
-          />
-
-          <p
-            className="
-              text-sm
-              font-medium
-              text-gray-500
-            "
-          >
-            Learn from industry experts and build
-            job-ready skills.
+        <div className="mt-10 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-4">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+          <p className="text-sm font-medium text-gray-500">
+            Learn from industry experts and build job-ready skills.
           </p>
         </div>
       </div>
@@ -563,7 +427,6 @@ function CoursesSection() {
       {/* =========================================
           CARD FLOAT ANIMATION
       ========================================== */}
-
       <style>{`
         @keyframes courseCardFloat {
           0%, 100% {
