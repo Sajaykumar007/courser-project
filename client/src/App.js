@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import BackgroundVideo from './components/BackgroundVideo';
 import Navbar from './components/Navbar';
+import CustomCursor from './components/CustomCursor'; // ✅ Imported Custom Cursor
 
 import HeroSection from './components/HeroSection';
 import GovtJobSection from './components/GovtJobSection';
@@ -118,9 +119,13 @@ function App() {
     return () => window.removeEventListener('navigateToJoinNow', handleJoinNow);
   }, []);
 
+  // =====================================================
+  // ADMIN VIEW
+  // =====================================================
   if (showAdmin) {
     return (
       <>
+        <CustomCursor />
         <BackgroundVideo />
         <AdminDashboard 
           onBack={() => {
@@ -133,12 +138,15 @@ function App() {
     );
   }
 
+  // =====================================================
+  // JOIN NOW VIEW
+  // =====================================================
   if (showJoinNow) {
     return (
       <>
+        <CustomCursor />
         <BackgroundVideo />
         <Navbar />
-        
         <JoinNowPage onBack={() => {
           setShowJoinNow(false);
           setCurrentPage('home');
@@ -151,6 +159,9 @@ function App() {
     );
   }
 
+  // =====================================================
+  // OTHER PAGES VIEW
+  // =====================================================
   const renderPage = () => {
     switch (currentPage) {
       case 'allCourses':
@@ -175,9 +186,9 @@ function App() {
   if (currentPage !== 'home') {
     return (
       <>
+        <CustomCursor />
         <BackgroundVideo />
         <Navbar />
-        
         {renderPage()}
         <Footer />
         <WhatsAppButton />
@@ -186,11 +197,14 @@ function App() {
     );
   }
 
+  // =====================================================
+  // HOME VIEW
+  // =====================================================
   return (
     <div className="min-h-screen bg-slate-900">
+      <CustomCursor />
       <BackgroundVideo />
       <Navbar />
-      
       <HeroSection />
       <CoursesSection />
       <GovtJobSection />
