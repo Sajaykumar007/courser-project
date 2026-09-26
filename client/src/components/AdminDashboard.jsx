@@ -13,6 +13,7 @@ function AdminDashboard({ onBack }) {
   const [corporateTrainingRequests, setCorporateTrainingRequests] = useState([]);
   const [courseEnrollments, setCourseEnrollments] = useState([]);
   const [courseEnquiries, setCourseEnquiries] = useState([]);
+  const [onlineCourseEnquiries, setOnlineCourseEnquiries] = useState([]); // NEW
   const [referrals, setReferrals] = useState([]);
   const [newsletterSubscribers, setNewsletterSubscribers] = useState([]);
   const [subscriberSearch, setSubscriberSearch] = useState('');
@@ -26,17 +27,18 @@ function AdminDashboard({ onBack }) {
     setLoading(true);
     try {
       let url = '';
-      if (activeTab === 'leads') url = 'https://courser-project.onrender.com/api/leads/all';
-      else if (activeTab === 'contacts') url = 'https://courser-project.onrender.com/api/contact/all';
-      else if (activeTab === 'placementEnquiries') url = 'https://courser-project.onrender.com/api/placement/enquiries';
-      else if (activeTab === 'placedStudents') url = 'https://courser-project.onrender.com/api/placement/placed-students';
-      else if (activeTab === 'driveRegistrations') url = 'https://courser-project.onrender.com/api/placement/drive-registrations';
-      else if (activeTab === 'hireRequests') url = 'https://courser-project.onrender.com/api/placement/hire-requests';
-      else if (activeTab === 'corporateTrainingRequests') url = 'https://courser-project.onrender.com/api/placement/corporate-training-requests';
-      else if (activeTab === 'courseEnrollments') url = 'https://courser-project.onrender.com/api/online-courses/enrollments';
-      else if (activeTab === 'courseEnquiries') url = 'https://courser-project.onrender.com/api/courses/enquiries';
-      else if (activeTab === 'referrals') url = 'https://courser-project.onrender.com/api/referrals/all';
-      else if (activeTab === 'newsletter') url = `https://courser-project.onrender.com/api/newsletter/all?search=${encodeURIComponent(subscriberSearch)}`;
+      if (activeTab === 'leads') url = 'http://localhost:5000/api/leads/all';
+      else if (activeTab === 'contacts') url = 'http://localhost:5000/api/contact/all';
+      else if (activeTab === 'placementEnquiries') url = 'http://localhost:5000/api/placement/enquiries';
+      else if (activeTab === 'placedStudents') url = 'http://localhost:5000/api/placement/placed-students';
+      else if (activeTab === 'driveRegistrations') url = 'http://localhost:5000/api/placement/drive-registrations';
+      else if (activeTab === 'hireRequests') url = 'http://localhost:5000/api/placement/hire-requests';
+      else if (activeTab === 'corporateTrainingRequests') url = 'http://localhost:5000/api/placement/corporate-training-requests';
+      else if (activeTab === 'courseEnrollments') url = 'http://localhost:5000/api/online-courses/enrollments';
+      else if (activeTab === 'courseEnquiries') url = 'http://localhost:5000/api/courses/enquiries';
+      else if (activeTab === 'onlineCourseEnquiries') url = 'http://localhost:5000/api/online-courses/enquiries'; // NEW
+      else if (activeTab === 'referrals') url = 'http://localhost:5000/api/referrals/all';
+      else if (activeTab === 'newsletter') url = `http://localhost:5000/api/newsletter/all?search=${encodeURIComponent(subscriberSearch)}`;
 
       if (url) {
         const response = await fetch(url);
@@ -51,6 +53,7 @@ function AdminDashboard({ onBack }) {
           else if (activeTab === 'corporateTrainingRequests') setCorporateTrainingRequests(data.data);
           else if (activeTab === 'courseEnrollments') setCourseEnrollments(data.data);
           else if (activeTab === 'courseEnquiries') setCourseEnquiries(data.data);
+          else if (activeTab === 'onlineCourseEnquiries') setOnlineCourseEnquiries(data.data); // NEW
           else if (activeTab === 'referrals') setReferrals(data.data);
           else if (activeTab === 'newsletter') setNewsletterSubscribers(data.data);
         }
@@ -66,13 +69,14 @@ function AdminDashboard({ onBack }) {
     if (window.confirm('Are you sure you want to delete this?')) {
       try {
         let url = '';
-        if (type === 'leads') url = `https://courser-project.onrender.com/api/leads/${id}`;
-        else if (type === 'contacts') url = `https://courser-project.onrender.com/api/contact/${id}`;
-        else if (type === 'driveRegistrations') url = `https://courser-project.onrender.com/api/placement/drive-registrations/${id}`;
-        else if (type === 'courseEnrollments') url = `https://courser-project.onrender.com/api/online-courses/enrollments/${id}`;
-        else if (type === 'courseEnquiries') url = `https://courser-project.onrender.com/api/courses/enquiries/${id}`;
-        else if (type === 'referrals') url = `https://courser-project.onrender.com/api/referrals/${id}`;
-        else if (type === 'newsletter') url = `https://courser-project.onrender.com/api/newsletter/${id}`;
+        if (type === 'leads') url = `http://localhost:5000/api/leads/${id}`;
+        else if (type === 'contacts') url = `http://localhost:5000/api/contact/${id}`;
+        else if (type === 'driveRegistrations') url = `http://localhost:5000/api/placement/drive-registrations/${id}`;
+        else if (type === 'courseEnrollments') url = `http://localhost:5000/api/online-courses/enrollments/${id}`;
+        else if (type === 'courseEnquiries') url = `http://localhost:5000/api/courses/enquiries/${id}`;
+        else if (type === 'onlineCourseEnquiries') url = `http://localhost:5000/api/online-courses/enquiries/${id}`; // NEW
+        else if (type === 'referrals') url = `http://localhost:5000/api/referrals/${id}`;
+        else if (type === 'newsletter') url = `http://localhost:5000/api/newsletter/${id}`;
 
         if (url) {
           await fetch(url, { method: 'DELETE' });
@@ -81,6 +85,7 @@ function AdminDashboard({ onBack }) {
           else if (type === 'driveRegistrations') setDriveRegistrations(driveRegistrations.filter(item => item._id !== id));
           else if (type === 'courseEnrollments') setCourseEnrollments(courseEnrollments.filter(item => item._id !== id));
           else if (type === 'courseEnquiries') setCourseEnquiries(courseEnquiries.filter(item => item._id !== id));
+          else if (type === 'onlineCourseEnquiries') setOnlineCourseEnquiries(onlineCourseEnquiries.filter(item => item._id !== id)); // NEW
           else if (type === 'referrals') setReferrals(referrals.filter(item => item._id !== id));
           else if (type === 'newsletter') setNewsletterSubscribers(newsletterSubscribers.filter(item => item._id !== id));
         }
@@ -92,7 +97,7 @@ function AdminDashboard({ onBack }) {
 
   const handleToggleSubscription = async (id) => {
     try {
-      const res = await fetch(`https://courser-project.onrender.com/api/newsletter/${id}/toggle`, { method: 'PUT' });
+      const res = await fetch(`http://localhost:5000/api/newsletter/${id}/toggle`, { method: 'PUT' });
       const data = await res.json();
       if (data.success) {
         setNewsletterSubscribers(prev => prev.map(sub => sub._id === id ? data.data : sub));
@@ -134,6 +139,7 @@ function AdminDashboard({ onBack }) {
     if (activeTab === 'corporateTrainingRequests' && corporateTrainingRequests.length === 0) return <EmptyState message="No corporate training requests found." />;
     if (activeTab === 'courseEnrollments' && courseEnrollments.length === 0) return <EmptyState message="No course enrollments found." />;
     if (activeTab === 'courseEnquiries' && courseEnquiries.length === 0) return <EmptyState message="No course enquiries found." />;
+    if (activeTab === 'onlineCourseEnquiries' && onlineCourseEnquiries.length === 0) return <EmptyState message="No online course enquiries found." />; // NEW
     if (activeTab === 'referrals' && referrals.length === 0) return <EmptyState message="No referrals found." />;
     if (activeTab === 'newsletter' && newsletterSubscribers.length === 0) return <EmptyState message="No newsletter subscribers found." />;
 
@@ -153,7 +159,7 @@ function AdminDashboard({ onBack }) {
         className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
         title="Delete"
       >
-        🗑️
+        ️
       </button>
     );
 
@@ -179,7 +185,7 @@ function AdminDashboard({ onBack }) {
                   <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
                     item.type === 'join_now' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                   }`}>
-                    {item.type === 'join_now' ? '🎓 Join' : '🎯 Demo'}
+                    {item.type === 'join_now' ? ' Join' : '🎯 Demo'}
                   </span>
                 </td>
                 <td className="px-6 py-4 font-medium text-slate-200">{item.fullName}</td>
@@ -450,6 +456,7 @@ function AdminDashboard({ onBack }) {
               <th className="px-6 py-4">Student Name</th>
               <th className="px-6 py-4">Phone</th>
               <th className="px-6 py-4">Course</th>
+              <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4">Date</th>
               <th className="px-6 py-4 text-right">Action</th>
             </tr>
@@ -460,8 +467,57 @@ function AdminDashboard({ onBack }) {
                 <td className="px-6 py-4 font-medium text-slate-200">{item.studentName}</td>
                 <td className="px-6 py-4 text-slate-400">{item.phone}</td>
                 <td className="px-6 py-4 text-emerald-400 font-semibold">{item.courseTitle}</td>
+                <td className="px-6 py-4">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                    item.status === 'New' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
+                    item.status === 'Contacted' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+                    item.status === 'Converted' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' :
+                    'bg-slate-500/20 text-slate-400 border-slate-500/30'
+                  }`}>
+                    {item.status}
+                  </span>
+                </td>
                 <td className="px-6 py-4 text-slate-400 whitespace-nowrap">{formatDate(item.createdAt)}</td>
                 <td className="px-6 py-4 text-right"><DeleteButton id={item._id} type="courseEnquiries" /></td>
+              </tr>
+            ))}
+          </tbody>
+        </TableWrapper>
+      );
+    }
+
+    // NEW - Online Course Enquiries Tab
+    if (activeTab === 'onlineCourseEnquiries') {
+      return (
+        <TableWrapper>
+          <thead className="bg-slate-900/80 text-slate-300 uppercase tracking-wider font-semibold border-b border-slate-700">
+            <tr>
+              <th className="px-6 py-4">Student Name</th>
+              <th className="px-6 py-4">Phone</th>
+              <th className="px-6 py-4">Course</th>
+              <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4">Date</th>
+              <th className="px-6 py-4 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-700/50">
+            {onlineCourseEnquiries.map((item) => (
+              <tr key={item._id} className="hover:bg-slate-700/30 transition-colors">
+                <td className="px-6 py-4 font-medium text-slate-200">{item.studentName}</td>
+                <td className="px-6 py-4 text-slate-400">{item.phone}</td>
+                <td className="px-6 py-4 text-emerald-400 font-semibold">{item.courseTitle}</td>
+                <td className="px-6 py-4">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                    item.status === 'New' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
+                    item.status === 'Contacted' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+                    item.status === 'Converted' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' :
+                    'bg-slate-500/20 text-slate-400 border-slate-500/30'
+                  }`}>
+                    {item.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-slate-400 whitespace-nowrap">{formatDate(item.createdAt)}</td>
+                <td className="px-6 py-4 text-right"><DeleteButton id={item._id} type="onlineCourseEnquiries" /></td>
               </tr>
             ))}
           </tbody>
@@ -584,6 +640,7 @@ function AdminDashboard({ onBack }) {
     { id: 'corporateTrainingRequests', label: 'Corp. Training', count: corporateTrainingRequests.length },
     { id: 'courseEnrollments', label: 'Enrollments', count: courseEnrollments.length },
     { id: 'courseEnquiries', label: 'Course Enq.', count: courseEnquiries.length },
+    { id: 'onlineCourseEnquiries', label: 'Online Course Enq.', count: onlineCourseEnquiries.length }, // NEW
     { id: 'referrals', label: 'Referrals', count: referrals.length },
     { id: 'newsletter', label: 'Newsletter', count: newsletterSubscribers.length },
   ];

@@ -44,7 +44,7 @@ function CorporateTrainingPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('https://courser-project.onrender.com/api/placement/corporate-training-request', {
+      const response = await fetch('http://localhost:5000/api/placement/corporate-training-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -180,6 +180,9 @@ function CorporateTrainingPage() {
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {trainingPrograms.map((program, idx) => (
               <div key={idx} className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-[#ffffff] p-5 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-green-300 hover:shadow-xl animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                {/* ✅ UPDATED: Very thin initially (h-0.5), grows slightly (h-1.5) on hover for a subtle, elegant look */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-2xl rounded-tr-2xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-green-100 blur-2xl transition-transform duration-700 group-hover:scale-150" />
                 <div className="relative">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-green-100">{program.icon}</div>
@@ -210,7 +213,10 @@ function CorporateTrainingPage() {
           </div>
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((benefit, idx) => (
-              <div key={idx} className="group rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+              <div key={idx} className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-green-100">{benefit.icon}</div>
                 <h3 className="mt-4 text-sm font-black text-gray-900">{benefit.title}</h3>
                 <p className="mt-1.5 text-xs leading-5 text-gray-500">{benefit.desc}</p>
@@ -230,7 +236,10 @@ function CorporateTrainingPage() {
           <div className="relative mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-green-100 lg:block" />
             {[['1', 'Needs Assessment', "Understand skill gaps and business objectives"], ['2', 'Custom Curriculum', 'Design training program tailored to you'], ['3', 'Expert Delivery', 'Industry experts deliver practical sessions'], ['4', 'Hands-on Practice', 'Real-world projects and case studies'], ['5', 'Assessment & Feedback', 'Regular evaluations and personalized feedback'], ['6', 'Certification & Support', 'Industry-recognized certification']].map(([number, title, desc], idx) => (
-              <div key={number} className="group relative z-10 rounded-xl border border-gray-200 bg-[#ffffff] p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+              <div key={number} className="group relative z-10 overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-xs font-black text-white shadow-lg shadow-green-500/20 transition-transform duration-300 group-hover:scale-110">{number}</div>
                 <h3 className="mt-4 text-sm font-black text-gray-900">{title}</h3>
                 <p className="mt-1.5 text-xs leading-5 text-gray-500">{desc}</p>
@@ -250,6 +259,9 @@ function CorporateTrainingPage() {
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {caseStudies.map((study, idx) => (
               <div key={idx} className="group overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-400/30 hover:bg-white/10 animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="border-b border-white/10 p-5">
                   <h3 className="text-base font-black text-white">{study.company}</h3>
                   <span className="mt-1.5 inline-flex rounded-full bg-green-400/10 px-2.5 py-1 text-[9px] font-bold text-green-300">{study.industry}</span>
@@ -275,7 +287,10 @@ function CorporateTrainingPage() {
           <h2 className="mt-3 text-2xl font-black text-gray-900 sm:text-3xl">Industries We Serve</h2>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {industries.map((industry, idx) => (
-              <div key={idx} className="group flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-[#ffffff] px-3 py-3 text-xs font-bold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:text-green-700 hover:shadow-md animate-scale-in" style={{ animationDelay: `${idx * 50}ms` }}>
+              <div key={idx} className="group relative overflow-hidden flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-[#ffffff] px-3 py-3 text-xs font-bold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:text-green-700 hover:shadow-md animate-scale-in" style={{ animationDelay: `${idx * 50}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line (Thinner for small cards) */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-lg rounded-tr-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <span className="text-green-500 transition-transform duration-300 group-hover:scale-125">✓</span>{industry}
               </div>
             ))}
@@ -291,7 +306,12 @@ function CorporateTrainingPage() {
             <h2 className="mt-3 text-2xl font-black text-gray-900 sm:text-3xl">Corporate Training Packages</h2>
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            <div className="group rounded-xl border border-gray-200 bg-[#ffffff] p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+            
+            {/* Starter */}
+            <div className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+              {/* ✅ UPDATED: Subtle Top Green Line */}
+              <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+              
               <h3 className="text-lg font-black text-gray-900">Starter</h3>
               <div className="mt-3 text-2xl font-black text-green-600">₹15,000 <span className="text-xs font-medium text-gray-400">/participant</span></div>
               <ul className="mt-5 space-y-2.5">
@@ -302,7 +322,11 @@ function CorporateTrainingPage() {
               <button onClick={() => handleGetQuote('Starter')} className="mt-6 w-full rounded-lg border border-green-200 bg-green-50 py-2.5 text-xs font-black text-green-700 transition-all duration-300 hover:bg-green-600 hover:text-white active:scale-95">Get Quote</button>
             </div>
 
-            <div className="group relative rounded-xl border-2 border-green-500 bg-[#ffffff] p-6 shadow-xl shadow-green-500/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+            {/* Professional */}
+            <div className="group relative overflow-hidden rounded-xl border-2 border-green-500 bg-[#ffffff] p-6 shadow-xl shadow-green-500/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              {/* ✅ UPDATED: Subtle Top Green Line */}
+              <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+              
               <div className="absolute right-4 top-4 rounded-full bg-green-500 px-2.5 py-1 text-[8px] font-black uppercase tracking-wide text-white animate-pulse">Most Popular</div>
               <h3 className="text-lg font-black text-gray-900">Professional</h3>
               <div className="mt-3 text-2xl font-black text-green-600">₹12,000 <span className="text-xs font-medium text-gray-400">/participant</span></div>
@@ -314,7 +338,11 @@ function CorporateTrainingPage() {
               <button onClick={() => handleGetQuote('Professional')} className="mt-6 w-full rounded-lg bg-gradient-to-r from-green-500 to-green-600 py-2.5 text-xs font-black text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95">Get Quote →</button>
             </div>
 
-            <div className="group rounded-xl border border-gray-200 bg-[#ffffff] p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+            {/* Enterprise */}
+            <div className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+              {/* ✅ UPDATED: Subtle Top Green Line */}
+              <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+              
               <h3 className="text-lg font-black text-gray-900">Enterprise</h3>
               <div className="mt-3 text-2xl font-black text-green-600">Custom <span className="text-xs font-medium text-gray-400">/pricing</span></div>
               <ul className="mt-5 space-y-2.5">
@@ -324,6 +352,7 @@ function CorporateTrainingPage() {
               </ul>
               <button onClick={() => handleGetQuote('Enterprise')} className="mt-6 w-full rounded-lg border border-green-200 bg-green-50 py-2.5 text-xs font-black text-green-700 transition-all duration-300 hover:bg-green-600 hover:text-white active:scale-95">Contact Us</button>
             </div>
+
           </div>
         </div>
       </section>

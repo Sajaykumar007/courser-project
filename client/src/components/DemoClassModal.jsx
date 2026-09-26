@@ -130,7 +130,7 @@ function DemoClassModal({ isOpen, onClose }) {
 
     try {
       const response = await fetch(
-        'https://courser-project.onrender.com/api/leads/submit',
+        'http://localhost:5000/api/leads/submit',
         {
           method: 'POST',
           headers: {

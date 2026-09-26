@@ -250,20 +250,25 @@ function CoursesSection() {
                 animationDelay: `${idx * 0.15}s`,
               }}
             >
-              {/* Top animated line */}
+              {/* ✅ UPDATED: Very thin initially (h-0.5), grows BIG (h-3) on hover with smooth animation */}
               <div
                 className="
                   absolute
                   left-0
+                  right-0
                   top-0
-                  h-1
-                  w-0
+                  h-0.5
+                  rounded-tl-2xl
+                  rounded-tr-2xl
                   bg-gradient-to-r
-                  from-green-500
-                  to-green-400
+                  from-green-400
+                  via-green-500
+                  to-green-600
                   transition-all
                   duration-500
-                  group-hover:w-full
+                  ease-in-out
+                  group-hover:h-1.5
+                  group-hover:shadow-[0_8px_25px_rgba(34,197,94,0.8)]
                 "
               />
 

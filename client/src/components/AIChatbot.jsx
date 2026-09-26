@@ -23,7 +23,7 @@ function AIChatbot() {
     const fetchCourses = async () => {
       try {
         const res = await fetch(
-          'https://courser-project.onrender.com/api/courses'
+          'http://localhost:5000/api/courses'
         );
 
         const data = await res.json();

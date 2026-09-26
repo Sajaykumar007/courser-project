@@ -218,18 +218,24 @@ function TestimonialsSection() {
                   "
                 >
 
-                  {/* Top Green Line - Logo Green Match */}
+                  {/* ✅ NEW: Top Green Line - INSIDE BOX TOP (Curved & Grows on Hover) */}
                   <div
                     className="
                       absolute
                       left-0
+                      right-0
                       top-0
-                      h-1
-                      w-0
-                      bg-green-500
+                      h-1.5
+                      rounded-tl-3xl
+                      rounded-tr-3xl
+                      bg-gradient-to-r
+                      from-green-400
+                      via-green-500
+                      to-green-600
                       transition-all
                       duration-500
-                      group-hover:w-full
+                      group-hover:h-1.5
+                      group-hover:shadow-[0_4px_15px_rgba(34,197,94,0.6)]
                     "
                   />
 

@@ -29,7 +29,7 @@ function OnlineCoursesPage() {
       duration: '52 hours',
       lectures: 142,
       level: 'Beginner',
-      image: '💻',
+      image: '',
       features: ['HTML, CSS, JavaScript', 'React & Node.js', 'MongoDB & Express', 'Real Projects'],
     },
     {
@@ -55,7 +55,7 @@ function OnlineCoursesPage() {
       duration: '38 hours',
       lectures: 96,
       level: 'Beginner',
-      image: '🎨',
+      image: '',
       features: ['Figma & Adobe XD', 'User Research', 'Prototyping', 'Design Systems'],
     },
     {
@@ -122,7 +122,7 @@ function OnlineCoursesPage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('https://courser-project.onrender.com/api/online-courses');
+        const response = await fetch('http://localhost:5000/api/online-courses');
         const data = await response.json();
         if (data.success && Array.isArray(data.data) && data.data.length > 0) {
           setCourses(data.data);
@@ -156,7 +156,7 @@ function OnlineCoursesPage() {
       alert('✅ You have already submitted an enquiry for this course!');
       return;
     }
-    const studentName = prompt(`📚 Course Enquiry\n\n${course.title}\n\nEnter your full name:`);
+    const studentName = prompt(` Course Enquiry\n\n${course.title}\n\nEnter your full name:`);
     if (!studentName) return;
     const phone = prompt('Enter your phone number:');
     if (!phone) return;
@@ -165,7 +165,7 @@ function OnlineCoursesPage() {
       return;
     }
     try {
-      const response = await fetch('https://courser-project.onrender.com/api/online-courses/enquiry', {
+      const response = await fetch('http://localhost:5000/api/online-courses/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ courseId: course._id, courseTitle: course.title, studentName, phone }),
@@ -233,7 +233,7 @@ function OnlineCoursesPage() {
           <div className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
             {[
               ['📚', '100+', 'Courses'],
-              ['👨‍🏫', '50+', 'Expert Instructors'],
+              ['👨‍', '50+', 'Expert Instructors'],
               ['👥', '50k+', 'Students'],
               ['🎓', '100%', 'Certification']
             ].map(([icon, number, label], index) => (
@@ -321,6 +321,27 @@ function OnlineCoursesPage() {
                     }`}
                     style={{ animation: `cardIn .55s ease-out ${index * 80}ms both` }}
                   >
+                    {/* ✅ NEW: Top Green Line - INSIDE BOX TOP (Curved & Grows on Hover) */}
+                    <div
+                      className="
+                        absolute
+                        left-0
+                        right-0
+                        top-0
+                        h-1.5
+                        rounded-tl-2xl
+                        rounded-tr-2xl
+                        bg-gradient-to-r
+                        from-green-400
+                        via-green-500
+                        to-green-600
+                        transition-all
+                        duration-500
+                        group-hover:h-1.5
+                        group-hover:shadow-[0_4px_15px_rgba(34,197,94,0.6)]
+                      "
+                    />
+
                     <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-green-100/50 blur-3xl transition-transform duration-500 group-hover:scale-150" />
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
@@ -352,7 +373,7 @@ function OnlineCoursesPage() {
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         <div className="rounded-lg bg-[#f7f7f7] px-2 py-2 text-center transition-colors group-hover:bg-green-50">
                           <div className="text-[9px] text-gray-400">Duration</div>
-                          <div className="mt-0.5 text-[10px] font-bold text-slate-700">⏱️ {course.duration}</div>
+                          <div className="mt-0.5 text-[10px] font-bold text-slate-700">️ {course.duration}</div>
                         </div>
                         <div className="rounded-lg bg-[#f7f7f7] px-2 py-2 text-center transition-colors group-hover:bg-green-50">
                           <div className="text-[9px] text-gray-400">Lectures</div>
@@ -419,16 +440,37 @@ function OnlineCoursesPage() {
             {[
               { icon: '⏰', title: 'Learn at Your Pace', text: 'Access course materials anytime, anywhere.' },
               { icon: '💰', title: 'Affordable Pricing', text: 'High-quality education at an affordable cost.' },
-              { icon: '👨‍🏫', title: 'Expert Instructors', text: 'Learn from industry professionals.' },
+              { icon: '👨‍', title: 'Expert Instructors', text: 'Learn from industry professionals.' },
               { icon: '📜', title: 'Certification', text: 'Earn industry-recognized certificates.' },
               { icon: '💬', title: '24/7 Support', text: 'Get help whenever you need it.' },
               { icon: '🔄', title: 'Lifetime Access', text: 'Access course materials and updates.' },
             ].map((benefit, index) => (
               <div
                 key={benefit.title}
-                className="group rounded-2xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-2 hover:border-green-300 hover:shadow-lg animate-fade-in-up"
+                className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-2 hover:border-green-300 hover:shadow-lg animate-fade-in-up"
                 style={{ animation: `cardIn .5s ease-out ${index * 70}ms both` }}
               >
+                {/* ✅ NEW: Top Green Line - INSIDE BOX TOP (Curved & Grows on Hover) */}
+                <div
+                  className="
+                    absolute
+                    left-0
+                    right-0
+                    top-0
+                    h-1.5
+                    rounded-tl-2xl
+                    rounded-tr-2xl
+                    bg-gradient-to-r
+                    from-green-400
+                    via-green-500
+                    to-green-600
+                    transition-all
+                    duration-500
+                    group-hover:h-1.5
+                    group-hover:shadow-[0_4px_15px_rgba(34,197,94,0.6)]
+                  "
+                />
+
                 <div className="flex items-start gap-4">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-xl shadow-sm transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-green-100">
                     {benefit.icon}
@@ -472,7 +514,7 @@ function OnlineCoursesPage() {
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-4xl backdrop-blur-sm">{selectedCourse.image || '💻'}</div>
                 <span className="mt-4 inline-block rounded-full bg-green-500 px-2.5 py-1 text-[9px] font-bold">{selectedCourse.category}</span>
                 <h2 className="mt-3 pr-8 text-xl font-black">{selectedCourse.title}</h2>
-                <p className="mt-1 text-xs text-gray-400">👨‍🏫 {selectedCourse.instructor}</p>
+                <p className="mt-1 text-xs text-gray-400">‍🏫 {selectedCourse.instructor}</p>
               </div>
             </div>
             <div className="p-6">
@@ -483,7 +525,7 @@ function OnlineCoursesPage() {
                   <div className="text-[8px] text-gray-400">Rating</div>
                 </div>
                 <div className="rounded-xl bg-[#f7f7f7] p-3 text-center">
-                  <div className="text-sm">⏱️</div>
+                  <div className="text-sm">️</div>
                   <div className="mt-1 text-xs font-bold">{selectedCourse.duration}</div>
                   <div className="text-[8px] text-gray-400">Duration</div>
                 </div>

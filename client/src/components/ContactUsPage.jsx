@@ -93,7 +93,7 @@ function ContactUsPage() {
 
     try {
       const response = await fetch(
-        'https://courser-project.onrender.com/api/contact/submit',
+        'http://localhost:5000/api/contact/submit',
         {
           method: 'POST',
           headers: {

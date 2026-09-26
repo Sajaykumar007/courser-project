@@ -126,7 +126,7 @@ function Footer() {
     setSubscribeStatus({ loading: true, message: '', type: '' });
 
     try {
-      const response = await fetch('https://courser-project.onrender.com/api/newsletter/subscribe', {
+      const response = await fetch('http://localhost:5000/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

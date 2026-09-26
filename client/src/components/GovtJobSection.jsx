@@ -92,6 +92,28 @@ function GovtJobSection() {
                   animation: `categoryIn .5s ease-out ${index * 80}ms both`,
                 }}
               >
+                {/* ✅ UPDATED: Very thin initially (h-0.5), grows BIG (h-3) on hover with smooth animation */}
+                <div
+                  className="
+                    absolute
+                    left-0
+                    right-0
+                    top-0
+                    h-0.5
+                    rounded-tl-xl
+                    rounded-tr-xl
+                    bg-gradient-to-r
+                    from-green-400
+                    via-green-500
+                    to-green-600
+                    transition-all
+                    duration-500
+                    ease-in-out
+                    group-hover:h-1.5
+                    group-hover:shadow-[0_8px_25px_rgba(34,197,94,0.8)]
+                  "
+                />
+
                 {/* Hover Shine - Logo Green Match */}
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-green-50/70 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 

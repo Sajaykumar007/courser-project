@@ -81,14 +81,13 @@ function PlacementSection() {
             {/* ================= ROW 1 ================= */}
             <div className="relative mb-7 overflow-hidden rounded-3xl border border-gray-100 bg-[#f7f7f7]/80 py-6 shadow-sm">
 
-              {/* Left Gradient - Updated to match #f7f7f7 */}
+              {/* Left Gradient */}
               <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
-              {/* Right Gradient - Updated to match #f7f7f7 */}
+              {/* Right Gradient */}
               <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
               <div className="marquee-track flex w-max gap-6">
-
                 {row1.map((company, idx) => (
                   <div
                     key={`row1-${idx}`}
@@ -116,6 +115,26 @@ function PlacementSection() {
                       hover:shadow-xl
                     "
                   >
+                    {/* ✅ NEW: GREEN LINE - INSIDE BOX TOP (Same as KeyFeatures) */}
+                    <div
+                      className="
+                        absolute
+                        left-0
+                        right-0
+                        top-0
+                        h-1.5
+                        rounded-tl-2xl
+                        rounded-tr-2xl
+                        bg-gradient-to-r
+                        from-green-400
+                        via-green-500
+                        to-green-600
+                        transition-all
+                        duration-500
+                        group-hover:h-1.5
+                        group-hover:shadow-[0_4px_15px_rgba(34,197,94,0.6)]
+                      "
+                    />
 
                     {/* Moving Shine */}
                     <div
@@ -139,7 +158,7 @@ function PlacementSection() {
                       "
                     />
 
-                    {/* Green Glow - Logo Green Match */}
+                    {/* Green Glow */}
                     <div
                       className="
                         absolute
@@ -169,24 +188,21 @@ function PlacementSection() {
                     >
                       {company}
                     </span>
-
                   </div>
                 ))}
-
               </div>
             </div>
 
             {/* ================= ROW 2 ================= */}
             <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-[#f7f7f7]/80 py-6 shadow-sm">
 
-              {/* Left Gradient - Updated to match #f7f7f7 */}
+              {/* Left Gradient */}
               <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
-              {/* Right Gradient - Updated to match #f7f7f7 */}
+              {/* Right Gradient */}
               <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-[#f7f7f7] via-[#f7f7f7]/90 to-transparent" />
 
               <div className="marquee-track-reverse flex w-max gap-6">
-
                 {row2.map((company, idx) => (
                   <div
                     key={`row2-${idx}`}
@@ -214,6 +230,26 @@ function PlacementSection() {
                       hover:shadow-xl
                     "
                   >
+                    {/* ✅ NEW: GREEN LINE - INSIDE BOX TOP (Same as KeyFeatures) */}
+                    <div
+                      className="
+                        absolute
+                        left-0
+                        right-0
+                        top-0
+                        h-1.5
+                        rounded-tl-2xl
+                        rounded-tr-2xl
+                        bg-gradient-to-r
+                        from-green-400
+                        via-green-500
+                        to-green-600
+                        transition-all
+                        duration-500
+                        group-hover:h-1.5
+                        group-hover:shadow-[0_4px_15px_rgba(34,197,94,0.6)]
+                      "
+                    />
 
                     {/* Moving Shine */}
                     <div
@@ -237,7 +273,7 @@ function PlacementSection() {
                       "
                     />
 
-                    {/* Glow - Logo Green Match */}
+                    {/* Green Glow */}
                     <div
                       className="
                         absolute
@@ -267,10 +303,8 @@ function PlacementSection() {
                     >
                       {company}
                     </span>
-
                   </div>
                 ))}
-
               </div>
             </div>
 
@@ -281,62 +315,29 @@ function PlacementSection() {
 
       {/* Custom Animations */}
       <style>{`
-
-        /* Row 1 - Left */
         @keyframes marqueeLeft {
-          from {
-            transform: translateX(0);
-          }
-
-          to {
-            transform: translateX(calc(-50% - 12px));
-          }
+          from { transform: translateX(0); }
+          to { transform: translateX(calc(-50% - 12px)); }
         }
 
-        /* Row 2 - Right */
         @keyframes marqueeRight {
-          from {
-            transform: translateX(calc(-50% - 12px));
-          }
-
-          to {
-            transform: translateX(0);
-          }
+          from { transform: translateX(calc(-50% - 12px)); }
+          to { transform: translateX(0); }
         }
 
-        /* Header */
         @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(25px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(25px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes lineExpand {
-          from {
-            width: 0;
-          }
-
-          to {
-            width: 56px;
-          }
+          from { width: 0; }
+          to { width: 56px; }
         }
 
         .marquee-track {
@@ -347,13 +348,11 @@ function PlacementSection() {
           animation: marqueeRight 28s linear infinite;
         }
 
-        /* Pause when mouse enters */
         .marquee-track:hover,
         .marquee-track-reverse:hover {
           animation-play-state: paused;
         }
 
-        /* Slight floating effect */
         .company-card:nth-child(3n) {
           animation: floatingCard 4s ease-in-out infinite;
         }
@@ -363,17 +362,10 @@ function PlacementSection() {
         }
 
         @keyframes floatingCard {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-4px);
-          }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
         }
 
-        /* Disable animation for users who prefer reduced motion */
         @media (prefers-reduced-motion: reduce) {
           .marquee-track,
           .marquee-track-reverse,
@@ -381,7 +373,6 @@ function PlacementSection() {
             animation: none !important;
           }
         }
-
       `}</style>
     </>
   );

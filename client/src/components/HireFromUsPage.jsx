@@ -85,7 +85,7 @@ function HireFromUsPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('https://courser-project.onrender.com/api/placement/hire-request', {
+      const response = await fetch('http://localhost:5000/api/placement/hire-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -165,7 +165,10 @@ function HireFromUsPage() {
 
           <div className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
             {stats.map((stat, index) => (
-              <div key={index} className="animate-fade-in-up rounded-xl border border-white/10 bg-white/5 px-3 py-4 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={index} className="group relative overflow-hidden animate-fade-in-up rounded-xl border border-white/10 bg-white/5 px-3 py-4 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Very thin initially (h-0.5), grows slightly (h-1.5) on hover for a subtle, elegant look */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="text-xl">{stat.icon}</div>
                 <div className="mt-1 text-lg font-black text-white sm:text-xl">{stat.number}</div>
                 <div className="mt-0.5 text-[10px] text-gray-400">{stat.label}</div>
@@ -181,7 +184,10 @@ function HireFromUsPage() {
           <SectionHeader title="Why Partner With Us?" subtitle="We connect you with pre-vetted, job-ready professionals" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((benefit, index) => (
-              <div key={index} className="group rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={index} className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-green-100">{benefit.icon}</div>
                 <h3 className="mt-4 text-sm font-black text-gray-900">{benefit.title}</h3>
                 <p className="mt-1.5 text-xs leading-5 text-gray-500">{benefit.desc}</p>
@@ -197,7 +203,10 @@ function HireFromUsPage() {
           <SectionHeader title="Our Talent Pool" subtitle="Skilled professionals across multiple domains" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {talentPool.map((talent, index) => (
-              <div key={index} className="group rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={index} className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-sm font-black text-gray-900 transition-colors group-hover:text-green-700">{talent.category}</h3>
                   <span className="shrink-0 rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-bold text-green-600">{talent.count}</span>
@@ -220,7 +229,10 @@ function HireFromUsPage() {
           <div className="relative mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-green-100 lg:block" />
             {hiringProcess.map((item, index) => (
-              <div key={item.step} className="group relative z-10 rounded-xl border border-gray-200 bg-[#ffffff] p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={item.step} className="group relative z-10 overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-xs font-black text-white shadow-lg shadow-green-500/20 transition-transform duration-300 group-hover:scale-110">
                   {item.step}
                 </div>
@@ -246,9 +258,12 @@ function HireFromUsPage() {
                   setFormData((prev) => ({ ...prev, industry }));
                   scrollToContact();
                 }}
-                className="group flex items-center gap-1.5 rounded-lg border border-gray-200 bg-[#ffffff] px-4 py-2.5 text-xs font-bold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:text-green-700 hover:shadow-md animate-scale-in"
+                className="group relative overflow-hidden flex items-center gap-1.5 rounded-lg border border-gray-200 bg-[#ffffff] px-4 py-2.5 text-xs font-bold text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:text-green-700 hover:shadow-md animate-scale-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
+                {/* ✅ UPDATED: Subtle Top Green Line (Thinner for small buttons) */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-lg rounded-tr-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <span className="text-green-500 transition-transform duration-300 group-hover:scale-125">✓</span>
                 {industry}
               </button>
@@ -263,7 +278,10 @@ function HireFromUsPage() {
           <SectionHeader title="What Our Partners Say" subtitle="Success stories from our hiring partners" />
           <div className="grid gap-4 md:grid-cols-3">
             {testimonials.map((item, index) => (
-              <div key={index} className="group relative rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={index} className="group relative overflow-hidden rounded-xl border border-gray-200 bg-[#ffffff] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="absolute right-4 top-3 text-3xl font-black text-green-100 transition-colors group-hover:text-green-200">"</div>
                 <div className="relative">
                   <div className="mb-3 flex gap-1 text-xs text-amber-400">★ ★ ★ ★ ★</div>

@@ -50,11 +50,11 @@ function PlacementsPage() {
     const fetchData = async () => {
       try {
         const [statsRes, partnersRes, studentsRes, storiesRes, drivesRes] = await Promise.all([
-          fetch('https://courser-project.onrender.com/api/placement/stats'),
-          fetch('https://courser-project.onrender.com/api/placement/hiring-partners'),
-          fetch('https://courser-project.onrender.com/api/placement/placed-students'),
-          fetch('https://courser-project.onrender.com/api/placement/success-stories'),
-          fetch('https://courser-project.onrender.com/api/placement/placement-drives')
+          fetch('http://localhost:5000/api/placement/stats'),
+          fetch('http://localhost:5000/api/placement/hiring-partners'),
+          fetch('http://localhost:5000/api/placement/placed-students'),
+          fetch('http://localhost:5000/api/placement/success-stories'),
+          fetch('http://localhost:5000/api/placement/placement-drives')
         ]);
 
         const statsData = await statsRes.json();
@@ -83,7 +83,7 @@ function PlacementsPage() {
     setFormLoading(true);
     setFormError('');
     try {
-      const response = await fetch('https://courser-project.onrender.com/api/placement/enquiry', {
+      const response = await fetch('http://localhost:5000/api/placement/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(enquiryForm),
@@ -128,7 +128,7 @@ function PlacementsPage() {
         phone: registrationForm.phone,
         course: registrationForm.course,
       };
-      const response = await fetch('https://courser-project.onrender.com/api/placement/register-drive', {
+      const response = await fetch('http://localhost:5000/api/placement/register-drive', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -207,7 +207,7 @@ function PlacementsPage() {
         .delay-100 { animation-delay: 100ms; } .delay-200 { animation-delay: 200ms; }
       `}</style>
 
-      {/* ===== HERO SECTION (Moved Further Up & Compact) ===== */}
+      {/* ===== HERO SECTION ===== */}
       <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-green-900 via-slate-900 to-green-950 px-4 pb-12 pt-8 sm:px-6 sm:pt-10 lg:px-8">
         <div className="absolute -left-32 -top-32 h-64 w-64 rounded-full bg-green-500/20 blur-3xl animate-glow" />
         <div className="absolute -bottom-32 -right-24 h-72 w-72 rounded-full bg-green-400/10 blur-3xl animate-glow delay-200" />
@@ -247,7 +247,10 @@ function PlacementsPage() {
               ['✅', '100%', 'Placement Assistance'],
               ['💰', stats.highestPackage, 'Highest Package']
             ].map(([icon, number, label], index) => (
-              <div key={index} className="animate-fade-in-up rounded-xl border border-white/10 bg-white/5 px-3 py-3.5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10" style={{ animationDelay: `${index * 100}ms` }}>
+              <div key={index} className="group relative overflow-hidden animate-fade-in-up rounded-xl border border-white/10 bg-white/5 px-3 py-3.5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10" style={{ animationDelay: `${index * 100}ms` }}>
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
                 <div className="text-xl">{icon}</div>
                 <div className="mt-1 text-lg font-black text-white sm:text-xl">{number}</div>
                 <div className="mt-0.5 text-[10px] text-gray-400">{label}</div>
@@ -267,7 +270,10 @@ function PlacementsPage() {
             { icon: '💰', label: 'Highest Package', value: stats.highestPackage, color: 'text-green-600' },
             { icon: '📊', label: 'Average Package', value: stats.averagePackage, color: 'text-green-600' },
           ].map((item, idx) => (
-            <div key={idx} className="group bg-[#f7f7f7] hover:bg-green-50 border border-gray-100 hover:border-green-200 rounded-xl p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-100">
+            <div key={idx} className="group relative overflow-hidden bg-[#f7f7f7] hover:bg-green-50 border border-gray-100 hover:border-green-200 rounded-xl p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-100">
+              {/* ✅ UPDATED: Subtle Top Green Line */}
+              <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+              
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
               <h3 className={`text-xl md:text-2xl font-bold mb-1 ${item.color}`}>{item.value}</h3>
               <p className="text-gray-500 text-xs font-medium">{item.label}</p>
@@ -289,7 +295,10 @@ function PlacementsPage() {
             <div className="flex overflow-hidden">
               <div className="flex gap-4 animate-marquee-left whitespace-nowrap">
                 {[...hiringPartners, ...hiringPartners, ...hiringPartners].map((partner, idx) => (
-                  <div key={`row1-${idx}`} className="flex-shrink-0 bg-[#ffffff] border border-gray-200 rounded-lg px-5 py-3 flex items-center gap-3 hover:border-green-300 hover:shadow-md transition-all duration-300">
+                  <div key={`row1-${idx}`} className="group relative overflow-hidden flex-shrink-0 bg-[#ffffff] border border-gray-200 rounded-lg px-5 py-3 flex items-center gap-3 hover:border-green-300 hover:shadow-md transition-all duration-300">
+                    {/* ✅ UPDATED: Subtle Top Green Line */}
+                    <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-lg rounded-tr-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                    
                     <div className="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center text-green-600 font-bold text-xs">
                       {partner.logo || partner.companyName.substring(0, 2).toUpperCase()}
                     </div>
@@ -301,7 +310,10 @@ function PlacementsPage() {
             <div className="flex overflow-hidden">
               <div className="flex gap-4 animate-marquee-right whitespace-nowrap">
                 {[...hiringPartners, ...hiringPartners, ...hiringPartners].map((partner, idx) => (
-                  <div key={`row2-${idx}`} className="flex-shrink-0 bg-[#ffffff] border border-gray-200 rounded-lg px-5 py-3 flex items-center gap-3 hover:border-green-300 hover:shadow-md transition-all duration-300">
+                  <div key={`row2-${idx}`} className="group relative overflow-hidden flex-shrink-0 bg-[#ffffff] border border-gray-200 rounded-lg px-5 py-3 flex items-center gap-3 hover:border-green-300 hover:shadow-md transition-all duration-300">
+                    {/* ✅ UPDATED: Subtle Top Green Line */}
+                    <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-lg rounded-tr-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                    
                     <div className="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center text-green-600 font-bold text-xs">
                       {partner.logo || partner.companyName.substring(0, 2).toUpperCase()}
                     </div>
@@ -323,13 +335,16 @@ function PlacementsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {placementProcess.map((item) => (
-              <div key={item.step} className="relative group bg-[#f7f7f7] border border-gray-100 rounded-xl p-5 hover:bg-white hover:border-green-200 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute -top-2.5 -left-2.5 w-7 h-7 bg-green-600 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-green-500/30">
+              <div key={item.step} className="group relative overflow-hidden bg-[#f7f7f7] border border-gray-100 rounded-xl p-5 hover:bg-white hover:border-green-200 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 hover:-translate-y-1">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="absolute -top-2.5 -left-2.5 w-7 h-7 bg-green-600 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-green-500/30 z-10">
                   {item.step}
                 </div>
-                <div className="text-3xl mb-3 mt-1 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
-                <h4 className="text-base font-bold mb-1.5 text-gray-900">{item.title}</h4>
-                <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+                <div className="text-3xl mb-3 mt-1 group-hover:scale-110 transition-transform duration-300 z-10 relative">{item.icon}</div>
+                <h4 className="text-base font-bold mb-1.5 text-gray-900 relative z-10">{item.title}</h4>
+                <p className="text-gray-500 text-xs leading-relaxed relative z-10">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -345,10 +360,13 @@ function PlacementsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {placementPrep.map((item, index) => (
-              <div key={index} className="bg-[#ffffff] border border-gray-100 rounded-xl p-5 hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 group hover:-translate-y-1">
-                <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
-                <h4 className="font-bold text-sm mb-1.5 text-gray-900">{item.title}</h4>
-                <p className="text-gray-500 text-xs">{item.desc}</p>
+              <div key={index} className="group relative overflow-hidden bg-[#ffffff] border border-gray-100 rounded-xl p-5 hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 hover:-translate-y-1">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="text-2xl mb-3 group-hover:scale-110 transition-transform duration-300 relative z-10">{item.icon}</div>
+                <h4 className="font-bold text-sm mb-1.5 text-gray-900 relative z-10">{item.title}</h4>
+                <p className="text-gray-500 text-xs relative z-10">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -366,8 +384,11 @@ function PlacementsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {placedStudents.length > 0 ? placedStudents.map((student) => (
-              <div key={student._id} className="bg-[#f7f7f7] border border-gray-100 rounded-xl p-5 hover:bg-white hover:border-green-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-100/50">
-                <div className="flex items-center gap-3 mb-3">
+              <div key={student._id} className="group relative overflow-hidden bg-[#f7f7f7] border border-gray-100 rounded-xl p-5 hover:bg-white hover:border-green-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-100/50">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="flex items-center gap-3 mb-3 relative z-10">
                   <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-green-500/20">
                     {student.photo || student.studentName.substring(0, 2).toUpperCase()}
                   </div>
@@ -376,7 +397,7 @@ function PlacementsPage() {
                     <p className="text-xs text-gray-500">{student.course}</p>
                   </div>
                 </div>
-                <div className="space-y-1.5 pt-3 border-t border-gray-200">
+                <div className="space-y-1.5 pt-3 border-t border-gray-200 relative z-10">
                   <div className="flex items-center gap-2 text-xs text-gray-700">
                     <span>🏢</span> <span className="font-medium">{student.company}</span>
                   </div>
@@ -406,9 +427,12 @@ function PlacementsPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {successStories.length > 0 ? successStories.map((story) => (
-              <div key={story._id} className="bg-[#ffffff] border border-gray-100 rounded-xl p-6 relative hover:border-green-200 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300">
-                <div className="absolute -top-3 left-6 text-5xl text-green-100 font-serif">"</div>
-                <div className="flex items-center gap-3 mb-4">
+              <div key={story._id} className="group relative overflow-hidden bg-[#ffffff] border border-gray-100 rounded-xl p-6 hover:border-green-200 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="absolute -top-3 left-6 text-5xl text-green-100 font-serif z-0">"</div>
+                <div className="flex items-center gap-3 mb-4 relative z-10">
                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-green-500/20 text-xs">
                     {story.photo || story.studentName.substring(0, 2).toUpperCase()}
                   </div>
@@ -417,8 +441,8 @@ function PlacementsPage() {
                     <p className="text-[10px] text-gray-500">{story.course}</p>
                   </div>
                 </div>
-                <p className="text-gray-600 text-xs leading-relaxed mb-3 italic">"{story.testimonial}"</p>
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                <p className="text-gray-600 text-xs leading-relaxed mb-3 italic relative z-10">"{story.testimonial}"</p>
+                <div className="flex items-center justify-between pt-3 border-t border-gray-100 relative z-10">
                   <span className="text-xs font-medium text-green-700">{story.company} - {story.jobRole}</span>
                   <span className="text-xs font-bold text-green-600">₹{story.package}</span>
                 </div>
@@ -441,8 +465,11 @@ function PlacementsPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {placementDrives.length > 0 ? placementDrives.map((drive) => (
-              <div key={drive._id} className="bg-[#f7f7f7] border border-gray-100 rounded-xl overflow-hidden hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 flex flex-col">
-                <div className="p-5 border-b border-gray-200">
+              <div key={drive._id} className="group relative overflow-hidden bg-[#f7f7f7] border border-gray-100 rounded-xl hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300 flex flex-col">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="p-5 border-b border-gray-200 relative z-10">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-xl flex-shrink-0">🏢</div>
                     <div>
@@ -451,13 +478,13 @@ function PlacementsPage() {
                     </div>
                   </div>
                 </div>
-                <div className="p-5 space-y-2 flex-grow">
+                <div className="p-5 space-y-2 flex-grow relative z-10">
                   <div className="flex items-center gap-2 text-xs text-gray-600"><span className="text-gray-400">📍</span><span>{drive.location}</span></div>
                   <div className="flex items-center gap-2 text-xs text-gray-600"><span className="text-gray-400">📅</span><span>{new Date(drive.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></div>
                   <div className="flex items-center gap-2 text-xs text-gray-600"><span className="text-gray-400">👥</span><span>{drive.openings} Openings</span></div>
                   <div className="flex items-center gap-2 text-xs text-gray-600"><span className="text-gray-400">✓</span><span>{drive.eligibility}</span></div>
                 </div>
-                <div className="p-5 pt-0 flex items-center justify-between">
+                <div className="p-5 pt-0 flex items-center justify-between relative z-10">
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${drive.status.toLowerCase() === 'open' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
                     {drive.status}
                   </span>
@@ -482,9 +509,12 @@ function PlacementsPage() {
           <p className="text-gray-500 text-sm mb-8">Simple eligibility criteria</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {['Course completion', 'Required attendance', 'Project completion', 'Assessment completion', 'Resume ready', 'Interview preparation completed'].map((item, idx) => (
-              <div key={idx} className="flex items-center gap-3 bg-[#ffffff] border border-gray-100 rounded-lg p-4 hover:border-green-300 hover:shadow-md transition-all duration-300">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xs flex-shrink-0 font-bold">✓</div>
-                <span className="text-gray-700 text-sm font-medium">{item}</span>
+              <div key={idx} className="group relative overflow-hidden flex items-center gap-3 bg-[#ffffff] border border-gray-100 rounded-lg p-4 hover:border-green-300 hover:shadow-md transition-all duration-300">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-lg rounded-tr-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xs flex-shrink-0 font-bold relative z-10">✓</div>
+                <span className="text-gray-700 text-sm font-medium relative z-10">{item}</span>
               </div>
             ))}
           </div>
@@ -500,12 +530,15 @@ function PlacementsPage() {
           </div>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-[#f7f7f7] border border-gray-100 rounded-xl overflow-hidden transition-all duration-300 hover:border-green-200">
-                <button className="w-full flex items-center justify-between p-4 text-left" onClick={() => setFaqOpen(faqOpen === index ? null : index)}>
+              <div key={index} className="group relative overflow-hidden bg-[#f7f7f7] border border-gray-100 rounded-xl transition-all duration-300 hover:border-green-200">
+                {/* ✅ UPDATED: Subtle Top Green Line */}
+                <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+                
+                <button className="w-full flex items-center justify-between p-4 text-left relative z-10" onClick={() => setFaqOpen(faqOpen === index ? null : index)}>
                   <span className="font-semibold text-gray-900 pr-4 text-sm">{faq.q}</span>
                   <span className={`text-xl text-green-600 transition-transform duration-300 flex-shrink-0 ${faqOpen === index ? 'rotate-45' : ''}`}>+</span>
                 </button>
-                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${faqOpen === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out relative z-10 ${faqOpen === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                   <div className="p-4 pt-0 text-gray-600 leading-relaxed border-t border-gray-200 mt-2 text-sm">
                     {faq.a}
                   </div>

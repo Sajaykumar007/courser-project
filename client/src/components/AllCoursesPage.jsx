@@ -36,7 +36,7 @@ function AllCoursesPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('https://courser-project.onrender.com/api/courses');
+      const res = await fetch('http://localhost:5000/api/courses');
       const data = await res.json();
       if (data.success) {
         setCourses(data.data);
@@ -94,7 +94,7 @@ function AllCoursesPage() {
       return;
     }
     try {
-      const res = await fetch('https://courser-project.onrender.com/api/courses/enquiry', {
+      const res = await fetch('http://localhost:5000/api/courses/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ courseTitle: course.title, courseId: course._id, studentName, phone }),
@@ -315,6 +315,28 @@ function AllCoursesPage() {
                     style={{ animationDelay: `${idx * 0.05}s` }}
                     className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-[#f7f7f7] shadow-sm transition-all duration-500 hover:-translate-y-2 hover:bg-[#ffffff] hover:border-green-200 hover:shadow-lg animate-[cardAppear_0.5s_ease-out_both]"
                   >
+                    {/* ✅ UPDATED: Very thin initially (h-0.5), grows slightly (h-1.5) on hover for a subtle, elegant look */}
+                    <div
+                      className="
+                        absolute
+                        left-0
+                        right-0
+                        top-0
+                        h-0.5
+                        rounded-tl-2xl
+                        rounded-tr-2xl
+                        bg-gradient-to-r
+                        from-green-400
+                        via-green-500
+                        to-green-600
+                        transition-all
+                        duration-500
+                        ease-in-out
+                        group-hover:h-1.5
+                        group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]
+                      "
+                    />
+
                     <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-green-950">
                       <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-700 group-hover:scale-150" />
                       <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-lime-300/10 blur-3xl" />
