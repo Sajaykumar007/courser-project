@@ -18,6 +18,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(`🔥 INCOMING REQUEST: ${req.method} ${req.url}`, req.body);
+  next();
+});
+
 // Routes
 app.use('/api/leads', leadRoutes);
 app.use('/api/contact', contactRoutes);

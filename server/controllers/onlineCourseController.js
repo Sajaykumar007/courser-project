@@ -1,6 +1,6 @@
 const OnlineCourse = require('../models/OnlineCourse');
 const CourseEnrollment = require('../models/CourseEnrollment');
-const OnlineCourseEnquiry = require('../models/OnlineCourseEnquiry'); // ✅ MISSING IMPORT ADDED HERE
+const OnlineCourseEnquiry = require('../models/OnlineCourseEnquiry');
 
 // ==========================================
 // ===== GET ALL ONLINE COURSES ============
@@ -111,7 +111,7 @@ exports.submitOnlineCourseEnquiry = async (req, res) => {
       courseTitle,
       studentName,
       phone,
-      status: 'Pending'
+      status: 'New' // ✅ CHANGED TO 'New' FOR ADMIN DASHBOARD BADGE
     });
 
     await newEnquiry.save();
@@ -126,5 +126,29 @@ exports.submitOnlineCourseEnquiry = async (req, res) => {
       success: false, 
       message: 'Server error while submitting enquiry' 
     });
+  }
+};
+
+// ==========================================
+// ===== GET ALL ENQUIRIES (Admin) =========
+// ==========================================
+exports.getOnlineCourseEnquiries = async (req, res) => {
+  try {
+    const enquiries = await OnlineCourseEnquiry.find().sort({ createdAt: -1 });
+    res.json({ success: true, data: enquiries });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ==========================================
+// ===== DELETE ENQUIRY (Admin) ============
+// ==========================================
+exports.deleteOnlineCourseEnquiry = async (req, res) => {
+  try {
+    await OnlineCourseEnquiry.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Enquiry deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

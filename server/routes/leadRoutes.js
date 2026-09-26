@@ -1,53 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const Lead = require('../models/Lead');
 
-// POST Route - Save Form Data
-router.post('/submit', async (req, res) => {
-  try {
-    const newLead = new Lead(req.body);
-    const savedLead = await newLead.save();
-    
-    res.status(201).json({ 
-      success: true, 
-      message: 'Data saved successfully!', 
-      data: savedLead 
-    });
-  } catch (error) {
-    console.error('Error saving data:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error', 
-      error: error.message 
-    });
-  }
-});
+// ✅ leadController-ஐ இங்கே Import செய்கிறோம்
+// (Database Save + Email Send இரண்டும் இனி இங்கு தான் நடக்கும்)
+const leadController = require('../controllers/leadController');
 
-// GET Route - Check if server is working
+// ==========================================
+// ===== PUBLIC ROUTES =====================
+// ==========================================
+
+// ✅ Frontend அனுப்பும் exact URL: /api/leads/submit
+// "Join Now" பார்ம் சப்மிட் ஆகும் போது இந்த Function தான் Call ஆகும்
+router.post('/submit', leadController.submitJoinNow);
+
+
+// ==========================================
+// ===== ADMIN DASHBOARD ROUTES ============
+// ==========================================
+
+// ✅ Admin Dashboard-ல் Leads-ஐ பார்க்க
+router.get('/all', leadController.getAllLeads);
+
+// ✅ Admin Dashboard-ல் Lead-ஐ Delete செய்ய
+router.delete('/:id', leadController.deleteLead);
+
+
+// ==========================================
+// ===== TEST ROUTE (Optional) =============
+// ==========================================
 router.get('/', (req, res) => {
-  res.send('Courser API is running! 🚀');
-});
-// ... (unga existing code) ...
-
-// GET Route - Get All Leads (Admin Dashboard-ku)
-router.get('/all', async (req, res) => {
-  try {
-    const leads = await Lead.find().sort({ createdAt: -1 }); // Latest first
-    res.status(200).json({ success: true, data: leads });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Error fetching leads' });
-  }
-});
-
-// DELETE Route - Delete a Lead
-router.delete('/:id', async (req, res) => {
-  try {
-    await Lead.findByIdAndDelete(req.params.id);
-    res.status(200).json({ success: true, message: 'Lead deleted' });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Error deleting lead' });
-  }
+  res.json({ success: true, message: 'Leads API is running! 🚀' });
 });
 
 module.exports = router;
-

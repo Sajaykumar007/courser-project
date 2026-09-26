@@ -19,7 +19,7 @@ const onlineCourseEnquirySchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'Pending' // Pending, Contacted, Converted
+    default: 'New' // Pending, Contacted, Converted
   }
 }, { timestamps: true });
 
