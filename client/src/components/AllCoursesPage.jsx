@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function AllCoursesPage() {
   const [courses, setCourses] = useState([]);
@@ -10,6 +10,356 @@ function AllCoursesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [enquiredCourses, setEnquiredCourses] = useState([]);
+
+  // ============================================================
+  // NETWORK BACKGROUND ANIMATION - HERO SECTION (DARK)
+  // ============================================================
+  const heroCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = heroCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createParticles(rect.width, rect.height);
+    };
+
+    const createParticles = (width, height) => {
+      const area = width * height;
+      let particleCount = Math.floor(area / 11000);
+      particleCount = Math.max(35, particleCount);
+      particleCount = Math.min(95, particleCount);
+
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.8 + 0.7,
+          opacity: Math.random() * 0.55 + 0.25,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.05 + 0.02,
+        });
+      }
+    };
+
+    const drawParticle = (particle) => {
+      particle.pulse += particle.pulseSpeed;
+      const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.12;
+      const radius = particle.radius + Math.sin(particle.pulse) * 0.25;
+
+      const gradient = ctx.createRadialGradient(
+        particle.x, particle.y, 0, particle.x, particle.y, radius * 5
+      );
+      gradient.addColorStop(0, `rgba(74, 222, 128, ${Math.max(0.15, pulseOpacity)})`);
+      gradient.addColorStop(0.5, `rgba(34, 197, 94, ${Math.max(0.05, pulseOpacity * 0.35)})`);
+      gradient.addColorStop(1, 'rgba(22, 163, 74, 0)');
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(particle.x, particle.y, radius * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(134, 239, 172, ${Math.max(0.25, pulseOpacity)})`;
+      ctx.arc(particle.x, particle.y, Math.max(0.7, radius), 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawConnections = () => {
+      const connectionDistance = 125;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.28;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(74, 222, 128, ${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const drawMouseConnections = () => {
+      if (mouse.x === null || mouse.y === null) return;
+      particles.forEach((particle) => {
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const opacity = (1 - distance / mouse.radius) * 0.45;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    };
+
+    const animate = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      if (!isReducedMotion) {
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -20 || particle.x > width + 20) particle.vx *= -1;
+          if (particle.y < -20 || particle.y > height + 20) particle.vy *= -1;
+        });
+      }
+
+      drawConnections();
+      drawMouseConnections();
+      particles.forEach(drawParticle);
+
+      if (!isReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    };
+    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const handleTouchMove = (event) => {
+      if (!event.touches.length) return;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.touches[0].clientX - rect.left;
+      mouse.y = event.touches[0].clientY - rect.top;
+    };
+    const handleTouchEnd = () => { mouse.x = null; mouse.y = null; };
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    resizeCanvas();
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
+  // ============================================================
+  // NETWORK BACKGROUND ANIMATION - WHITE SECTION (LIGHT)
+  // ============================================================
+  const whiteCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = whiteCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createParticles(rect.width, rect.height);
+    };
+
+    const createParticles = (width, height) => {
+      const area = width * height;
+      let particleCount = Math.floor(area / 11000);
+      particleCount = Math.max(35, particleCount);
+      particleCount = Math.min(95, particleCount);
+
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.8 + 0.7,
+          opacity: Math.random() * 0.55 + 0.25,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.05 + 0.02,
+        });
+      }
+    };
+
+    const drawParticle = (particle) => {
+      particle.pulse += particle.pulseSpeed;
+      const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.12;
+      const radius = particle.radius + Math.sin(particle.pulse) * 0.25;
+
+      const gradient = ctx.createRadialGradient(
+        particle.x, particle.y, 0, particle.x, particle.y, radius * 5
+      );
+      gradient.addColorStop(0, `rgba(22, 163, 74, ${Math.max(0.15, pulseOpacity * 0.6)})`);
+      gradient.addColorStop(0.5, `rgba(34, 197, 94, ${Math.max(0.05, pulseOpacity * 0.3)})`);
+      gradient.addColorStop(1, 'rgba(74, 222, 128, 0)');
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(particle.x, particle.y, radius * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(22, 163, 74, ${Math.max(0.3, pulseOpacity * 0.7)})`;
+      ctx.arc(particle.x, particle.y, Math.max(0.7, radius), 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawConnections = () => {
+      const connectionDistance = 125;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(22, 163, 74, ${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const drawMouseConnections = () => {
+      if (mouse.x === null || mouse.y === null) return;
+      particles.forEach((particle) => {
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const opacity = (1 - distance / mouse.radius) * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    };
+
+    const animate = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      if (!isReducedMotion) {
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -20 || particle.x > width + 20) particle.vx *= -1;
+          if (particle.y < -20 || particle.y > height + 20) particle.vy *= -1;
+        });
+      }
+
+      drawConnections();
+      drawMouseConnections();
+      particles.forEach(drawParticle);
+
+      if (!isReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    };
+    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const handleTouchMove = (event) => {
+      if (!event.touches.length) return;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.touches[0].clientX - rect.left;
+      mouse.y = event.touches[0].clientY - rect.top;
+    };
+    const handleTouchEnd = () => { mouse.x = null; mouse.y = null; };
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    resizeCanvas();
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -135,7 +485,7 @@ function AllCoursesPage() {
   const handleOnlineCourses = () => window.dispatchEvent(new CustomEvent('navigateToPage', { detail: 'onlineCourses' }));
 
   return (
-    <div className="min-h-screen bg-[#f7f7f7] text-slate-800 font-sans animate-[pageLoad_0.6s_ease-out_forwards]">
+    <div className="min-h-screen bg-gray-50 text-slate-800 font-sans animate-[pageLoad_0.6s_ease-out_forwards]">
       <style>{`
         @keyframes pageLoad { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes cardAppear { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
@@ -151,11 +501,16 @@ function AllCoursesPage() {
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
       `}</style>
 
-      {/* ===== HERO SECTION (Premium Dark Green) ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-green-900 via-slate-900 to-green-950 px-4 pb-16 pt-12 sm:px-6 sm:pt-16 lg:px-8">
-        <div className="absolute -left-32 -top-32 h-64 w-64 rounded-full bg-green-500/20 blur-3xl animate-glow" />
-        <div className="absolute -bottom-32 -right-24 h-72 w-72 rounded-full bg-green-400/10 blur-3xl animate-glow delay-200" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.6)_1px,transparent_1px)] [background-size:40px_40px]" />
+      {/* ===== HERO SECTION WITH DARK NETWORK ANIMATION ===== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-green-900 via-slate-950 to-green-950 px-4 pb-16 pt-12 sm:px-6 sm:pt-16 lg:px-8">
+        <canvas
+          ref={heroCanvasRef}
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          aria-hidden="true"
+        />
+        <div className="absolute -left-32 -top-32 z-[1] h-64 w-64 rounded-full bg-green-500/20 blur-3xl animate-glow" />
+        <div className="absolute -bottom-32 -right-24 z-[1] h-72 w-72 rounded-full bg-green-400/10 blur-3xl animate-glow delay-200" />
+        <div className="pointer-events-none absolute inset-0 z-[1] opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.6)_1px,transparent_1px)] [background-size:40px_40px]" />
 
         <div className="relative z-10 mx-auto max-w-5xl text-center animate-fade-in-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-green-400/30 bg-green-400/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-green-300 backdrop-blur-md">
@@ -189,248 +544,239 @@ function AllCoursesPage() {
         </div>
       </section>
 
-      {/* ===== FILTER SECTION ===== */}
-      <section className="relative z-10 px-4 sm:px-6 lg:px-8 -mt-6">
-        <div className="mx-auto max-w-7xl rounded-2xl border border-gray-200 bg-[#ffffff] p-4 shadow-xl sm:p-5">
-          <div className="flex justify-center">
-            <div className="group relative w-full max-w-3xl transition-all duration-300 hover:-translate-y-0.5">
-              <div className="pointer-events-none absolute -inset-0.5 rounded-[12px] bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 opacity-0 blur transition duration-500 group-focus-within:opacity-30" />
-              <div className="relative flex h-[46px] items-center overflow-hidden rounded-[10px] border border-gray-200 bg-[#f7f7f7] shadow-sm transition-all duration-300 group-hover:border-green-200 group-hover:bg-[#ffffff] group-focus-within:border-green-400 group-focus-within:bg-[#ffffff] group-focus-within:shadow-lg group-focus-within:shadow-green-500/10">
-                <div className="ml-3 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-green-50 text-sm transition-all duration-300 group-hover:scale-105 group-focus-within:rotate-6 group-focus-within:bg-green-100">
-                  <span className="inline-block transition-transform duration-500 group-focus-within:scale-110">🔍</span>
+      {/* ===== MAIN CONTENT WITH WHITE NETWORK ANIMATION ===== */}
+      <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 -mt-6 pb-10">
+        <canvas
+          ref={whiteCanvasRef}
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          aria-hidden="true"
+        />
+        <div className="pointer-events-none absolute left-0 top-20 z-[1] h-72 w-72 rounded-full bg-green-100/60 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 right-0 z-[1] h-80 w-80 rounded-full bg-green-100/50 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-7xl space-y-8">
+          
+          {/* ===== FILTER SECTION ===== */}
+          <div className="rounded-2xl border border-gray-200 bg-white/90 backdrop-blur-md p-4 shadow-xl sm:p-5 animate-fade-in-up">
+            <div className="flex justify-center">
+              <div className="group relative w-full max-w-3xl transition-all duration-300 hover:-translate-y-0.5">
+                <div className="pointer-events-none absolute -inset-0.5 rounded-[12px] bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 opacity-0 blur transition duration-500 group-focus-within:opacity-30" />
+                <div className="relative flex h-[46px] items-center overflow-hidden rounded-[10px] border border-gray-200 bg-gray-50 shadow-sm transition-all duration-300 group-hover:border-green-200 group-hover:bg-white group-focus-within:border-green-400 group-focus-within:bg-white group-focus-within:shadow-lg group-focus-within:shadow-green-500/10">
+                  <div className="ml-3 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-green-50 text-sm transition-all duration-300 group-hover:scale-105 group-focus-within:rotate-6 group-focus-within:bg-green-100">
+                    <span className="inline-block transition-transform duration-500 group-focus-within:scale-110">🔍</span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search courses..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="h-full min-w-0 flex-1 bg-transparent px-3 text-[13px] font-medium text-slate-700 outline-none placeholder:text-gray-400 sm:text-sm"
+                  />
+                  {searchTerm && (
+                    <span className="hidden whitespace-nowrap rounded-md bg-green-50 px-2 py-1 text-[10px] font-bold text-green-600 sm:block animate-[fadeIn_0.3s_ease-out]">
+                      {filteredCourses.length} found
+                    </span>
+                  )}
+                  {searchTerm && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchTerm('')}
+                      aria-label="Clear search"
+                      className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-[11px] font-bold text-gray-500 transition-all duration-300 hover:rotate-90 hover:scale-110 hover:bg-red-50 hover:text-red-500 active:scale-90 animate-[scaleIn_0.2s_ease-out]"
+                    >
+                      ✕
+                    </button>
+                  )}
                 </div>
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-full min-w-0 flex-1 bg-transparent px-3 text-[13px] font-medium text-slate-700 outline-none placeholder:text-gray-400 sm:text-sm"
-                />
-                {searchTerm && (
-                  <span className="hidden whitespace-nowrap rounded-md bg-green-50 px-2 py-1 text-[10px] font-bold text-green-600 sm:block animate-[fadeIn_0.3s_ease-out]">
-                    {filteredCourses.length} found
-                  </span>
-                )}
-                {searchTerm && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchTerm('')}
-                    aria-label="Clear search"
-                    className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-200 text-[11px] font-bold text-gray-500 transition-all duration-300 hover:rotate-90 hover:scale-110 hover:bg-red-50 hover:text-red-500 active:scale-90 animate-[scaleIn_0.2s_ease-out]"
-                  >
-                    ✕
-                  </button>
-                )}
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">📂 Category</label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full rounded-[10px] border border-gray-200 bg-gray-50 px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-white focus:ring-2 focus:ring-green-100"
+                >
+                  {categories.map((cat, idx) => (
+                    <option key={idx} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">📊 Level</label>
+                <select
+                  value={selectedLevel}
+                  onChange={(e) => setSelectedLevel(e.target.value)}
+                  className="w-full rounded-[10px] border border-gray-200 bg-gray-50 px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-white focus:ring-2 focus:ring-green-100"
+                >
+                  <option value="All">All Levels</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">🔃 Sort By</label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full rounded-[10px] border border-gray-200 bg-gray-50 px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-white focus:ring-2 focus:ring-green-100"
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                </select>
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={resetFilters}
+                  className="w-full rounded-[10px] border border-gray-200 bg-gray-100 px-4 py-2.5 text-xs font-bold text-slate-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:bg-gray-200 hover:shadow-md active:scale-95"
+                >
+                  🔄 Reset
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+              <span className="font-medium text-gray-500">
+                Showing <strong className="text-green-600">{filteredCourses.length}</strong> {filteredCourses.length === 1 ? 'course' : 'courses'}
+              </span>
+              {searchTerm && (
+                <span className="rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-semibold text-green-700 animate-[scaleIn_0.3s_ease-out]">
+                  Search: "{searchTerm}"
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* ===== COURSES GRID ===== */}
+          <div id="courses-grid" className="py-6">
+            {loading ? (
+              <div className="flex min-h-[400px] flex-col items-center justify-center">
+                <div className="h-14 w-14 animate-spin rounded-full border-4 border-green-100 border-t-green-600" />
+                <p className="mt-4 text-sm font-medium text-gray-500">Loading courses...</p>
+              </div>
+            ) : filteredCourses.length === 0 ? (
+              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-white/80 backdrop-blur-sm px-6 text-center animate-[fadeUp_0.5s_ease-out]">
+                <div className="text-6xl">📭</div>
+                <h3 className="mt-5 text-2xl font-black text-slate-800">No courses found</h3>
+                <p className="mt-2 max-w-md text-sm text-gray-500">Try adjusting your filters or search criteria</p>
+                <button onClick={resetFilters} className="mt-6 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95">
+                  Clear All Filters
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {filteredCourses.map((course, idx) => {
+                  const discount = getDiscount(course.price, course.originalPrice);
+                  const alreadyEnquired = enquiredCourses.includes(course._id);
+                  return (
+                    <div
+                      key={course._id}
+                      style={{ animationDelay: `${idx * 0.05}s` }}
+                      className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:border-green-300 hover:shadow-xl animate-[cardAppear_0.5s_ease-out_both]"
+                    >
+                      <div className="absolute left-0 right-0 top-0 h-0.5 rounded-tl-2xl rounded-tr-2xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 transition-all duration-500 ease-in-out group-hover:h-1.5 group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]" />
+
+                      <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-green-950">
+                        <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-700 group-hover:scale-150" />
+                        <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-lime-300/10 blur-3xl" />
+                        <div className="relative z-10 text-6xl drop-shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                          {course.image || '💻'}
+                        </div>
+                        <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1 text-[9px] font-bold shadow-sm ${getLevelClasses(course.level)}`}>
+                          {course.level}
+                        </span>
+                        {discount > 0 && (
+                          <span className="absolute right-3 top-3 rounded-full bg-red-500 px-2.5 py-1 text-[9px] font-black text-white shadow-lg">
+                            {discount}% OFF
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="p-4">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-green-600">{course.category}</div>
+                        <h3 className="mt-1.5 min-h-[42px] line-clamp-2 text-base font-black leading-5 text-slate-800 transition-colors duration-300 group-hover:text-green-700">
+                          {course.title}
+                        </h3>
+                        <div className="mt-3 flex items-center gap-2 text-[10px] text-gray-500">
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50">👨‍🏫</span>
+                          <span className="truncate">{course.instructor}</span>
+                        </div>
+                        <div className="mt-3 flex items-center gap-2">
+                          <span className="rounded-md bg-amber-50 px-2 py-1 text-[10px] font-bold text-amber-700">⭐ {course.rating}</span>
+                          <span className="text-[9px] text-gray-400">({course.reviews} reviews)</span>
+                        </div>
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          <div className="rounded-lg bg-gray-50 px-2.5 py-2 text-center transition-colors group-hover:bg-green-50">
+                            <div className="text-[9px] text-gray-400">Duration</div>
+                            <div className="mt-0.5 text-[10px] font-bold text-slate-700">⏱️ {course.duration}</div>
+                          </div>
+                          <div className="rounded-lg bg-gray-50 px-2.5 py-2 text-center transition-colors group-hover:bg-green-50">
+                            <div className="text-[9px] text-gray-400">Lectures</div>
+                            <div className="mt-0.5 text-[10px] font-bold text-slate-700">📚 {course.lectures}</div>
+                          </div>
+                        </div>
+                        {course.features && course.features.length > 0 && (
+                          <ul className="mt-3 space-y-1.5">
+                            {course.features.slice(0, 3).map((feature, fidx) => (
+                              <li key={fidx} className="flex items-start gap-2 text-[10px] leading-4 text-gray-600">
+                                <span className="mt-0.5 text-green-500">✓</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        <div className="mt-4 flex items-end justify-between gap-3 border-t border-gray-100 pt-4">
+                          <div>
+                            <div className="text-xl font-black text-slate-900">₹{course.price?.toLocaleString()}</div>
+                            {course.originalPrice && (
+                              <div className="text-[10px] text-gray-400 line-through">₹{course.originalPrice?.toLocaleString()}</div>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => handleEnquiry(course)}
+                            disabled={alreadyEnquired}
+                            className={`rounded-xl px-4 py-2.5 text-[10px] font-bold transition-all duration-300 ${
+                              alreadyEnquired
+                                ? 'cursor-not-allowed bg-green-100 text-green-700'
+                                : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md shadow-green-500/20 hover:-translate-y-0.5 hover:shadow-lg active:scale-95'
+                            }`}
+                          >
+                            {alreadyEnquired ? '✓ Enquired' : 'Enquire Now'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* ===== CTA SECTION ===== */}
+          <div className="relative overflow-hidden bg-green-900/95 backdrop-blur-md rounded-3xl border border-white/10 px-4 py-10 text-white sm:px-6 sm:py-14 lg:px-8">
+            <div className="absolute -left-20 top-0 h-60 w-60 rounded-full bg-white/10 blur-3xl animate-pulse" />
+            <div className="absolute -bottom-20 -right-10 h-72 w-72 rounded-full bg-lime-300/10 blur-3xl" />
+            <div className="relative mx-auto max-w-4xl text-center animate-fade-in-up">
+              <h2 className="text-2xl font-black text-white sm:text-3xl">Can't Find What You're Looking For?</h2>
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-green-100 sm:text-base">
+                Get personalized course recommendations from our experts
+              </p>
+              <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+                <button onClick={handleContactUs} className="rounded-xl bg-white px-6 py-3 text-sm font-black text-green-700 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl active:scale-95">
+                  Contact Us
+                </button>
+                <button onClick={handleOnlineCourses} className="rounded-xl border border-white/30 bg-white/10 px-6 py-3 text-sm font-black text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 active:scale-95">
+                  View Online Courses
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">📂 Category</label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full rounded-[10px] border border-gray-200 bg-[#f7f7f7] px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-[#ffffff] focus:ring-2 focus:ring-green-100"
-              >
-                {categories.map((cat, idx) => (
-                  <option key={idx} value={cat}>{cat}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">📊 Level</label>
-              <select
-                value={selectedLevel}
-                onChange={(e) => setSelectedLevel(e.target.value)}
-                className="w-full rounded-[10px] border border-gray-200 bg-[#f7f7f7] px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-[#ffffff] focus:ring-2 focus:ring-green-100"
-              >
-                <option value="All">All Levels</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
-            <div>
-              <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">🔃 Sort By</label>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full rounded-[10px] border border-gray-200 bg-[#f7f7f7] px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 hover:border-green-200 focus:border-green-400 focus:bg-[#ffffff] focus:ring-2 focus:ring-green-100"
-              >
-                <option value="newest">Newest First</option>
-                <option value="rating">Highest Rated</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
-            </div>
-            <div className="flex items-end">
-              <button
-                onClick={resetFilters}
-                className="w-full rounded-[10px] border border-gray-200 bg-gray-100 px-4 py-2.5 text-xs font-bold text-slate-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:bg-gray-200 hover:shadow-md active:scale-95"
-              >
-                🔄 Reset
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-medium text-gray-500">
-              Showing <strong className="text-green-600">{filteredCourses.length}</strong> {filteredCourses.length === 1 ? 'course' : 'courses'}
-            </span>
-            {searchTerm && (
-              <span className="rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-semibold text-green-700 animate-[scaleIn_0.3s_ease-out]">
-                Search: "{searchTerm}"
-              </span>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== COURSES GRID ===== */}
-      <section className="px-4 py-10 bg-[#ffffff] sm:px-6 lg:px-8 sm:py-14">
-        <div className="mx-auto max-w-7xl">
-          {loading ? (
-            <div className="flex min-h-[400px] flex-col items-center justify-center">
-              <div className="h-14 w-14 animate-spin rounded-full border-4 border-green-100 border-t-green-600" />
-              <p className="mt-4 text-sm font-medium text-gray-500">Loading courses...</p>
-            </div>
-          ) : filteredCourses.length === 0 ? (
-            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-[#ffffff] px-6 text-center animate-[fadeUp_0.5s_ease-out]">
-              <div className="text-6xl">📭</div>
-              <h3 className="mt-5 text-2xl font-black text-slate-800">No courses found</h3>
-              <p className="mt-2 max-w-md text-sm text-gray-500">Try adjusting your filters or search criteria</p>
-              <button onClick={resetFilters} className="mt-6 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95">
-                Clear All Filters
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {filteredCourses.map((course, idx) => {
-                const discount = getDiscount(course.price, course.originalPrice);
-                const alreadyEnquired = enquiredCourses.includes(course._id);
-                return (
-                  <div
-                    key={course._id}
-                    style={{ animationDelay: `${idx * 0.05}s` }}
-                    className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-[#f7f7f7] shadow-sm transition-all duration-500 hover:-translate-y-2 hover:bg-[#ffffff] hover:border-green-200 hover:shadow-lg animate-[cardAppear_0.5s_ease-out_both]"
-                  >
-                    {/* ✅ UPDATED: Very thin initially (h-0.5), grows slightly (h-1.5) on hover for a subtle, elegant look */}
-                    <div
-                      className="
-                        absolute
-                        left-0
-                        right-0
-                        top-0
-                        h-0.5
-                        rounded-tl-2xl
-                        rounded-tr-2xl
-                        bg-gradient-to-r
-                        from-green-400
-                        via-green-500
-                        to-green-600
-                        transition-all
-                        duration-500
-                        ease-in-out
-                        group-hover:h-1.5
-                        group-hover:shadow-[0_4px_12px_rgba(34,197,94,0.6)]
-                      "
-                    />
-
-                    <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-green-950">
-                      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-700 group-hover:scale-150" />
-                      <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-lime-300/10 blur-3xl" />
-                      <div className="relative z-10 text-6xl drop-shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3">
-                        {course.image || '💻'}
-                      </div>
-                      <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1 text-[9px] font-bold shadow-sm ${getLevelClasses(course.level)}`}>
-                        {course.level}
-                      </span>
-                      {discount > 0 && (
-                        <span className="absolute right-3 top-3 rounded-full bg-red-500 px-2.5 py-1 text-[9px] font-black text-white shadow-lg">
-                          {discount}% OFF
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="p-4">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-green-600">{course.category}</div>
-                      <h3 className="mt-1.5 min-h-[42px] line-clamp-2 text-base font-black leading-5 text-slate-800 transition-colors duration-300 group-hover:text-green-700">
-                        {course.title}
-                      </h3>
-                      <div className="mt-3 flex items-center gap-2 text-[10px] text-gray-500">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50">👨‍🏫</span>
-                        <span className="truncate">{course.instructor}</span>
-                      </div>
-                      <div className="mt-3 flex items-center gap-2">
-                        <span className="rounded-md bg-amber-50 px-2 py-1 text-[10px] font-bold text-amber-700">⭐ {course.rating}</span>
-                        <span className="text-[9px] text-gray-400">({course.reviews} reviews)</span>
-                      </div>
-                      <div className="mt-3 grid grid-cols-2 gap-2">
-                        <div className="rounded-lg bg-[#f7f7f7] px-2.5 py-2 text-center transition-colors group-hover:bg-green-50">
-                          <div className="text-[9px] text-gray-400">Duration</div>
-                          <div className="mt-0.5 text-[10px] font-bold text-slate-700">⏱️ {course.duration}</div>
-                        </div>
-                        <div className="rounded-lg bg-[#f7f7f7] px-2.5 py-2 text-center transition-colors group-hover:bg-green-50">
-                          <div className="text-[9px] text-gray-400">Lectures</div>
-                          <div className="mt-0.5 text-[10px] font-bold text-slate-700">📚 {course.lectures}</div>
-                        </div>
-                      </div>
-                      {course.features && course.features.length > 0 && (
-                        <ul className="mt-3 space-y-1.5">
-                          {course.features.slice(0, 3).map((feature, fidx) => (
-                            <li key={fidx} className="flex items-start gap-2 text-[10px] leading-4 text-gray-600">
-                              <span className="mt-0.5 text-green-500">✓</span>
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      <div className="mt-4 flex items-end justify-between gap-3 border-t border-gray-100 pt-4">
-                        <div>
-                          <div className="text-xl font-black text-slate-900">₹{course.price?.toLocaleString()}</div>
-                          {course.originalPrice && (
-                            <div className="text-[10px] text-gray-400 line-through">₹{course.originalPrice?.toLocaleString()}</div>
-                          )}
-                        </div>
-                        <button
-                          onClick={() => handleEnquiry(course)}
-                          disabled={alreadyEnquired}
-                          className={`rounded-xl px-4 py-2.5 text-[10px] font-bold transition-all duration-300 ${
-                            alreadyEnquired
-                              ? 'cursor-not-allowed bg-green-100 text-green-700'
-                              : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md shadow-green-500/20 hover:-translate-y-0.5 hover:shadow-lg active:scale-95'
-                          }`}
-                        >
-                          {alreadyEnquired ? '✓ Enquired' : 'Enquire Now'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ===== CTA SECTION ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-green-700 via-green-600 to-green-800 px-4 py-10 text-white sm:px-6 sm:py-14 lg:px-8">
-        <div className="absolute -left-20 top-0 h-60 w-60 rounded-full bg-white/10 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -right-10 h-72 w-72 rounded-full bg-lime-300/10 blur-3xl" />
-        <div className="relative mx-auto max-w-4xl text-center animate-fade-in-up">
-          <h2 className="text-2xl font-black text-white sm:text-3xl">Can't Find What You're Looking For?</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-green-100 sm:text-base">
-            Get personalized course recommendations from our experts
-          </p>
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <button onClick={handleContactUs} className="rounded-xl bg-white px-6 py-3 text-sm font-black text-green-700 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl active:scale-95">
-              Contact Us
-            </button>
-            <button onClick={handleOnlineCourses} className="rounded-xl border border-white/30 bg-white/10 px-6 py-3 text-sm font-black text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/20 active:scale-95">
-              View Online Courses
-            </button>
-          </div>
         </div>
       </section>
     </div>

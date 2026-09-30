@@ -15,6 +15,181 @@ function Navbar() {
 
   const navbarRef = useRef(null);
   const timeoutRef = useRef(null);
+  
+  // ============================================================
+  // NETWORK BACKGROUND ANIMATION - NAVBAR (LIGHT)
+  // ============================================================
+  const navbarCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = navbarCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createParticles(rect.width, rect.height);
+    };
+
+    const createParticles = (width, height) => {
+      const area = width * height;
+      let particleCount = Math.floor(area / 11000);
+      particleCount = Math.max(20, particleCount); // Optimized for navbar height
+      particleCount = Math.min(50, particleCount);
+
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.8 + 0.7,
+          opacity: Math.random() * 0.55 + 0.25,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.05 + 0.02,
+        });
+      }
+    };
+
+    const drawParticle = (particle) => {
+      particle.pulse += particle.pulseSpeed;
+      const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.12;
+      const radius = particle.radius + Math.sin(particle.pulse) * 0.25;
+
+      const gradient = ctx.createRadialGradient(
+        particle.x, particle.y, 0, particle.x, particle.y, radius * 5
+      );
+      gradient.addColorStop(0, `rgba(22, 163, 74, ${Math.max(0.15, pulseOpacity * 0.6)})`);
+      gradient.addColorStop(0.5, `rgba(34, 197, 94, ${Math.max(0.05, pulseOpacity * 0.3)})`);
+      gradient.addColorStop(1, 'rgba(74, 222, 128, 0)');
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(particle.x, particle.y, radius * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(22, 163, 74, ${Math.max(0.3, pulseOpacity * 0.7)})`;
+      ctx.arc(particle.x, particle.y, Math.max(0.7, radius), 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawConnections = () => {
+      const connectionDistance = 125;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(22, 163, 74, ${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const drawMouseConnections = () => {
+      if (mouse.x === null || mouse.y === null) return;
+      particles.forEach((particle) => {
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const opacity = (1 - distance / mouse.radius) * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    };
+
+    const animate = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      if (!isReducedMotion) {
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -20 || particle.x > width + 20) particle.vx *= -1;
+          if (particle.y < -20 || particle.y > height + 20) particle.vy *= -1;
+        });
+      }
+
+      drawConnections();
+      drawMouseConnections();
+      particles.forEach(drawParticle);
+
+      if (!isReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    };
+    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const handleTouchMove = (event) => {
+      if (!event.touches.length) return;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.touches[0].clientX - rect.left;
+      mouse.y = event.touches[0].clientY - rect.top;
+    };
+    const handleTouchEnd = () => { mouse.x = null; mouse.y = null; };
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    resizeCanvas();
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
 
   const announcements = [
     "🎓 100% Placement Assistance",
@@ -313,8 +488,15 @@ function Navbar() {
       ====================================================== */}
       <nav
         ref={navbarRef}
-        className="fixed top-0 left-0 right-0 z-[1000] h-[72px] sm:h-[76px] flex items-center bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[1000] h-[72px] sm:h-[76px] flex items-center bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm overflow-hidden"
       >
+        {/* Network Animation Canvas */}
+        <canvas
+          ref={navbarCanvasRef}
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          aria-hidden="true"
+        />
+
         {/* Hamburger Menu (PrimeReact Icon) */}
         <button
           type="button"
@@ -322,7 +504,7 @@ function Navbar() {
           aria-label="Open menu"
           aria-expanded={isSidebarOpen}
           aria-controls="vertical-sidebar"
-          className="ml-2 sm:ml-4 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg border border-gray-200 bg-white transition hover:bg-gray-100 lg:hidden"
+          className="relative z-10 ml-2 sm:ml-4 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg border border-gray-200 bg-white/80 backdrop-blur-sm transition hover:bg-gray-100 lg:hidden"
         >
           <BarsIcon className="h-5 w-5 text-gray-700" />
         </button>
@@ -332,13 +514,13 @@ function Navbar() {
           onClick={() => navigateTo("home")}
           role="button"
           aria-label="Courser Home"
-          className="ml-2 sm:ml-4 flex cursor-pointer items-center lg:ml-6"
+          className="relative z-10 ml-2 sm:ml-4 flex cursor-pointer items-center lg:ml-6"
         >
           <img src="/logo.png" alt="Courser Logo" className="h-9 sm:h-11 w-auto object-contain" />
         </div>
 
         {/* Desktop Menu */}
-        <ul role="menubar" className="ml-2 sm:ml-6 hidden h-full items-center gap-1 lg:flex">
+        <ul role="menubar" className="relative z-10 ml-2 sm:ml-6 hidden h-full items-center gap-1 lg:flex">
           {menuKeys.map((key) => {
             const item = menuData[key];
             const isActive = activeMenu === key;
@@ -380,7 +562,7 @@ function Navbar() {
                 {hasDropdown && isActive && (
                   <div
                     role="menu"
-                    className="absolute left-0 top-full mt-2 z-[1100] w-64 rounded-xl border border-gray-100 bg-white p-2 shadow-xl shadow-gray-200/50 animate-[fadeIn_0.2s_ease-out]"
+                    className="absolute left-0 top-full mt-2 z-[1100] w-64 rounded-xl border border-gray-100 bg-white/95 backdrop-blur-md p-2 shadow-xl shadow-gray-200/50 animate-[fadeIn_0.2s_ease-out]"
                   >
                     {item.items.map((subItem, idx) => (
                       <a
@@ -402,7 +584,7 @@ function Navbar() {
         </ul>
 
         {/* Join Now Button - COMPACT SIZE */}
-        <div className="ml-auto mr-2 sm:mr-4 lg:mr-6">
+        <div className="relative z-10 ml-auto mr-2 sm:mr-4 lg:mr-6">
           <button
             type="button"
             onClick={handleJoinNow}
@@ -541,6 +723,13 @@ function Navbar() {
         @keyframes fadeIn {
           0% { opacity: 0; transform: translateY(-10px); }
           100% { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { 
+            animation-duration: 0.01ms !important; 
+            animation-iteration-count: 1 !important; 
+            transition-duration: 0.01ms !important; 
+          }
         }
       `}</style>
     </>

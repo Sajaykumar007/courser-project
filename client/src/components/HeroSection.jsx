@@ -1,6 +1,181 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 function HeroSection() {
+  const canvasRef = useRef(null);
+
+  // ============================================================
+  // NETWORK BACKGROUND ANIMATION - HERO SECTION (DARK GREEN)
+  // ============================================================
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createParticles(rect.width, rect.height);
+    };
+
+    const createParticles = (width, height) => {
+      const area = width * height;
+      let particleCount = Math.floor(area / 11000);
+      particleCount = Math.max(35, particleCount);
+      particleCount = Math.min(95, particleCount);
+
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.8 + 0.7,
+          opacity: Math.random() * 0.55 + 0.25,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.05 + 0.02,
+        });
+      }
+    };
+
+    const drawParticle = (particle) => {
+      particle.pulse += particle.pulseSpeed;
+      const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.12;
+      const radius = particle.radius + Math.sin(particle.pulse) * 0.25;
+
+      const gradient = ctx.createRadialGradient(
+        particle.x, particle.y, 0, particle.x, particle.y, radius * 5
+      );
+      gradient.addColorStop(0, `rgba(74, 222, 128, ${Math.max(0.15, pulseOpacity)})`);
+      gradient.addColorStop(0.5, `rgba(34, 197, 94, ${Math.max(0.05, pulseOpacity * 0.35)})`);
+      gradient.addColorStop(1, 'rgba(22, 163, 74, 0)');
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(particle.x, particle.y, radius * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(134, 239, 172, ${Math.max(0.25, pulseOpacity)})`;
+      ctx.arc(particle.x, particle.y, Math.max(0.7, radius), 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawConnections = () => {
+      const connectionDistance = 125;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.28;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(74, 222, 128, ${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const drawMouseConnections = () => {
+      if (mouse.x === null || mouse.y === null) return;
+      particles.forEach((particle) => {
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const opacity = (1 - distance / mouse.radius) * 0.45;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    };
+
+    const animate = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      if (!isReducedMotion) {
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -20 || particle.x > width + 20) particle.vx *= -1;
+          if (particle.y < -20 || particle.y > height + 20) particle.vy *= -1;
+        });
+      }
+
+      drawConnections();
+      drawMouseConnections();
+      particles.forEach(drawParticle);
+
+      if (!isReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    };
+    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const handleTouchMove = (event) => {
+      if (!event.touches.length) return;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.touches[0].clientX - rect.left;
+      mouse.y = event.touches[0].clientY - rect.top;
+    };
+    const handleTouchEnd = () => { mouse.x = null; mouse.y = null; };
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    resizeCanvas();
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
   const handleExploreCourses = () => {
     window.dispatchEvent(
       new CustomEvent("navigateToPage", {
@@ -19,23 +194,31 @@ function HeroSection() {
     { icon: "👨‍🏫", label: "Expert Trainers" },
     { icon: "💼", label: "Placement Support" },
     { icon: "💻", label: "Online & Offline" },
-    { icon: "", label: "Certification" },
+    { icon: "🏆", label: "Certification" },
   ];
 
   return (
-    // ✅ UPDATED: Further reduced top padding (pt-6, sm:pt-10, lg:pt-12) to bring content even more UP
-    <section className="relative overflow-hidden bg-[#022d23] bg-gradient-to-br from-[#022d23] via-[#07533b] to-[#087a4d] px-4 pt-6 pb-12 sm:px-6 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 lg:px-16 lg:pt-12 lg:pb-20 xl:px-24">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#022d23] via-[#07533b] to-[#087a4d] px-4 pt-6 pb-12 sm:px-6 sm:pt-10 sm:pb-14 md:px-10 md:pt-12 md:pb-16 lg:px-16 lg:pt-12 lg:pb-20 xl:px-24">
       
       {/* =========================================
-          SUBTLE DOT BACKGROUND PATTERN
+          NETWORK ANIMATION CANVAS
       ========================================== */}
-      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(167,243,208,0.4)_1px,transparent_1px)] [background-size:32px_32px]" />
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        aria-hidden="true"
+      />
+
+      {/* =========================================
+          SUBTLE DOT BACKGROUND PATTERN & GLOWS
+      ========================================== */}
+      <div className="pointer-events-none absolute inset-0 z-[1] opacity-20 [background-image:radial-gradient(rgba(167,243,208,0.4)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       {/* Animated Glow 1 (Top Left) */}
-      <div className="pointer-events-none absolute -left-32 top-10 h-80 w-80 animate-pulse rounded-full bg-emerald-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 top-10 z-[1] h-80 w-80 animate-pulse rounded-full bg-emerald-400/10 blur-3xl" />
 
       {/* Animated Glow 2 (Bottom Right) */}
-      <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 animate-pulse rounded-full bg-cyan-400/10 blur-3xl [animation-delay:1.5s]" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 z-[1] h-96 w-96 animate-pulse rounded-full bg-cyan-400/10 blur-3xl [animation-delay:1.5s]" />
 
       {/* =========================================
           MAIN CONTAINER
@@ -197,6 +380,14 @@ function HeroSection() {
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { 
+            animation-duration: 0.01ms !important; 
+            animation-iteration-count: 1 !important; 
+            transition-duration: 0.01ms !important; 
+          }
         }
       `}</style>
     </section>

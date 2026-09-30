@@ -1,6 +1,181 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 function KeyFeaturesSection() {
+  const whiteCanvasRef = useRef(null);
+
+  // ============================================================
+  // NETWORK BACKGROUND ANIMATION - WHITE SECTION (LIGHT)
+  // ============================================================
+  useEffect(() => {
+    const canvas = whiteCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createParticles(rect.width, rect.height);
+    };
+
+    const createParticles = (width, height) => {
+      const area = width * height;
+      let particleCount = Math.floor(area / 11000);
+      particleCount = Math.max(35, particleCount);
+      particleCount = Math.min(95, particleCount);
+
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.8 + 0.7,
+          opacity: Math.random() * 0.55 + 0.25,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.05 + 0.02,
+        });
+      }
+    };
+
+    const drawParticle = (particle) => {
+      particle.pulse += particle.pulseSpeed;
+      const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.12;
+      const radius = particle.radius + Math.sin(particle.pulse) * 0.25;
+
+      const gradient = ctx.createRadialGradient(
+        particle.x, particle.y, 0, particle.x, particle.y, radius * 5
+      );
+      gradient.addColorStop(0, `rgba(22, 163, 74, ${Math.max(0.15, pulseOpacity * 0.6)})`);
+      gradient.addColorStop(0.5, `rgba(34, 197, 94, ${Math.max(0.05, pulseOpacity * 0.3)})`);
+      gradient.addColorStop(1, 'rgba(74, 222, 128, 0)');
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(particle.x, particle.y, radius * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(22, 163, 74, ${Math.max(0.3, pulseOpacity * 0.7)})`;
+      ctx.arc(particle.x, particle.y, Math.max(0.7, radius), 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawConnections = () => {
+      const connectionDistance = 125;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < connectionDistance) {
+            const opacity = (1 - distance / connectionDistance) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(22, 163, 74, ${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    const drawMouseConnections = () => {
+      if (mouse.x === null || mouse.y === null) return;
+      particles.forEach((particle) => {
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const opacity = (1 - distance / mouse.radius) * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(34, 197, 94, ${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      });
+    };
+
+    const animate = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      if (!isReducedMotion) {
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -20 || particle.x > width + 20) particle.vx *= -1;
+          if (particle.y < -20 || particle.y > height + 20) particle.vy *= -1;
+        });
+      }
+
+      drawConnections();
+      drawMouseConnections();
+      particles.forEach(drawParticle);
+
+      if (!isReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+    };
+    const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+    const handleTouchMove = (event) => {
+      if (!event.touches.length) return;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.touches[0].clientX - rect.left;
+      mouse.y = event.touches[0].clientY - rect.top;
+    };
+    const handleTouchEnd = () => { mouse.x = null; mouse.y = null; };
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    resizeCanvas();
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
   const features = [
     'Choose ur favourite course either Online or Offline',
     'Land a job within 6 months of graduation',
@@ -14,17 +189,29 @@ function KeyFeaturesSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-[#f7f7f7] px-4 py-16 sm:px-6 lg:px-10">
+    <section className="relative overflow-hidden bg-gray-50 px-4 py-16 sm:px-6 lg:px-10">
+      
+      {/* =========================================
+          NETWORK ANIMATION CANVAS
+      ========================================== */}
+      <canvas
+        ref={whiteCanvasRef}
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        aria-hidden="true"
+      />
 
-      {/* Background Decoration - Logo Green Match */}
-      <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-green-100/50 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-green-50/40 blur-3xl" />
+      {/* =========================================
+          BACKGROUND DECORATION
+      ========================================== */}
+      <div className="pointer-events-none absolute -left-24 top-10 z-[1] h-64 w-64 rounded-full bg-green-100/60 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-10 z-[1] h-72 w-72 rounded-full bg-green-100/50 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl">
-
-        {/* Header */}
+      <div className="relative z-10 mx-auto max-w-7xl">
+        
+        {/* =======================================
+            HEADER
+        ======================================== */}
         <div className="mb-12 text-center">
-
           <span className="mb-4 inline-flex rounded-full border border-green-200 bg-green-50 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-green-600">
             Why Choose Us
           </span>
@@ -38,17 +225,17 @@ function KeyFeaturesSection() {
             with industry-ready skills.
           </p>
 
-          {/* Underline - Logo Green Match */}
+          {/* Underline */}
           <div className="mx-auto mt-5 flex items-center justify-center gap-2">
             <div className="h-1.5 w-14 rounded-full bg-green-500" />
             <div className="h-1.5 w-4 rounded-full bg-green-300" />
           </div>
-
         </div>
 
-        {/* Features */}
+        {/* =======================================
+            FEATURES GRID
+        ======================================== */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-
           {features.map((feature, idx) => (
             <div
               key={idx}
@@ -62,20 +249,20 @@ function KeyFeaturesSection() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-gray-100
-                bg-[#ffffff]
+                border-gray-200
+                bg-white/80
+                backdrop-blur-sm
                 px-6
                 py-6
                 shadow-md
                 transition-all
                 duration-300
                 hover:-translate-y-2
-                hover:border-green-200
+                hover:border-green-300
                 hover:shadow-xl
               "
             >
-
-              {/* ✅ UPDATED: Very thin initially (h-0.5), grows BIG (h-3) on hover with smooth animation */}
+              {/* Top Green Line */}
               <div
                 className="
                   absolute
@@ -114,7 +301,7 @@ function KeyFeaturesSection() {
                 {String(idx + 1).padStart(2, '0')}
               </div>
 
-              {/* Icon Box - Logo Green Match */}
+              {/* Icon Box */}
               <div
                 className="
                   relative
@@ -170,7 +357,7 @@ function KeyFeaturesSection() {
                 {feature}
               </p>
 
-              {/* Arrow - Logo Green Match */}
+              {/* Arrow */}
               <div
                 className="
                   relative
@@ -195,7 +382,7 @@ function KeyFeaturesSection() {
                 →
               </div>
 
-              {/* Glow Effect - Logo Green Match */}
+              {/* Glow Effect */}
               <div
                 className="
                   pointer-events-none
@@ -213,12 +400,9 @@ function KeyFeaturesSection() {
                   group-hover:opacity-100
                 "
               />
-
             </div>
           ))}
-
         </div>
-
       </div>
     </section>
   );
