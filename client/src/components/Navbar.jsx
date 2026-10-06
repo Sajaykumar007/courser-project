@@ -7,20 +7,51 @@ import { ChevronRightIcon } from "primereact/icons/chevronright";
 function Navbar() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  
   const [allCourses, setAllCourses] = useState([]);
   const [onlineCourses, setOnlineCourses] = useState([]);
+  const [placementDrives, setPlacementDrives] = useState([]);
+  const [hiringPartners, setHiringPartners] = useState([]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarExpandedMenu, setSidebarExpandedMenu] = useState(null);
 
   const navbarRef = useRef(null);
   const timeoutRef = useRef(null);
-  
-  // ============================================================
-  // NETWORK BACKGROUND ANIMATION - NAVBAR (LIGHT)
-  // ============================================================
   const navbarCanvasRef = useRef(null);
 
+  // ============================================================
+  // 1. FETCH REAL DATA FOR NAVBAR DROPDOWNS
+  // ============================================================
+  useEffect(() => {
+    const fetchNavbarData = async () => {
+      try {
+        const coursesRes = await fetch("http://localhost:5000/api/courses");
+        const coursesData = await coursesRes.json();
+        if (coursesData.success) setAllCourses(coursesData.data);
+
+        const onlineRes = await fetch("http://localhost:5000/api/online-courses");
+        const onlineData = await onlineRes.json();
+        if (onlineData.success) setOnlineCourses(onlineData.data);
+
+        const drivesRes = await fetch("http://localhost:5000/api/placement/placement-drives");
+        const drivesData = await drivesRes.json();
+        if (drivesData.success) setPlacementDrives(drivesData.data.slice(0, 6));
+
+        const partnersRes = await fetch("http://localhost:5000/api/placement/hiring-partners");
+        const partnersData = await partnersRes.json();
+        if (partnersData.success) setHiringPartners(partnersData.data.slice(0, 6));
+
+      } catch (error) {
+        console.error("Error fetching navbar data:", error);
+      }
+    };
+    fetchNavbarData();
+  }, []);
+
+  // ============================================================
+  // 2. NETWORK BACKGROUND ANIMATION
+  // ============================================================
   useEffect(() => {
     const canvas = navbarCanvasRef.current;
     if (!canvas) return;
@@ -51,7 +82,7 @@ function Navbar() {
     const createParticles = (width, height) => {
       const area = width * height;
       let particleCount = Math.floor(area / 11000);
-      particleCount = Math.max(20, particleCount); // Optimized for navbar height
+      particleCount = Math.max(20, particleCount);
       particleCount = Math.min(50, particleCount);
 
       particles = [];
@@ -191,39 +222,16 @@ function Navbar() {
     };
   }, []);
 
+  // ============================================================
+  // 3. NAVIGATION & EVENT HANDLERS
+  // ============================================================
   const announcements = [
     "🎓 100% Placement Assistance",
     "💰 12 Months No Cost EMI",
-    "👨‍🏫 Industry Expert Trainers",
-    "🚀 Live Real-time Projects",
+    "👨‍ Industry Expert Trainers",
+    " Live Real-time Projects",
     "🌍 Internationally Recognized Certification",
   ];
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/courses");
-        const data = await res.json();
-        if (data.success) setAllCourses(data.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-    fetchCourses();
-  }, []);
-
-  useEffect(() => {
-    const fetchOnlineCourses = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/online-courses");
-        const data = await res.json();
-        if (data.success) setOnlineCourses(data.data);
-      } catch (error) {
-        console.error("Error fetching online courses:", error);
-      }
-    };
-    fetchOnlineCourses();
-  }, []);
 
   useEffect(() => {
     const handleEscKey = (e) => {
@@ -242,10 +250,25 @@ function Navbar() {
     } else {
       document.body.style.overflow = "unset";
     }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    return () => { document.body.style.overflow = "unset"; };
   }, [isSidebarOpen]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setActiveMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const navigateTo = (page) => {
     window.dispatchEvent(new CustomEvent("navigateToPage", { detail: page }));
@@ -328,102 +351,6 @@ function Navbar() {
     setSidebarExpandedMenu(sidebarExpandedMenu === menuKey ? null : menuKey);
   };
 
-  const menuData = {
-    home: { label: "Home", type: "link", onClick: () => navigateTo("home") },
-    allCourses: {
-      label: "All Courses",
-      type: "mega",
-      onClick: () => navigateTo("allCourses"),
-      items: allCourses.length > 0 ? allCourses.map((course) => ({ name: course.title, type: "course" })) : [
-        { name: "Web Developer", type: "course" },
-        { name: "Cloud Architect", type: "course" },
-        { name: "Business Analyst", type: "course" },
-        { name: "Java Developer", type: "course" },
-        { name: "Digital Marketing", type: "course" },
-        { name: "Cyber Security", type: "course" },
-        { name: "Data Analyst", type: "course" },
-        { name: "DevOps Engineer", type: "course" },
-        { name: "Big Data", type: "course" },
-      ],
-    },
-    onlineCourses: {
-      label: "Online Courses",
-      type: "mega",
-      onClick: () => navigateTo("onlineCourses"),
-      items: onlineCourses.length > 0 ? onlineCourses.map((course) => ({ name: course.title, type: "onlineCourse" })) : [
-        { name: "Web Development Bootcamp", type: "onlineCourse" },
-        { name: "Data Science & ML", type: "onlineCourse" },
-        { name: "UI/UX Design Masterclass", type: "onlineCourse" },
-        { name: "Digital Marketing Strategy", type: "onlineCourse" },
-      ],
-    },
-    corporateTraining: {
-      label: "Corporate Training",
-      type: "mega",
-      onClick: () => navigateTo("corporateTraining"),
-      items: [
-        { name: "Technical Skills", type: "corporate", value: "Technical" },
-        { name: "Data & Analytics", type: "corporate", value: "Data" },
-        { name: "Leadership & Management", type: "corporate", value: "Leadership" },
-        { name: "Cybersecurity", type: "corporate", value: "Cybersecurity" },
-        { name: "Digital Marketing", type: "corporate", value: "Digital Marketing" },
-        { name: "Emerging Technologies", type: "corporate", value: "Emerging Tech" },
-      ],
-    },
-    hireFromUs: {
-      label: "Hire From Us",
-      type: "mega",
-      onClick: () => navigateTo("hireFromUs"),
-      items: [
-        { name: "IT Services", type: "hire", value: "IT Services" },
-        { name: "Banking & Finance", type: "hire", value: "Banking & Finance" },
-        { name: "Healthcare", type: "hire", value: "Healthcare" },
-        { name: "E-commerce", type: "hire", value: "E-commerce" },
-        { name: "Telecommunications", type: "hire", value: "Telecommunications" },
-        { name: "Manufacturing", type: "hire", value: "Manufacturing" },
-      ],
-    },
-    placements: {
-      label: "Placements",
-      type: "mega",
-      onClick: () => navigateTo("placements"),
-      items: [
-        { name: "Placement Support", type: "placement", value: "placement-enquiry" },
-        { name: "Success Stories", type: "placement", value: "success-stories" },
-        { name: "Hiring Partners", type: "placement", value: "hiring-partners" },
-        { name: "Career Guidance", type: "placement", value: "placement-enquiry" },
-      ],
-    },
-    contactUs: {
-      label: "Contact Us",
-      type: "mega",
-      onClick: () => navigateTo("contactUs"),
-      items: [
-        { name: "Call Us", type: "link", value: "tel:+917706037060" },
-        { name: "Email Us", type: "link", value: "mailto:hi@courser.in" },
-        { name: "Our Centers", type: "scroll", value: "contact-centers" },
-        { name: "Contact Form", type: "scroll", value: "contact-form" },
-      ],
-    },
-  };
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setActiveMenu(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const handleMouseEnter = (menuKey) => {
     if (!isMobile && menuData[menuKey].type !== "link") {
       clearTimeout(timeoutRef.current);
@@ -433,17 +360,23 @@ function Navbar() {
 
   const handleMouseLeave = () => {
     if (!isMobile) {
-      timeoutRef.current = setTimeout(() => setActiveMenu(null), 200);
+      timeoutRef.current = setTimeout(() => setActiveMenu(null), 300);
     }
   };
 
-  const handleClick = (menuKey) => {
+  const handleClick = (menuKey, e) => {
+    if (menuData[menuKey].type !== "link") {
+      e.preventDefault();
+    }
+    
     if (isMobile) {
       if (menuData[menuKey].type === "link" && menuData[menuKey].onClick) {
         menuData[menuKey].onClick();
       } else {
         setActiveMenu(activeMenu === menuKey ? null : menuKey);
       }
+    } else {
+      setActiveMenu(activeMenu === menuKey ? null : menuKey);
     }
   };
 
@@ -451,8 +384,6 @@ function Navbar() {
     window.dispatchEvent(new CustomEvent("navigateToJoinNow"));
     setIsSidebarOpen(false);
   };
-
-  const menuKeys = Object.keys(menuData);
 
   const handleCourseClick = (e, course) => {
     e.preventDefault();
@@ -467,11 +398,103 @@ function Navbar() {
     else if (course.type === "scroll") navigateToContactUs("scroll", course.value);
   };
 
+  // ============================================================
+  // 4. DYNAMIC MENU DATA
+  // ============================================================
+  const menuData = {
+    home: { 
+      label: "Home", 
+      type: "link", 
+      onClick: () => navigateTo("home") 
+    },
+    allCourses: {
+      label: "All Courses",
+      type: "mega",
+      onClick: () => navigateTo("allCourses"),
+      items: allCourses.length > 0 
+        ? allCourses.slice(0, 6).map((course) => ({ name: course.title, type: "course" })) 
+        : [
+            { name: "Web Developer", type: "course" },
+            { name: "Cloud Architect", type: "course" },
+            { name: "Business Analyst", type: "course" },
+            { name: "Java Developer", type: "course" },
+            { name: "Digital Marketing", type: "course" },
+            { name: "Cyber Security", type: "course" },
+          ],
+    },
+    onlineCourses: {
+      label: "Online Courses",
+      type: "mega",
+      onClick: () => navigateTo("onlineCourses"),
+      items: onlineCourses.length > 0 
+        ? onlineCourses.slice(0, 6).map((course) => ({ name: course.title, type: "onlineCourse" })) 
+        : [
+            { name: "Web Development Bootcamp", type: "onlineCourse" },
+            { name: "Data Science & ML", type: "onlineCourse" },
+            { name: "UI/UX Design Masterclass", type: "onlineCourse" },
+            { name: "Digital Marketing Strategy", type: "onlineCourse" },
+          ],
+    },
+    placements: {
+      label: "Placements",
+      type: "mega",
+      onClick: () => navigateTo("placements"),
+      items: placementDrives.length > 0
+        ? placementDrives.map((drive) => ({ 
+            name: `${drive.company} - ${drive.role}`, 
+            type: "placement", 
+            value: "placement-enquiry" 
+          }))
+        : [
+            { name: "📋 Placement Support", type: "placement", value: "placement-enquiry" },
+            { name: "⭐ Success Stories", type: "placement", value: "success-stories" },
+            { name: "🏢 Hiring Partners", type: "placement", value: "hiring-partners" },
+            { name: "📅 Upcoming Drives", type: "placement", value: "placement-enquiry" },
+            { name: "💼 Career Guidance", type: "placement", value: "placement-enquiry" },
+          ],
+    },
+    hireFromUs: {
+      label: "Hire From Us",
+      type: "mega",
+      onClick: () => navigateTo("hireFromUs"),
+      items: [
+        { name: "IT Services", type: "hire", value: "IT Services" },
+        { name: "Banking & Finance", type: "hire", value: "Banking & Finance" },
+        { name: "Healthcare", type: "hire", value: "Healthcare" },
+        { name: "E-commerce", type: "hire", value: "E-commerce" },
+        { name: "Manufacturing", type: "hire", value: "Manufacturing" },
+      ],
+    },
+    corporateTraining: {
+      label: "Corporate Training",
+      type: "mega",
+      onClick: () => navigateTo("corporateTraining"),
+      items: [
+        { name: "Technical Skills", type: "corporate", value: "Technical" },
+        { name: "Data & Analytics", type: "corporate", value: "Data" },
+        { name: "Leadership & Management", type: "corporate", value: "Leadership" },
+        { name: "Cybersecurity", type: "corporate", value: "Cybersecurity" },
+        { name: "Digital Marketing", type: "corporate", value: "Digital Marketing" },
+      ],
+    },
+    contactUs: {
+      label: "Contact Us",
+      type: "mega",
+      onClick: () => navigateTo("contactUs"),
+      items: [
+        { name: " Call Us", type: "link", value: "tel:+917706037060" },
+        { name: "✉️ Email Us", type: "link", value: "mailto:hi@courser.in" },
+        { name: "📍 Our Centers", type: "scroll", value: "contact-centers" },
+        { name: "📝 Contact Form", type: "scroll", value: "contact-form" },
+      ],
+    },
+  };
+
+  const menuKeys = Object.keys(menuData);
+
   return (
     <>
-      {/* =====================================================
-          ANNOUNCEMENT BAR
-      ====================================================== */}
+      {/* Announcement Bar */}
       <div className="fixed top-[72px] sm:top-[76px] left-0 right-0 z-[999] h-10 sm:h-11 bg-emerald-50/95 backdrop-blur-sm border-b border-emerald-100 overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap h-full items-center">
           {[...announcements, ...announcements, ...announcements].map((text, idx) => (
@@ -483,33 +506,26 @@ function Navbar() {
         </div>
       </div>
 
-      {/* =====================================================
-          HORIZONTAL NAVBAR
-      ====================================================== */}
+      {/* Navbar */}
       <nav
         ref={navbarRef}
-        className="fixed top-0 left-0 right-0 z-[1000] h-[72px] sm:h-[76px] flex items-center bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm overflow-hidden"
+        className="fixed top-0 left-0 right-0 z-[1000] h-[72px] sm:h-[76px] flex items-center bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm"
       >
-        {/* Network Animation Canvas */}
         <canvas
           ref={navbarCanvasRef}
           className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           aria-hidden="true"
         />
 
-        {/* Hamburger Menu (PrimeReact Icon) */}
         <button
           type="button"
           onClick={() => setIsSidebarOpen(true)}
           aria-label="Open menu"
-          aria-expanded={isSidebarOpen}
-          aria-controls="vertical-sidebar"
           className="relative z-10 ml-2 sm:ml-4 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg border border-gray-200 bg-white/80 backdrop-blur-sm transition hover:bg-gray-100 lg:hidden"
         >
           <BarsIcon className="h-5 w-5 text-gray-700" />
         </button>
 
-        {/* Logo */}
         <div
           onClick={() => navigateTo("home")}
           role="button"
@@ -519,7 +535,6 @@ function Navbar() {
           <img src="/logo.png" alt="Courser Logo" className="h-9 sm:h-11 w-auto object-contain" />
         </div>
 
-        {/* Desktop Menu */}
         <ul role="menubar" className="relative z-10 ml-2 sm:ml-6 hidden h-full items-center gap-1 lg:flex">
           {menuKeys.map((key) => {
             const item = menuData[key];
@@ -532,18 +547,13 @@ function Navbar() {
                 role="none"
                 onMouseEnter={() => handleMouseEnter(key)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => handleClick(key)}
                 className="relative h-full flex items-center"
               >
-                <a
-                  href="#!"
+                <button
                   role="menuitem"
                   aria-expanded={isActive}
                   aria-haspopup={hasDropdown}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (item.onClick) item.onClick();
-                  }}
+                  onClick={(e) => handleClick(key, e)}
                   className={`flex h-full items-center gap-1.5 whitespace-nowrap px-3 sm:px-4 text-[14px] sm:text-[15px] font-semibold tracking-wide transition duration-200 ${
                     isActive ? "text-emerald-600" : "text-slate-700 hover:text-emerald-600"
                   }`}
@@ -554,28 +564,36 @@ function Navbar() {
                       className={`h-4 w-4 transition-transform duration-200 ${isActive ? "rotate-180" : ""}`} 
                     />
                   )}
-                </a>
+                </button>
 
-                {/* ========================================
-                    VERTICAL DROPDOWN MENU
-                ========================================= */}
+                {/* ✅ DROPDOWN MENU - SOLID WHITE BACKGROUND, NO ANIMATION */}
                 {hasDropdown && isActive && (
                   <div
                     role="menu"
-                    className="absolute left-0 top-full mt-2 z-[1100] w-64 rounded-xl border border-gray-100 bg-white/95 backdrop-blur-md p-2 shadow-xl shadow-gray-200/50 animate-[fadeIn_0.2s_ease-out]"
+                    className="absolute left-0 top-full mt-0 z-[1100] w-72 rounded-xl border border-gray-200 bg-white p-2 shadow-2xl shadow-gray-900/20 animate-[fadeIn_0.2s_ease-out]"
+                    onMouseEnter={() => {
+                      clearTimeout(timeoutRef.current);
+                      setActiveMenu(key);
+                    }}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    {item.items.map((subItem, idx) => (
-                      <a
-                        key={idx}
-                        href="#!"
-                        role="menuitem"
-                        onClick={(e) => handleCourseClick(e, subItem)}
-                        className="group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-gray-700 transition duration-200 hover:bg-emerald-50 hover:text-emerald-700"
-                      >
-                        <span className="line-clamp-1">{subItem.name}</span>
-                        <ChevronRightIcon className="h-4 w-4 text-gray-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-emerald-600" />
-                      </a>
-                    ))}
+                    {item.items && item.items.length > 0 ? (
+                      item.items.map((subItem, idx) => (
+                        <button
+                          key={idx}
+                          role="menuitem"
+                          onClick={(e) => handleCourseClick(e, subItem)}
+                          className="w-full group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-gray-700 transition duration-200 hover:bg-emerald-50 hover:text-emerald-700 text-left"
+                        >
+                          <span className="line-clamp-1">{subItem.name}</span>
+                          <ChevronRightIcon className="h-4 w-4 text-gray-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-emerald-600" />
+                        </button>
+                      ))
+                    ) : (
+                      <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                        Loading...
+                      </div>
+                    )}
                   </div>
                 )}
               </li>
@@ -583,7 +601,6 @@ function Navbar() {
           })}
         </ul>
 
-        {/* Join Now Button - COMPACT SIZE */}
         <div className="relative z-10 ml-auto mr-2 sm:mr-4 lg:mr-6">
           <button
             type="button"
@@ -596,9 +613,7 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* =====================================================
-          MOBILE OVERLAY
-      ====================================================== */}
+      {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div
           onClick={() => {
@@ -610,9 +625,7 @@ function Navbar() {
         />
       )}
 
-      {/* =====================================================
-          MOBILE SIDEBAR
-      ====================================================== */}
+      {/* Mobile Sidebar */}
       <aside
         id="vertical-sidebar"
         role="navigation"
@@ -653,7 +666,6 @@ function Navbar() {
                       type="button"
                       onClick={() => toggleSidebarSubmenu(key)}
                       aria-expanded={isExpanded}
-                      aria-controls={`sidebar-submenu-${key}`}
                       className={`flex w-full items-center justify-between rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-left text-[14px] sm:text-[15px] font-semibold transition ${
                         isExpanded ? "bg-emerald-50 text-emerald-700" : "text-slate-700 hover:bg-gray-50"
                       }`}
@@ -665,18 +677,16 @@ function Navbar() {
                     </button>
 
                     {isExpanded && (
-                      <div id={`sidebar-submenu-${key}`} role="menu" className="mt-1 ml-3 border-l-2 border-emerald-100 pl-3">
+                      <div className="mt-1 ml-3 border-l-2 border-emerald-100 pl-3">
                         {item.items.map((subItem, idx) => (
-                          <a
+                          <button
                             key={idx}
-                            href="#!"
-                            role="menuitem"
                             onClick={(e) => handleCourseClick(e, subItem)}
-                            className="group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-gray-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                            className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm text-gray-600 transition hover:bg-emerald-50 hover:text-emerald-700"
                           >
                             <span>{subItem.name}</span>
-                            <ChevronRightIcon className="h-4 w-4 text-gray-400 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 group-hover:text-emerald-600" />
-                          </a>
+                            <ChevronRightIcon className="h-4 w-4 text-gray-400" />
+                          </button>
                         ))}
                       </div>
                     )}
@@ -706,7 +716,6 @@ function Navbar() {
         </div>
       </aside>
 
-      {/* ✅ FIXED SPACER - Navbar (72px/76px) + Announcement Bar (40px/44px) = 112px/120px */}
       <div className="h-[112px] sm:h-[120px]" />
 
       <style>{`
