@@ -364,18 +364,20 @@ function Navbar() {
     }
   };
 
+  // ✅ FIXED: Click handler now navigates to page AND shows dropdown
   const handleClick = (menuKey, e) => {
-    if (menuData[menuKey].type !== "link") {
-      e.preventDefault();
+    e.preventDefault();
+    
+    // Always navigate to the main page first
+    if (menuData[menuKey].onClick) {
+      menuData[menuKey].onClick();
     }
     
-    if (isMobile) {
-      if (menuData[menuKey].type === "link" && menuData[menuKey].onClick) {
-        menuData[menuKey].onClick();
-      } else {
-        setActiveMenu(activeMenu === menuKey ? null : menuKey);
-      }
+    // Then toggle dropdown
+    if (!isMobile) {
+      setActiveMenu(activeMenu === menuKey ? null : menuKey);
     } else {
+      // On mobile, just toggle
       setActiveMenu(activeMenu === menuKey ? null : menuKey);
     }
   };
@@ -483,7 +485,7 @@ function Navbar() {
       onClick: () => navigateTo("contactUs"),
       items: [
         { name: " Call Us", type: "link", value: "tel:+917706037060" },
-        { name: "✉️ Email Us", type: "link", value: "mailto:hi@courser.in" },
+        { name: "️ Email Us", type: "link", value: "mailto:hi@courser.in" },
         { name: "📍 Our Centers", type: "scroll", value: "contact-centers" },
         { name: "📝 Contact Form", type: "scroll", value: "contact-form" },
       ],
@@ -566,7 +568,7 @@ function Navbar() {
                   )}
                 </button>
 
-                {/* ✅ DROPDOWN MENU - SOLID WHITE BACKGROUND, NO ANIMATION */}
+                {/* DROPDOWN MENU */}
                 {hasDropdown && isActive && (
                   <div
                     role="menu"
@@ -664,7 +666,10 @@ function Navbar() {
                   <>
                     <button
                       type="button"
-                      onClick={() => toggleSidebarSubmenu(key)}
+                      onClick={() => {
+                        toggleSidebarSubmenu(key);
+                        if (item.onClick) item.onClick();
+                      }}
                       aria-expanded={isExpanded}
                       className={`flex w-full items-center justify-between rounded-xl px-3 sm:px-4 py-3 sm:py-3.5 text-left text-[14px] sm:text-[15px] font-semibold transition ${
                         isExpanded ? "bg-emerald-50 text-emerald-700" : "text-slate-700 hover:bg-gray-50"
