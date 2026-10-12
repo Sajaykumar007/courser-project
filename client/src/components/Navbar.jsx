@@ -494,6 +494,23 @@ function Navbar() {
 
   const menuKeys = Object.keys(menuData);
 
+  // ✅ UPDATED: Reusable Transparent SVG Logo Component with Parrot Green (Kili Patchai) Color
+  const CourserLogo = ({ className }) => (
+    <svg viewBox="0 0 150 40" className={className} xmlns="http://www.w3.org/2000/svg">
+      <text 
+        x="0" 
+        y="30" 
+        fontFamily="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+        fontWeight="800" 
+        fontSize="28" 
+        fill="#32CD32" 
+        letterSpacing="-0.02em"
+      >
+        COURSER<tspan fontSize="12" fontWeight="700" dy="-0.6em">TM</tspan>
+      </text>
+    </svg>
+  );
+
   return (
     <>
       {/* Announcement Bar */}
@@ -534,7 +551,8 @@ function Navbar() {
           aria-label="Courser Home"
           className="relative z-10 ml-2 sm:ml-4 flex cursor-pointer items-center lg:ml-6"
         >
-          <img src="/logo.png" alt="Courser Logo" className="h-9 sm:h-11 w-auto object-contain" />
+          {/* REPLACED: IMG with Transparent SVG Logo (Parrot Green) */}
+          <CourserLogo className="h-9 sm:h-11 w-auto" />
         </div>
 
         <ul role="menubar" className="relative z-10 ml-2 sm:ml-6 hidden h-full items-center gap-1 lg:flex">
@@ -639,7 +657,8 @@ function Navbar() {
       >
         <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-gray-200 px-4 sm:px-5">
           <div onClick={() => navigateTo("home")} role="button" aria-label="Courser Home" className="cursor-pointer">
-            <img src="/logo.png" alt="Courser Logo" className="h-9 sm:h-10 w-auto object-contain" />
+            {/* REPLACED: IMG with Transparent SVG Logo (Parrot Green) */}
+            <CourserLogo className="h-9 sm:h-10 w-auto" />
           </div>
           <button
             type="button"
