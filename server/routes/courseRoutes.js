@@ -1,30 +1,51 @@
+
 const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courseController');
+const adminAuth = require('../middleware/adminAuth');
 
 // ==========================================
-// ===== PUBLIC ROUTES =====================
+// PUBLIC ROUTES
 // ==========================================
 router.get('/', courseController.getAllCourses);
 router.get('/categories', courseController.getCategories);
 
 // ==========================================
-// ===== COURSE ENQUIRY ROUTES =============
-// (Specific routes MUST come before /:id)
+// ADMIN ONLY - COURSE ENQUIRIES
 // ==========================================
 router.post('/enquiry', courseController.submitCourseEnquiry);
-router.get('/enquiries', courseController.getCourseEnquiries);
-router.delete('/enquiries/:id', courseController.deleteCourseEnquiry);
+router.get(
+  '/enquiries',
+  adminAuth,
+  courseController.getCourseEnquiries
+);
+router.delete(
+  '/enquiries/:id',
+  adminAuth,
+  courseController.deleteCourseEnquiry
+);
 
 // ==========================================
-// ===== ADMIN ROUTES ======================
+// ADMIN ONLY - COURSE MANAGEMENT
 // ==========================================
-router.post('/admin/create', courseController.createCourse);
-router.put('/admin/update/:id', courseController.updateCourse);
-router.delete('/admin/delete/:id', courseController.deleteCourse);
+router.post(
+  '/admin/create',
+  adminAuth,
+  courseController.createCourse
+);
+router.put(
+  '/admin/update/:id',
+  adminAuth,
+  courseController.updateCourse
+);
+router.delete(
+  '/admin/delete/:id',
+  adminAuth,
+  courseController.deleteCourse
+);
 
 // ==========================================
-// ===== DYNAMIC ROUTE (MUST BE LAST) ======
+// PUBLIC - DYNAMIC ROUTE (MUST BE LAST)
 // ==========================================
 router.get('/:id', courseController.getCourseById);
 

@@ -1,40 +1,56 @@
+
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
+const adminAuth = require('../middleware/adminAuth');
 
-// ✅ GET ALL CONTACTS (For Admin Dashboard)
-router.get('/all', async (req, res) => {
+// ADMIN ONLY - GET ALL CONTACTS
+router.get('/all', adminAuth, async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    console.log(' Total contacts found:', contacts.length);
     res.status(200).json({ success: true, data: contacts });
   } catch (error) {
-    console.error('❌ Error fetching contacts:', error);
-    res.status(500).json({ success: false, message: 'Error fetching contacts' });
+    console.error('Error fetching contacts:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching contacts'
+    });
   }
 });
 
-// ✅ DELETE CONTACT
-router.delete('/:id', async (req, res) => {
+// ADMIN ONLY - DELETE CONTACT
+router.delete('/:id', adminAuth, async (req, res) => {
   try {
-    await Contact.findByIdAndDelete(req.params.id);
-    console.log('🗑️ Contact deleted:', req.params.id);
-    res.status(200).json({ success: true, message: 'Contact deleted' });
+    const contact = await Contact.findByIdAndDelete(req.params.id);
+
+    if (!contact) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Contact deleted'
+    });
   } catch (error) {
-    console.error('❌ Error deleting:', error);
-    res.status(500).json({ success: false, message: 'Error deleting' });
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting contact'
+    });
   }
 });
 
-// ✅ POST SUBMIT (From Website Form)
+// PUBLIC - CONTACT FORM SUBMISSION
 router.post('/submit', async (req, res) => {
   try {
     const { name, company, phone, email, subject, message } = req.body;
-    
+
     if (!name || !phone || !email || !subject || !message) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Please fill all required fields' 
+      return res.status(400).json({
+        success: false,
+        message: 'Please fill all required fields'
       });
     }
 
@@ -44,22 +60,21 @@ router.post('/submit', async (req, res) => {
       phone,
       email,
       subject,
-      message,
+      message
     });
 
     await newContact.save();
-    console.log('✅ New contact saved:', newContact.name);
-    
-    res.status(200).json({ 
-      success: true, 
-      message: 'Message sent successfully!', 
-      data: newContact 
+
+    res.status(201).json({
+      success: true,
+      message: 'Message sent successfully!',
+      data: newContact
     });
   } catch (error) {
-    console.error('❌ Submit error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error. Please try again later.' 
+    console.error('Contact submit error:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Server error. Please try again later.'
     });
   }
 });

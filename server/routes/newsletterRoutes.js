@@ -1,15 +1,26 @@
+
 const express = require('express');
 const router = express.Router();
-const { 
-  subscribeNewsletter, 
-  getAllSubscribers, 
-  toggleSubscription, 
-  deleteSubscriber 
+
+const {
+  subscribeNewsletter,
+  getAllSubscribers,
+  toggleSubscription,
+  deleteSubscriber
 } = require('../controllers/newsletterController');
 
+const adminAuth = require('../middleware/adminAuth');
+
+// PUBLIC - Newsletter subscription
 router.post('/subscribe', subscribeNewsletter);
-router.get('/all', getAllSubscribers);
-router.put('/:id/toggle', toggleSubscription);
-router.delete('/:id', deleteSubscriber);
+
+// ADMIN ONLY - View subscribers
+router.get('/all', adminAuth, getAllSubscribers);
+
+// ADMIN ONLY - Toggle subscription status
+router.put('/:id/toggle', adminAuth, toggleSubscription);
+
+// ADMIN ONLY - Delete subscriber
+router.delete('/:id', adminAuth, deleteSubscriber);
 
 module.exports = router;
